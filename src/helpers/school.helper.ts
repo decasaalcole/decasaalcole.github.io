@@ -13,15 +13,18 @@ export function filterSchoolsByRegimen(schools: School[], regimen: SchoolRegimen
     });
 }
 
-export function filterSchoolsByType(schools: School[], type: SchoolType) {
+export function filterSchoolsByType(schools: School[], type: SchoolType[]) {
+    console.log('filterSchoolsByType | types', type);
     return schools
 }
 
-export function filterSchoolsByDayType(schools: School[], dayType: SchoolDayType) {
+export function filterSchoolsByDayType(schools: School[], dayType: SchoolDayType[]) {
+    console.log('filterSchoolsByDayType | types', dayType);
     return schools
 }
 
 export function filterSchoolsByProvince(schools: School[], provinces: Province[]) {
+    console.log('filterSchoolsByDayType | provinces', provinces);
     return schools
 }
 
