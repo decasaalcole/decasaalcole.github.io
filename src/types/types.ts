@@ -2,19 +2,17 @@ export enum SchoolRegimen {
     Public = 'Pub',
     Private = 'Priv',
     PrivateConc = 'PrivConc',
-    All = 'all',
 }
 
 export enum SchoolType {
-    Infantil = 'inf',
-    Primaria = 'pri',
-    Especial = 'esp',
-    CRA = 'cra',
-    ESO = 'eso',
-    Bachillerato = 'bac',
-    FP = 'fp',
-    Adultos = 'adu',
-    All = 'all',
+    Infantil = 'EI',
+    Primaria = 'EP',
+    Especial = 'ESP',
+    CRA = 'CRA',
+    ESO = 'SEC',
+    Bachillerato = 'BACH',
+    FP = 'FP',
+    Adultos = 'ADU',
 }
 
 export enum SchoolDayType {
@@ -32,9 +30,9 @@ export interface FinderProps {
     zipCode: number;
     setZipCode: (zipCode: number) => void;
     regimens: SchoolRegimen[];
-    setRegimen: any;
+    setRegimens: any;
     types: SchoolType[];
-    setType: any;
+    setTypes: any;
     dayTypes: SchoolDayType[];
     setDayTypes: any;
     provinces: Province[];

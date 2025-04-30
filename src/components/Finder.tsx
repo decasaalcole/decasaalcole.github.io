@@ -6,7 +6,7 @@ import Counter4 from '../assets/icons/counter_4.svg';
 import Counter5 from '../assets/icons/counter_5.svg';
 import { FinderProps, SchoolRegimen, SchoolType, SchoolDayType, Province } from '../types/types';
 import { Btn } from './Btn';
-export function Finder({ zipCode, setZipCode, regimens, setRegimen, types, setType, dayTypes, setDayTypes, provinces, setProvinces }: FinderProps) {
+export function Finder({ zipCode, setZipCode, regimens, setRegimens, types, setTypes, dayTypes, setDayTypes, provinces, setProvinces }: FinderProps) {
 
     const handleZipCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setZipCode(Number(e.target.value));
@@ -30,9 +30,9 @@ export function Finder({ zipCode, setZipCode, regimens, setRegimen, types, setTy
                 <span>Selecciona el régimen del centro</span>
                 </div>
                 <div className="btns">
-                    <Btn text="Público" value={SchoolRegimen.Public} selected={regimens.includes(SchoolRegimen.Public)} setSelected={setRegimen}/>
-                    <Btn text="Privado" value={SchoolRegimen.Private} selected={regimens.includes(SchoolRegimen.Private)} setSelected={setRegimen}/>
-                    <Btn text="Priv. concertado" value={SchoolRegimen.PrivateConc} selected={regimens.includes(SchoolRegimen.PrivateConc)} setSelected={setRegimen}/>
+                    <Btn text="Público" value={SchoolRegimen.Public} selected={regimens.includes(SchoolRegimen.Public)} setSelected={setRegimens}/>
+                    <Btn text="Privado" value={SchoolRegimen.Private} selected={regimens.includes(SchoolRegimen.Private)} setSelected={setRegimens}/>
+                    <Btn text="Priv. concertado" value={SchoolRegimen.PrivateConc} selected={regimens.includes(SchoolRegimen.PrivateConc)} setSelected={setRegimens}/>
                 </div>
             </div>
             <div className="step">
@@ -41,16 +41,16 @@ export function Finder({ zipCode, setZipCode, regimens, setRegimen, types, setTy
                 <span>Selecciona el tipo del centro</span>
                 </div>
                 <div className="btns">
-                    <Btn text="Infantil" value={SchoolType.Infantil} selected={types.includes(SchoolType.Infantil)} setSelected={setType}/>
-                    <Btn text="Primaria" value={SchoolType.Primaria} selected={types.includes(SchoolType.Primaria)} setSelected={setType}/>
-                    <Btn text="Especial" value={SchoolType.Especial} selected={types.includes(SchoolType.Especial)} setSelected={setType}/>
-                    <Btn text="C.R.A." value={SchoolType.CRA} selected={types.includes(SchoolType.CRA)} setSelected={setType}/>
+                    <Btn text="Infantil" value={SchoolType.Infantil} selected={types.includes(SchoolType.Infantil)} setSelected={setTypes   }/>
+                    <Btn text="Primaria" value={SchoolType.Primaria} selected={types.includes(SchoolType.Primaria)} setSelected={setTypes}/>
+                    <Btn text="Especial" value={SchoolType.Especial} selected={types.includes(SchoolType.Especial)} setSelected={setTypes}/>
+                    <Btn text="C.R.A." value={SchoolType.CRA} selected={types.includes(SchoolType.CRA)} setSelected={setTypes}/>
                 </div>
                 <div className="btns">
-                    <Btn text="E.S.O." value={SchoolType.ESO} selected={types.includes(SchoolType.ESO)} setSelected={setType}/>
-                    <Btn text="Bachillerato" value={SchoolType.Bachillerato} selected={types.includes(SchoolType.Bachillerato)} setSelected={setType}/>
-                    <Btn text="FP" value={SchoolType.FP} selected={types.includes(SchoolType.FP)} setSelected={setType}/>
-                    <Btn text="Adultos" value={SchoolType.Adultos} selected={types.includes(SchoolType.Adultos)} setSelected={setType}/>
+                    <Btn text="E.S.O." value={SchoolType.ESO} selected={types.includes(SchoolType.ESO)} setSelected={setTypes}/>
+                    <Btn text="Bachillerato" value={SchoolType.Bachillerato} selected={types.includes(SchoolType.Bachillerato)} setSelected={setTypes}/>
+                    <Btn text="FP" value={SchoolType.FP} selected={types.includes(SchoolType.FP)} setSelected={setTypes}/>
+                    <Btn text="Adultos" value={SchoolType.Adultos} selected={types.includes(SchoolType.Adultos)} setSelected={setTypes}/>
                 </div>
             </div>
             <div className="step">

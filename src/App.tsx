@@ -8,8 +8,8 @@ import { filterSchoolsByDayType, filterSchoolsByType, filterSchoolsByProvince, f
 
 function App() {
   const [zipCode, setZipCode] = useState(46113);
-  const [regimens, setRegimen] = useState([SchoolRegimen.Public]);
-  const [types, setType] = useState([SchoolType.Infantil]);
+  const [regimens, setRegimens] = useState([SchoolRegimen.Public]);
+  const [types, setTypes] = useState([SchoolType.Infantil]);
   const [schools, setSchools] = useState<School[]>([]);
   const [dayTypes, setDayTypes] = useState([SchoolDayType.Continue, SchoolDayType.Splitted]);
   const [provinces, setProvinces] = useState([Province.Castellon, Province.Valencia, Province.Alicante]);
@@ -31,23 +31,23 @@ function App() {
   const handleRegimenChange = (value: SchoolRegimen) => {
     console.log('value', value);
     if (regimens.includes(value)) {
-      setRegimen(prev => prev.filter(regimen => regimen !== value));
+      setRegimens(prev => prev.filter(regimen => regimen !== value));
     } else {
-      setRegimen(prev => [...prev, value]);
+      setRegimens(prev => [...prev, value]);
     }
     if (regimens.length === 0) {
-      setRegimen([SchoolRegimen.Public, SchoolRegimen.Private, SchoolRegimen.PrivateConc]);
+      setRegimens([SchoolRegimen.Public, SchoolRegimen.Private, SchoolRegimen.PrivateConc]);
     }
   }
 
   const handleTypeChange = (value: SchoolType) => {
     if (types.includes(value)) {
-      setType(prev => prev.filter(type => type !== value));
+      setTypes(prev => prev.filter(type => type !== value));
     } else {
-      setType(prev => [...prev, value]);
+      setTypes(prev => [...prev, value]);
     }
     if (types.length === 0) {
-      setType([SchoolType.Primaria]);
+      setTypes([SchoolType.Primaria]);
     }
   }
 
@@ -71,10 +71,10 @@ function App() {
   }
 
   if (regimens.length === 0) {
-    setRegimen([SchoolRegimen.Public, SchoolRegimen.Private, SchoolRegimen.PrivateConc]);
+    setRegimens([SchoolRegimen.Public, SchoolRegimen.Private, SchoolRegimen.PrivateConc]);
   }
   if (types.length === 0) {
-    setType([SchoolType.Primaria, SchoolType.Infantil, SchoolType.Especial, SchoolType.ESO, SchoolType.Bachillerato, SchoolType.FP, SchoolType.Adultos]);
+    setTypes([SchoolType.Primaria, SchoolType.Infantil, SchoolType.Especial, SchoolType.ESO, SchoolType.Bachillerato, SchoolType.FP, SchoolType.Adultos, SchoolType.CRA]);
   }
 
   if (dayTypes.length === 0) {
@@ -91,9 +91,9 @@ function App() {
         zipCode={zipCode} 
         setZipCode={setZipCode} 
         regimens={regimens} 
-        setRegimen={handleRegimenChange} 
+        setRegimens={handleRegimenChange} 
         types={types} 
-        setType={handleTypeChange} 
+        setTypes={handleTypeChange} 
         dayTypes={dayTypes}
         setDayTypes={handleDayTypesChange}
         provinces={provinces}
