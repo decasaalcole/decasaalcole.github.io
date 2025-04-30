@@ -1,0 +1,19 @@
+{
+  "name": "decasaalcole_scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prepareTimesFile": "npx ts-node ./src/prepareTimesFile.ts",
+    "prepareSchoolsFile": "npx ts-node ./src/prepareSchoolsFile.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "jsonminify": "^0.4.2"
+  }
+}
