@@ -7,6 +7,7 @@ import baseSchools from './assets/data/schools_base.json';
 import infoSchools from './assets/data/schools_info.json';
 import craSchools from './assets/data/schools_cra.json';
 import { filterSchools, prepareSchools } from './helpers/school.helper.ts';
+import { Footer } from './components/Footer.tsx';
 
 function App() {
   // schools
@@ -120,6 +121,7 @@ function App() {
         setCenterTypes={handleCenterTypeChange}
       />
       <Results schools={schools} />
+      <Footer />
     </>
   )
 }
