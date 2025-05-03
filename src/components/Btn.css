@@ -10,11 +10,6 @@
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     color: var(--primary-color);
 
-    &:hover {
-        background-color: var(--secondary-color);
-        border: 1px solid var(--secondary-color);
-        color: var(--white-color);
-    } 
     &:focus {
         outline: none;
     }
@@ -23,11 +18,19 @@
         background-color: var(--primary-color);
         color: var(--white-color);
         border: 1px solid var(--primary-color);
+    }
+}
 
-        &:hover {
-            background-color: var(--secondary-color);
-            border: 1px solid var(--secondary-color);
-            color: var(--white-color);
-        }
+@media (hover: hover) {
+    .btn:hover {
+        background-color: var(--secondary-color);
+        border: 1px solid var(--secondary-color);
+        color: var(--white-color);
+    }
+
+    .btn.selected:hover {
+        background-color: var(--secondary-color);
+        border: 1px solid var(--secondary-color);
+        color: var(--white-color);
     }
 }
