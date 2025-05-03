@@ -45,13 +45,11 @@ export function CardSchool({ school }: { school: School }) {
                         <img src={Phone} alt="Phone" />
                         <p>{school.telefono}</p>
                     </div>
-                )}
-                {school.jornada_continua && (
-                    <div className="schedule">
-                        <img src={Schedule} alt="Schedule" />
-                        <p>{school.horario}</p>
-                    </div>
-                )}
+                )}                
+                <div className="schedule">
+                    <img src={Schedule} alt="Schedule" />
+                    <p>{school.horario}</p>
+                </div>                
             </div>
             <div className="card-school-footer">
                 {school.telefono && school.telefono.toString().trim() !== '' && (
