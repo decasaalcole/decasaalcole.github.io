@@ -1,8 +1,8 @@
 import './Results.css';
 import { School } from '../types/types';
-import { CardSchool } from './CardSchool';
+import { CardSchool } from './card/CardSchool';
 import noResults from '../assets/icons/no_results.svg';
-import { DownloadBtn } from './DownloadBtn';
+import { DownloadBtn } from './btns/DownloadBtn';
 
 export function Results({ schools }: { schools: School[] }) {
     return (
@@ -17,8 +17,8 @@ export function Results({ schools }: { schools: School[] }) {
                 </div>
             ) : (
                 
-                schools.map((school) => (
-                    <CardSchool key={school.Codigo} school={school} />
+                schools.slice(0, 50).map((school) => (
+                    <CardSchool key={school.codigo} school={school} />
                 ))
             )}
             {schools.length > 0 && (

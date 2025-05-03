@@ -1,4 +1,4 @@
-import { BtnProps } from "../types/types";
+import { BtnProps } from "../../types/types";
 import './Btn.css';
 export function Btn({ text, value, selected, setSelected }: BtnProps) {
     return (

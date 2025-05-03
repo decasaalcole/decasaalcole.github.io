@@ -22,16 +22,54 @@
         justify-content: space-between;
         width: 100%;
         
-        .code {
-            font-size: 14px;
-            font-weight: bold;
-            color: var(--secondary-color);
-            margin: 0;
-            background-color: var(--light-gray-color);
-            padding: 3px 10px;
-            border-radius: 5px;
 
 
+        .code-regimen {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+
+            .code {
+                font-size: 14px;
+                font-weight: bold;
+                color: var(--secondary-color);
+                margin: 0;
+                background-color: var(--light-gray-color);
+                padding: 3px 10px;
+                border-radius: 5px;    
+            }
+
+            .regimen {
+                font-size: 14px;
+                font-weight: bold;
+                color: var(--primary-color);
+                margin: 0;
+                background-color: var(--light-gray-color);
+                padding: 3px 10px;
+                border-radius: 5px;
+            }
+
+            .cra {
+                font-size: 14px;
+                font-weight: bold;
+                color: var(--green-color);
+                margin: 0;
+                background-color: var(--light-gray-color);
+                padding: 3px 10px;
+                border-radius: 5px;
+            }
+
+            .cae {
+                font-size: 14px;
+                font-weight: bold;
+                color: var(--red-color);
+                margin: 0;
+                background-color: var(--light-gray-color);
+                padding: 3px 10px;
+                border-radius: 5px;
+            }
         }
 
         .distance {

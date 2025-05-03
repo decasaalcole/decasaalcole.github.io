@@ -3,8 +3,11 @@ import { Finder } from './components/Finder.tsx'
 import { Results } from './components/Results.tsx'
 import { useEffect, useState } from 'react';
 import { SchoolRegimen, SchoolType, School, SchoolDayType, Province } from './types/types.ts';
-import rawSchools from './assets/data/schools.json';
-import { filterSchoolsByDayType, filterSchoolsByType, filterSchoolsByProvince, filterSchoolsByRegimen, filterSchoolsByZipCode } from './helpers/school.helper.ts';
+import baseSchools from './assets/data/schools_base.json';
+import infoSchools from './assets/data/schools_info.json';
+import craSchools from './assets/data/schools_cra.json';
+import caeSchools from './assets/data/schools_cae.json';
+import { filterSchools, mergeSchools } from './helpers/school.helper.ts';
 
 function App() {
   const [zipCode, setZipCode] = useState(46113);
@@ -14,19 +17,22 @@ function App() {
   const [dayTypes, setDayTypes] = useState([SchoolDayType.Continue, SchoolDayType.Splitted]);
   const [provinces, setProvinces] = useState([Province.Castellon, Province.Valencia, Province.Alicante]);
 
+  const [rawSchools, setRawSchools] = useState<School[]>([]);
+
+  // Prepare schools data
   useEffect(() => {
-    const filteredSchoolsByZipCode = filterSchoolsByZipCode(rawSchools as School[], zipCode);
-    console.log('1. filteredSchoolsByZipCode', filteredSchoolsByZipCode);
-    const filteredSchoolsByRegimen = filterSchoolsByRegimen(filteredSchoolsByZipCode, regimens);
-    console.log('2. filteredSchoolsByRegimen', filteredSchoolsByRegimen);
-    const filteredSchoolsByType = filterSchoolsByType(filteredSchoolsByRegimen, types);
-    console.log('3. filteredSchoolsByType', filteredSchoolsByType);
-    const filteredSchoolsByDayType = filterSchoolsByDayType(filteredSchoolsByType, dayTypes);
-    console.log('4. filteredSchoolsByDayType', filteredSchoolsByDayType);
-    const filteredSchoolsByProvince = filterSchoolsByProvince(filteredSchoolsByDayType, provinces);
-    console.log('5. filteredSchoolsByProvince', filteredSchoolsByProvince);
-    setSchools(filteredSchoolsByProvince);
-  }, [regimens, zipCode, types, dayTypes, provinces]);
+    const mergedSchools = mergeSchools(baseSchools, infoSchools, craSchools, caeSchools);
+    setRawSchools(mergedSchools);
+  }, []);
+
+  // Filter schools with debounce of 2 seconds
+  useEffect(() => {
+    const filterData = setTimeout(() => {
+      const filteredSchools = filterSchools(rawSchools, regimens, types, dayTypes, provinces);
+      setSchools(filteredSchools);
+    }, 2000);
+    return () => clearTimeout(filterData);
+  }, [rawSchools, regimens, zipCode, types, dayTypes, provinces]);
 
   const handleRegimenChange = (value: SchoolRegimen) => {
     console.log('value', value);

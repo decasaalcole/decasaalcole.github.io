@@ -5,7 +5,7 @@ import Counter3 from '../assets/icons/counter_3.svg';
 import Counter4 from '../assets/icons/counter_4.svg';
 import Counter5 from '../assets/icons/counter_5.svg';
 import { FinderProps, SchoolRegimen, SchoolType, SchoolDayType, Province } from '../types/types';
-import { Btn } from './Btn';
+import { Btn } from './btns/Btn';
 export function Finder({ zipCode, setZipCode, regimens, setRegimens, types, setTypes, dayTypes, setDayTypes, provinces, setProvinces }: FinderProps) {
 
     const handleZipCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {

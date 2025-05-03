@@ -1,4 +1,4 @@
-import { CardBtnProps } from "../types/types";
+import { CardBtnProps } from "../../types/types";
 import './CardBtn.css';
 export function CardBtn({ text, action }: CardBtnProps) {
     return (

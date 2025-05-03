@@ -21,9 +21,9 @@ export enum SchoolDayType {
 }
 
 export enum Province {
-    Castellon = 'cas',
-    Valencia = 'val',
-    Alicante = 'ala',
+    Castellon = 'Castelló',
+    Valencia = 'València',
+    Alicante = 'Alacant',
 }
 
 export interface FinderProps {
@@ -51,27 +51,39 @@ export interface CardBtnProps {
     action: () => void;
 }
 
+export interface SchoolLevel {
+    nivel: string;
+    unidades_autorizadas: number;
+    puestos_autorizados: number;
+    unidades_activas: number;
+    puestos_activos: number;
+}
+
 export interface School {
-    Codigo: number;
-    Denominacion_Generica_ES: string;
-    Denominacion_Generica_VAL: string;
-    Denominacion_Especifica: string;
-    Denominacion: string;
-    Regimen: string;
-    Tipo_Via: string;
-    Direccion: string;
-    Num: string;
-    Codigo_postal: number;
-    Localidad: string;
-    Provincia: string;
-    Telefono: number;
-    Fax: string;
-    COD_EDIFICACION: number;
+    codigo: string;   
+    denGenEs: string;
+    denGenVal: string;
+    denEspec: string;
+    denominacion: string;
+    regimen: string;
+    direccion: string;
+    localidad: string;
+    comarca: string;
+    provincia: string;
+    cp: number;
+    telefono: number;
+    fax: string;
+    cif: string;
     long: string;
     lat: string;
-    Titularidad: string;
-    CIF: string;
-    Comarca: string;
+    instalaciones: string[];
+    horario: string[];
+    informacion_adicional: string[];
+    niveles_autorizados: SchoolLevel[];
+    dist: number;
+    time: number;
+    cra: boolean;
+    cae: boolean;
 }
 
 export interface RawTime {
