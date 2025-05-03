@@ -70,7 +70,7 @@ export function prepareSchools(baseSchools: any[], infoSchools: any[], craSchool
             return codigo === baseSchool.Codigo.toString();
         });
         const craSchool = craSchools.includes(baseSchool.Codigo);
-        const caeSchool = infoSchool?.informacion_adicional ? infoSchool.informacion_adicional.find(info => info.includes('Centro Singular')) : false;
+        const caeSchool = infoSchool?.informacion_adicional ? infoSchool.informacion_adicional.find((info: string) => info.includes('Centro Singular')) : false;
         return {
             codigo: baseSchool.Codigo,
             denGenEs: baseSchool.Denominacion_Generica_ES,
