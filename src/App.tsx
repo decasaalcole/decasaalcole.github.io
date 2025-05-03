@@ -17,7 +17,7 @@ function App() {
   const [zipCode, setZipCode] = useState(46113);
   const [regimenTypes, setRegimenTypes] = useState([SchoolRegimenType.Public]);
   const [educationTypes, setEducationTypes] = useState([SchoolEducationType.Infantil]);
-  const [centerTypes, setCenterTypes] = useState([]);
+  const [centerTypes, setCenterTypes] = useState([] as SchoolCenterType[]);
   const [dayTypes, setDayTypes] = useState([SchoolDayType.Continue, SchoolDayType.Splitted]);
   const [provinces, setProvinces] = useState([Province.Castellon, Province.Valencia, Province.Alicante]);
 
