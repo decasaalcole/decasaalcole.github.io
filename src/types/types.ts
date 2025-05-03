@@ -1,18 +1,22 @@
-export enum SchoolRegimen {
+export enum SchoolRegimenType {
     Public = 'Pub',
     Private = 'Priv',
     PrivateConc = 'PrivConc',
 }
 
-export enum SchoolType {
+export enum SchoolEducationType {
     Infantil = 'EI',
     Primaria = 'EP',
     Especial = 'ESP',
-    CRA = 'CRA',
     ESO = 'SEC',
     Bachillerato = 'BACH',
     FP = 'FP',
     Adultos = 'ADU',
+}
+
+export enum SchoolCenterType {
+    CRA = 'CRA',
+    CAES = 'CAES',
 }
 
 export enum SchoolDayType {
@@ -29,19 +33,21 @@ export enum Province {
 export interface FinderProps {
     zipCode: number;
     setZipCode: (zipCode: number) => void;
-    regimens: SchoolRegimen[];
-    setRegimens: any;
-    types: SchoolType[];
-    setTypes: any;
+    regimenTypes: SchoolRegimenType[];
+    setRegimenTypes: any;
+    educationTypes: SchoolEducationType[];
+    setEducationTypes: any;
     dayTypes: SchoolDayType[];
     setDayTypes: any;
     provinces: Province[];
     setProvinces: any;
+    centerTypes: SchoolCenterType[];
+    setCenterTypes: any;
 }
 
 export interface BtnProps {
     text: string;
-    value: SchoolRegimen | SchoolType | SchoolDayType | Province;
+    value: SchoolRegimenType | SchoolEducationType | SchoolDayType | Province | SchoolCenterType    ;
     selected: boolean;
     setSelected: any;
 }
@@ -83,7 +89,7 @@ export interface School {
     dist: number;
     time: number;
     cra: boolean;
-    cae: boolean;
+    caes: boolean;
 }
 
 export interface RawTime {

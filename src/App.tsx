@@ -2,58 +2,62 @@ import { Header } from './components/Header.tsx'
 import { Finder } from './components/Finder.tsx'
 import { Results } from './components/Results.tsx'
 import { useEffect, useState } from 'react';
-import { SchoolRegimen, SchoolType, School, SchoolDayType, Province } from './types/types.ts';
+import { SchoolRegimenType, SchoolEducationType, School, SchoolDayType, SchoolCenterType, Province } from './types/types.ts';
 import baseSchools from './assets/data/schools_base.json';
 import infoSchools from './assets/data/schools_info.json';
 import craSchools from './assets/data/schools_cra.json';
-import caeSchools from './assets/data/schools_cae.json';
-import { filterSchools, mergeSchools } from './helpers/school.helper.ts';
+import { filterSchools, prepareSchools } from './helpers/school.helper.ts';
 
 function App() {
-  const [zipCode, setZipCode] = useState(46113);
-  const [regimens, setRegimens] = useState([SchoolRegimen.Public]);
-  const [types, setTypes] = useState([SchoolType.Infantil]);
+  // schools
+  const [rawSchools, setRawSchools] = useState<School[]>([]);
   const [schools, setSchools] = useState<School[]>([]);
+
+  // filters
+  const [zipCode, setZipCode] = useState(46113);
+  const [regimenTypes, setRegimenTypes] = useState([SchoolRegimenType.Public]);
+  const [educationTypes, setEducationTypes] = useState([SchoolEducationType.Infantil]);
+  const [centerTypes, setCenterTypes] = useState([]);
   const [dayTypes, setDayTypes] = useState([SchoolDayType.Continue, SchoolDayType.Splitted]);
   const [provinces, setProvinces] = useState([Province.Castellon, Province.Valencia, Province.Alicante]);
 
-  const [rawSchools, setRawSchools] = useState<School[]>([]);
+  
 
   // Prepare schools data
   useEffect(() => {
-    const mergedSchools = mergeSchools(baseSchools, infoSchools, craSchools, caeSchools);
-    setRawSchools(mergedSchools);
+    const schools = prepareSchools(baseSchools, infoSchools, craSchools);
+    setRawSchools(schools);
   }, []);
 
   // Filter schools with debounce of 2 seconds
   useEffect(() => {
     const filterData = setTimeout(() => {
-      const filteredSchools = filterSchools(rawSchools, regimens, types, dayTypes, provinces);
+      const filteredSchools = filterSchools(rawSchools, regimenTypes, educationTypes, dayTypes, provinces, centerTypes);
       setSchools(filteredSchools);
     }, 2000);
     return () => clearTimeout(filterData);
-  }, [rawSchools, regimens, zipCode, types, dayTypes, provinces]);
+  }, [rawSchools, regimenTypes, zipCode, educationTypes, dayTypes, provinces, centerTypes]);
 
-  const handleRegimenChange = (value: SchoolRegimen) => {
+  const handleRegimenTypeChange = (value: SchoolRegimenType) => {
     console.log('value', value);
-    if (regimens.includes(value)) {
-      setRegimens(prev => prev.filter(regimen => regimen !== value));
+    if (regimenTypes.includes(value)) {
+      setRegimenTypes(prev => prev.filter(regimen => regimen !== value));
     } else {
-      setRegimens(prev => [...prev, value]);
+      setRegimenTypes(prev => [...prev, value]);
     }
-    if (regimens.length === 0) {
-      setRegimens([SchoolRegimen.Public, SchoolRegimen.Private, SchoolRegimen.PrivateConc]);
+    if (regimenTypes.length === 0) {
+      setRegimenTypes([SchoolRegimenType.Public, SchoolRegimenType.Private, SchoolRegimenType.PrivateConc]);
     }
   }
 
-  const handleTypeChange = (value: SchoolType) => {
-    if (types.includes(value)) {
-      setTypes(prev => prev.filter(type => type !== value));
+  const handleEducationTypeChange = (value: SchoolEducationType) => {
+    if (educationTypes.includes(value)) {
+      setEducationTypes(prev => prev.filter(type => type !== value));
     } else {
-      setTypes(prev => [...prev, value]);
+      setEducationTypes(prev => [...prev, value]);
     }
-    if (types.length === 0) {
-      setTypes([SchoolType.Primaria]);
+    if (educationTypes.length === 0) {
+      setEducationTypes([SchoolEducationType.Primaria]);
     }
   }
 
@@ -68,6 +72,14 @@ function App() {
     }
   }
 
+  const handleCenterTypeChange = (value: SchoolCenterType) => {
+    if (centerTypes.includes(value)) {
+      setCenterTypes(prev => prev.filter(center => center !== value));
+    } else {
+      setCenterTypes(prev => [...prev, value]);
+    }
+  }
+
   const handleProvinceChange = (value: Province) => {
     if (provinces.includes(value)) {
       setProvinces(prev => prev.filter(prov => prov !== value));
@@ -76,11 +88,11 @@ function App() {
     }
   }
 
-  if (regimens.length === 0) {
-    setRegimens([SchoolRegimen.Public, SchoolRegimen.Private, SchoolRegimen.PrivateConc]);
+  if (regimenTypes.length === 0) {
+    setRegimenTypes([SchoolRegimenType.Public, SchoolRegimenType.Private, SchoolRegimenType.PrivateConc]);
   }
-  if (types.length === 0) {
-    setTypes([SchoolType.Primaria, SchoolType.Infantil, SchoolType.Especial, SchoolType.ESO, SchoolType.Bachillerato, SchoolType.FP, SchoolType.Adultos, SchoolType.CRA]);
+  if (educationTypes.length === 0) {
+    setEducationTypes([SchoolEducationType.Primaria, SchoolEducationType.Infantil, SchoolEducationType.Especial, SchoolEducationType.ESO, SchoolEducationType.Bachillerato, SchoolEducationType.FP, SchoolEducationType.Adultos]);
   }
 
   if (dayTypes.length === 0) {
@@ -96,14 +108,16 @@ function App() {
       <Finder 
         zipCode={zipCode} 
         setZipCode={setZipCode} 
-        regimens={regimens} 
-        setRegimens={handleRegimenChange} 
-        types={types} 
-        setTypes={handleTypeChange} 
+        regimenTypes={regimenTypes} 
+        setRegimenTypes={handleRegimenTypeChange} 
+        educationTypes={educationTypes} 
+        setEducationTypes={handleEducationTypeChange} 
         dayTypes={dayTypes}
         setDayTypes={handleDayTypesChange}
         provinces={provinces}
         setProvinces={handleProvinceChange}
+        centerTypes={centerTypes}
+        setCenterTypes={handleCenterTypeChange}
       />
       <Results schools={schools} />
     </>

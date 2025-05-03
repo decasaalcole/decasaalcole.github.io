@@ -25,7 +25,7 @@ export function CardSchool({ school }: { school: School }) {
                     <p className="code">{school.codigo}</p>
                     <p className="regimen">{school.regimen === 'PrivConc' ? 'Conc' : school.regimen}</p>
                     {school.cra && <p className="cra">CRA</p>}
-                    {school.cae && <p className="cae">CAE</p>}
+                    {school.caes && <p className="cae">CAE</p>}
                 </div>                
                 <div className="distance">
                     <p className="time">20 min</p>
