@@ -40,7 +40,6 @@ function App() {
   }, [rawSchools, regimenTypes, zipCode, educationTypes, dayTypes, provinces, centerTypes]);
 
   const handleRegimenTypeChange = (value: SchoolRegimenType) => {
-    console.log('value', value);
     if (regimenTypes.includes(value)) {
       setRegimenTypes(prev => prev.filter(regimen => regimen !== value));
     } else {

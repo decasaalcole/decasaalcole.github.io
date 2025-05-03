@@ -14,6 +14,18 @@ export enum SchoolEducationType {
     Adultos = 'ADU',
 }
 
+export enum SchoolEducationLevel {
+    EI1 = 'EDUCACIÓN INFANTIL PRIMER CICLO',
+    EI2 = 'EDUCACIÓN INFANTIL SEGUNDO CICLO',
+    EP = 'EDUCACIÓN PRIMARIA',
+    ESP = 'EDUCACIÓN ESPECIAL',
+    ESO = 'EDUCACIÓN SECUNDARIA',
+    BACH = 'BACHILLERATO',
+    CICLOS = 'CICLOS FORMATIVOS',
+    FP = 'EDUCACIÓN DE FORMACIÓN PROFESIONAL',
+    ADU = 'EDUCACIÓN DE ADULTOS',
+}
+
 export enum SchoolCenterType {
     CRA = 'CRA',
     CAES = 'CAES',
@@ -91,6 +103,7 @@ export interface School {
     cra: boolean;
     caes: boolean;
     jornada_continua: boolean;
+    niveles: SchoolEducationType[];
 }
 
 export interface RawTime {
