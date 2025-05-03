@@ -27,7 +27,7 @@ export function Finder({ zipCode, setZipCode, regimens, setRegimens, types, setT
             <div className="step">
                 <div className="title">
                 <img src={Counter2} alt="" />
-                <span>Selecciona el régimen del centro</span>
+                <span>Selecciona los régimenes de los centros</span>
                 </div>
                 <div className="btns">
                     <Btn text="Público" value={SchoolRegimen.Public} selected={regimens.includes(SchoolRegimen.Public)} setSelected={setRegimens}/>
@@ -38,7 +38,7 @@ export function Finder({ zipCode, setZipCode, regimens, setRegimens, types, setT
             <div className="step">
                 <div className="title">
                 <img src={Counter3} alt="" />
-                <span>Selecciona el tipo del centro</span>
+                <span>Selecciona los tipos de los centros</span>
                 </div>
                 <div className="btns">
                     <Btn text="Infantil" value={SchoolType.Infantil} selected={types.includes(SchoolType.Infantil)} setSelected={setTypes   }/>
@@ -56,7 +56,7 @@ export function Finder({ zipCode, setZipCode, regimens, setRegimens, types, setT
             <div className="step">
                 <div className="title">
                 <img src={Counter4} alt="" />
-                <span>Selecciona el tipo de jornada </span>
+                <span>Selecciona los tipos de jornada </span>
                 </div>
                 <div className="btns">
                     <Btn text="Continua" value={SchoolDayType.Continue} selected={dayTypes.includes(SchoolDayType.Continue)} setSelected={setDayTypes}/>
@@ -66,7 +66,7 @@ export function Finder({ zipCode, setZipCode, regimens, setRegimens, types, setT
             <div className="step">
                 <div className="title">
                 <img src={Counter5} alt="" />
-                <span>Selecciona la provincia</span>
+                <span>Selecciona las provincias</span>
                 </div>
                 <div className="btns">
                     <Btn text="Castellón" value={Province.Castellon} selected={provinces.includes(Province.Castellon)} setSelected={setProvinces}/>
