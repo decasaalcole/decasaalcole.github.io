@@ -4,7 +4,7 @@ export function DownloadBtn() {
     return (
         <button onClick={() => {}} className="download-btn">
             <img src={downloadIcon} alt="Download XLSX" />
-            <p>Download XLSX</p>
+            <p>Descargar XLSX</p>
         </button>
     )
 }

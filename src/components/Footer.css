@@ -1,0 +1,26 @@
+.footer {
+    background: var(--white-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    padding: 10px;
+
+    .footer_body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        gap: 20px;
+
+        p {
+            font-size: 15px;
+            margin-top: 0.2em;
+            margin-bottom: 0.2em;
+            text-align: center;
+        }
+    }
+
+
+
+}
