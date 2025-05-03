@@ -90,6 +90,7 @@ export interface School {
     time: number;
     cra: boolean;
     caes: boolean;
+    jornada_continua: boolean;
 }
 
 export interface RawTime {

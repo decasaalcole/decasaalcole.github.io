@@ -41,10 +41,26 @@ function filterSchoolsByCenterType(schools: School[], centerTypes: SchoolCenterT
 }
 
 function filterSchoolsByDayType(schools: School[], dayType: SchoolDayType[]): School[] {
-    console.log('filterSchoolsByDayType | types', dayType);
-    return schools
+    if (dayType.length === Object.keys(SchoolDayType).length) {
+        return schools;
+    }
+    
+    return schools.filter((school: School) => {
+        return dayType.some(type => {
+            if (type === SchoolDayType.Continue) {
+                return school.jornada_continua === true;
+            }
+            if (type === SchoolDayType.Splitted) {
+                return school.jornada_continua === false;
+            }
+            return false;
+        });
+    });
 }
 
+function hasJornadaContinua(school: any): boolean {
+   return school.informacion_adicional ? school.informacion_adicional.includes('Jornada escolar modificada') : false;
+}
 
 
 export function filterSchools(schools: School[], regimenTypes: SchoolRegimenType[], educationTypes: SchoolEducationType[], dayTypes: SchoolDayType[], province: Province[], centerTypes: SchoolCenterType[]): School[] {
@@ -57,8 +73,10 @@ export function filterSchools(schools: School[], regimenTypes: SchoolRegimenType
 }
 
 export function buildAddress(school: School) {
-    return `${school.direccion.trim()}, ${school.cp} ${school.localidad}, ${school.provincia}`;
+    return `${school.direccion.trim()}, ${school.cp} ${school.localidad}`;
 }
+
+
 
 export function prepareSchools(baseSchools: any[], infoSchools: any[], craSchools: number[]): School[] {
     return baseSchools.map(baseSchool => {
@@ -71,6 +89,7 @@ export function prepareSchools(baseSchools: any[], infoSchools: any[], craSchool
         });
         const craSchool = craSchools.includes(baseSchool.Codigo);
         const caeSchool = infoSchool?.informacion_adicional ? infoSchool.informacion_adicional.find((info: string) => info.includes('Centro Singular')) : false;
+        const jornadaContinua = hasJornadaContinua(infoSchool);
         return {
             codigo: baseSchool.Codigo,
             denGenEs: baseSchool.Denominacion_Generica_ES,
@@ -89,13 +108,14 @@ export function prepareSchools(baseSchools: any[], infoSchools: any[], craSchool
             lat: baseSchool.lat,
             cif: baseSchool.CIF,
             instalaciones: infoSchool?.instalaciones || [],
-            horario: infoSchool?.horario || [],
+            horario: (infoSchool?.horario?.filter((h: string) => !h.includes('JORNADA')) || []).join(' | '),
             informacion_adicional: infoSchool?.informacion_adicional || [],
             niveles_autorizados: infoSchool?.niveles_autorizados || [],
             dist: 0,
             time: 0,
             cra: craSchool,
             caes: caeSchool,
+            jornada_continua: jornadaContinua
         };
     });
 }

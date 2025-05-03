@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     min-height: 200px;
-    background-color: var(--ultra-light-gray-color);
+    background-color: var(--light-gray-color);
     border-radius: 5px;
     padding: 4px;
     overflow-x: hidden;

@@ -2,6 +2,7 @@ import { buildAddress } from "../../helpers/school.helper";
 import { School } from "../../types/types";
 import Home from '../../assets/icons/home.svg';
 import Phone from '../../assets/icons/phone.svg';
+import Schedule from '../../assets/icons/schedule.svg';
 import { CardBtn } from '../btns/CardBtn';
 import './CardSchool.css';
 export function CardSchool({ school }: { school: School }) {
@@ -25,7 +26,7 @@ export function CardSchool({ school }: { school: School }) {
                     <p className="code">{school.codigo}</p>
                     <p className="regimen">{school.regimen === 'PrivConc' ? 'Conc' : school.regimen}</p>
                     {school.cra && <p className="cra">CRA</p>}
-                    {school.caes && <p className="cae">CAE</p>}
+                    {school.caes && <p className="cae">CAES</p>}
                 </div>                
                 <div className="distance">
                     <p className="time">20 min</p>
@@ -43,6 +44,12 @@ export function CardSchool({ school }: { school: School }) {
                     <div className="phone">
                         <img src={Phone} alt="Phone" />
                         <p>{school.telefono}</p>
+                    </div>
+                )}
+                {school.jornada_continua && (
+                    <div className="schedule">
+                        <img src={Schedule} alt="Schedule" />
+                        <p>{school.horario}</p>
                     </div>
                 )}
             </div>
