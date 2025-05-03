@@ -1,8 +1,9 @@
 import { buildAddress } from "../../helpers/school.helper";
-import { School } from "../../types/types";
+import { School, SchoolLevel } from "../../types/types";
 import Home from '../../assets/icons/home.svg';
 import Phone from '../../assets/icons/phone.svg';
 import Schedule from '../../assets/icons/schedule.svg';
+import Education from '../../assets/icons/education.svg';
 import { CardBtn } from '../btns/CardBtn';
 import './CardSchool.css';
 export function CardSchool({ school }: { school: School }) {
@@ -49,6 +50,14 @@ export function CardSchool({ school }: { school: School }) {
                 <div className="schedule">
                     <img src={Schedule} alt="Schedule" />
                     <p>{school.horario}</p>
+                </div> 
+                <div className="education">
+                    <img src={Education} alt="Education" />
+                    <div className="education-levels">
+                        {school.niveles_autorizados.map((nivel: SchoolLevel) => (
+                            <p key={nivel.nivel}>{nivel.nivel}</p>
+                        ))}
+                    </div>
                 </div>                
             </div>
             <div className="card-school-footer">
