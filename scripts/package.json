@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prepareTimesFile": "npx ts-node ./src/prepareTimesFile.ts",
+    "prepareTimesFile2025": "npx ts-node ./src/prepareTimesFile2025.ts",
     "prepareSchoolsFile": "npx ts-node ./src/prepareSchoolsFile.ts"
   },
   "author": "",
