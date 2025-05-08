@@ -6,7 +6,8 @@ import { SchoolRegimenType, SchoolEducationType, School, SchoolDayType, SchoolCe
 import baseSchools from './assets/data/schools_base.json';
 import infoSchools from './assets/data/schools_info.json';
 import craSchools from './assets/data/schools_cra.json';
-import { filterSchools, prepareSchools } from './helpers/school.helper.ts';
+import times from './assets/data/times.json';
+import { filterSchools, prepareSchools, sortSchoolsByZipCodeTime, getZipCodeTimes } from './helpers/school.helper.ts';
 import { Footer } from './components/Footer.tsx';
 
 function App() {
@@ -33,8 +34,16 @@ function App() {
   // Filter schools with debounce of 2 seconds
   useEffect(() => {
     const filterData = setTimeout(() => {
-      const filteredSchools = filterSchools(rawSchools, regimenTypes, educationTypes, dayTypes, provinces, centerTypes);
-      setSchools(filteredSchools);
+      let schools: School[] = []
+      if(zipCode.toString().length > 3 && zipCode.toString().length < 6) {
+        const filteredSchools = filterSchools(rawSchools, regimenTypes, educationTypes, dayTypes, provinces, centerTypes);       
+        const zipCodeTimes = getZipCodeTimes(times as any, zipCode);        
+        if(zipCodeTimes) {
+          schools = sortSchoolsByZipCodeTime(filteredSchools, zipCodeTimes);          
+        }
+      }
+      setSchools(schools);
+      
     }, 2000);
     return () => clearTimeout(filterData);
   }, [rawSchools, regimenTypes, zipCode, educationTypes, dayTypes, provinces, centerTypes]);

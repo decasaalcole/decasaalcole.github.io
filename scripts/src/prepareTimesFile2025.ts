@@ -51,6 +51,24 @@ async function main() {
   const listCp: number[] = Array.from(new Set([...listCpFrom, ...listCpTo]));
   listCp.sort((a, b) => a - b);
 
+  // duplicate data
+  const preparedData: any[] = [];
+  for (const item of rawJson) {
+    preparedData.push({
+      cp_from: item.cp_from,
+      cp_to: item.cp_to,
+      dist: item.from_dist,
+      time: item.from_time,
+    });
+    preparedData.push({
+      cp_from: item.cp_to,
+      cp_to: item.cp_from,
+      dist: item.to_dist,
+      time: item.to_time,
+    });
+  }
+
+ 
   const insertedAllCps: number[] = [];
   for (const cp of listCp) {
     if (insertedAllCps.includes(cp)) {
@@ -59,13 +77,15 @@ async function main() {
     let insertedCps: number[] = [];
     const result: string[] = [];
     // from
-    const othersCpFrom = rawJson.filter((item) => item.cp_from === cp);
+    const othersCpFrom = preparedData.filter((item) => item.cp_from === cp);
+
+    console.log(`-- ${cp} --`, othersCpFrom);
 
     for (const otherCp of othersCpFrom) {
       if (insertedCps.includes(otherCp.cp_to)) {
         continue;
       }
-      result.push(`${otherCp.cp_to},${otherCp.from_dist},${otherCp.from_time}`);
+      result.push(`${otherCp.cp_to},${otherCp.dist},${otherCp.time}`);
       insertedCps.push(otherCp.cp_from);
     }
 

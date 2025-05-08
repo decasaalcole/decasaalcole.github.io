@@ -4,6 +4,7 @@ import Home from '../../assets/icons/home.svg';
 import Phone from '../../assets/icons/phone.svg';
 import Schedule from '../../assets/icons/schedule.svg';
 import Education from '../../assets/icons/education.svg';
+import Car from '../../assets/icons/car.svg';
 import { CardBtn } from '../btns/CardBtn';
 import './CardSchool.css';
 export function CardSchool({ school }: { school: School }) {
@@ -30,8 +31,11 @@ export function CardSchool({ school }: { school: School }) {
                     {school.caes && <p className="cae">CAES</p>}
                 </div>                
                 <div className="distance">
-                    <p className="time">20 min</p>
-                    <p className="km">1 km</p>
+                    <div className="car">
+                        <img src={Car} alt="Car" />
+                    </div>
+                    <p className="time">{school.time === 0 ? '1 min' : `${school.time + 2} min`}</p>
+                    <p className="km">{school.dist === 0 ? 'En tu CP' : `${school.dist} km`}</p>
                 </div>
             </div>
             <div className="card-school-body">

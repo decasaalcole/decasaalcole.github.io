@@ -110,3 +110,9 @@ export interface RawTime {
     Codigo: number;
     Denominacion: string;
 }
+
+export interface ToZipCodeDistTime {
+    zcTo: number;
+    dist: number;
+    time: number;
+}

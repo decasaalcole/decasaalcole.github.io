@@ -6,6 +6,7 @@ import {
   SchoolCenterType,
   Province,
   SchoolEducationLevel,
+  ToZipCodeDistTime,
 } from "../types/types";
 
 function filterSchoolsByProvince(
@@ -177,6 +178,35 @@ export function filterSchools(
     centerTypes
   );
   return filteredSchoolsByCenterType;
+}
+
+export function getZipCodeTimes(times: any[], cp: number): ToZipCodeDistTime[] | null {
+  const rawZipCodeTimes = times[cp] as string[];
+  if(!rawZipCodeTimes) {
+    return null;
+  } else {
+    return rawZipCodeTimes.map((strTime: string) => {
+      const [zcTo, dist, time] = strTime.split(",");
+      return {
+        zcTo: Number(zcTo),
+        dist: Number(dist),
+        time: Number(time),
+      };
+    });
+  }
+  
+}
+
+export function sortSchoolsByZipCodeTime(schools: School[], times: ToZipCodeDistTime[]): School[] {
+  const sortedSchools = schools.map((school) => {
+    const zc = times.find((time) => time.zcTo === school.cp);
+    if(zc?.dist && zc?.time) {
+      school.dist = zc.dist;
+      school.time = zc.time;
+    }    
+    return school;
+  })
+  return sortedSchools.sort((a, b) => a.dist - b.dist);
 }
 
 export function buildAddress(school: School) {
