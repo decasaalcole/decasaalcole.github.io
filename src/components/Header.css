@@ -19,4 +19,12 @@
         font-size: 14px;
         text-align: center;
     }
+
+    .header_top {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
 }
