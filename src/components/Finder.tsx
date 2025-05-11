@@ -14,8 +14,9 @@ export function Finder({ zipCode, setZipCode, regimenTypes, setRegimenTypes, edu
     }
 
     return (
-        <>
+        <>        
         <section className="finder">
+            <h2>Selección de colegios</h2>
             <div className="step">
                 <div className="title">
                 <img src={Counter1} alt="" />
