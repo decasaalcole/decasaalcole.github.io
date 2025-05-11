@@ -7,6 +7,8 @@ import {
   Province,
   SchoolEducationLevel,
   ToZipCodeDistTime,
+  rawSchool,
+  RawSchoolRegimenType,
 } from "../types/types";
 
 function filterSchoolsByProvince(
@@ -19,7 +21,7 @@ function filterSchoolsByProvince(
     return schools;
   }
   const response = schools.filter((school: School) => {
-    return provinces.includes(school.provincia as Province);
+    return provinces.includes(school.prov as Province);
   });
   console.log("filterSchoolsByProvince | schools OUT", response.length);
   return response;
@@ -35,7 +37,7 @@ function filterSchoolsByRegimen(
     return schools;
   }
   const response = schools.filter((school: School) => {
-    return regimenTypes.includes(school.regimen as SchoolRegimenType);
+    return regimenTypes.includes(school.reg as SchoolRegimenType);
   });
   console.log("filterSchoolsByRegimen | schools OUT", response.length);
   return response;
@@ -52,7 +54,7 @@ function filterSchoolsByEducation(
   }
   const response = schools.filter((school: School) => {
     return educationTypes.some((educationType: SchoolEducationType) => {
-      return school.niveles.includes(educationType);
+      return school.reduNiveles.includes(educationType);
     });
   });
   console.log("filterSchoolsByEducation | schools OUT", response.length);
@@ -95,10 +97,10 @@ function filterSchoolsByDayType(
   const response = schools.filter((school: School) => {
     return dayType.some((type) => {
       if (type === SchoolDayType.Continue) {
-        return school.jornada_continua === true;
+        return school.jornadaContinua === true;
       }
       if (type === SchoolDayType.Splitted) {
-        return school.jornada_continua === false;
+        return school.jornadaContinua === false;
       }
       return false;
     });
@@ -107,17 +109,51 @@ function filterSchoolsByDayType(
   return response;
 }
 
-function hasJornadaContinua(school: any): boolean {
-  return school.informacion_adicional
-    ? school.informacion_adicional.includes("Jornada escolar modificada")
+function hasJornadaContinua(school: rawSchool): boolean {
+  return school.info
+    ? school.info.includes("Jornada escolar modificada")
     : false;
 }
 
-function calculateNiveles(school: any): SchoolEducationType[] {
-  if (!school.niveles_autorizados || school.niveles_autorizados.length === 0) {
+function isCaesSchool(school: rawSchool): boolean {
+  return school.info
+    ? school.info.some((info: string) => info.includes("Centro Singular"))
+    : false;
+}
+
+function simplifyRegimen(school: rawSchool): string {
+  switch (school.reg) {
+    case RawSchoolRegimenType.Public:
+      return SchoolRegimenType.Public;
+    case RawSchoolRegimenType.Private:
+      return SchoolRegimenType.Private;
+    case RawSchoolRegimenType.PrivateConc:
+      return SchoolRegimenType.PrivateConc;
+    default:
+      return SchoolRegimenType.Public;
+  }
+}
+
+function calculateProvince(school: rawSchool): Province {
+  const provinceMap: Record<string, Province> = {
+    "12": Province.Castellon,
+    "46": Province.Valencia,
+    "03": Province.Alicante,
+  };
+
+  const prefix = school.cp.toString().slice(0, 2);
+  return provinceMap[prefix] || Province.Valencia; // Default to Valencia if unknown
+}
+
+function getSchoolSchedule(school: rawSchool): string[] {
+  return school?.horario?.filter((h: string) => !h.includes("JORNADA")) || [];
+}
+
+function calculateNiveles(school: rawSchool): SchoolEducationType[] {
+  if (!school.niveles || school.niveles.length === 0) {
     return [];
   }
-  const levels = school.niveles_autorizados.map((nivel: any) => {
+  const levels = school.niveles.map((nivel: any) => {
     if (
       nivel.nivel === SchoolEducationLevel.EI1 ||
       nivel.nivel === SchoolEducationLevel.EI2
@@ -127,13 +163,19 @@ function calculateNiveles(school: any): SchoolEducationType[] {
       return SchoolEducationType.Primaria;
     } else if (nivel.nivel === SchoolEducationLevel.ESP) {
       return SchoolEducationType.Especial;
-    } else if (nivel.nivel === SchoolEducationLevel.ESO) {
+    } else if (
+      nivel.nivel === SchoolEducationLevel.ESO ||
+      nivel.nivel === SchoolEducationLevel.ESO1
+    ) {
       return SchoolEducationType.ESO;
     } else if (nivel.nivel === SchoolEducationLevel.BACH) {
       return SchoolEducationType.Bachillerato;
     } else if (
       nivel.nivel === SchoolEducationLevel.CICLOS ||
-      nivel.nivel === SchoolEducationLevel.FP
+      nivel.nivel === SchoolEducationLevel.FP ||
+      nivel.nivel === SchoolEducationLevel.MODULOS ||
+      nivel.nivel === SchoolEducationLevel.PROF_INICIAL ||
+      nivel.nivel === SchoolEducationLevel.HOGAR
     ) {
       return SchoolEducationType.FP;
     } else if (nivel.nivel === SchoolEducationLevel.ADU) {
@@ -180,9 +222,12 @@ export function filterSchools(
   return filteredSchoolsByCenterType;
 }
 
-export function getZipCodeTimes(times: any[], cp: number): ToZipCodeDistTime[] | null {
+export function getZipCodeTimes(
+  times: any[],
+  cp: number
+): ToZipCodeDistTime[] | null {
   const rawZipCodeTimes = times[cp] as string[];
-  if(!rawZipCodeTimes) {
+  if (!rawZipCodeTimes) {
     return null;
   } else {
     return rawZipCodeTimes.map((strTime: string) => {
@@ -194,74 +239,64 @@ export function getZipCodeTimes(times: any[], cp: number): ToZipCodeDistTime[] |
       };
     });
   }
-  
 }
 
-export function sortSchoolsByZipCodeTime(schools: School[], times: ToZipCodeDistTime[]): School[] {
-  const sortedSchools = schools.map((school) => {
-    const zc = times.find((time) => time.zcTo === school.cp);
-    if(zc?.dist && zc?.time) {
+export function populateSchoolsByZipCodeWithTimeAndDist(
+  schools: School[],
+  times: ToZipCodeDistTime[],
+  cp: number
+): School[] {
+  const schoolsWithTimesAndDist = schools.map((school) => {
+    const zc = times.find((time) => Number(time.zcTo) === Number(school.cp));
+    if (zc?.dist && zc?.time) {
       school.dist = zc.dist;
       school.time = zc.time;
-    }    
+    }
+    if (school.cp === cp.toString()) {
+      school.dist = 0;
+      school.time = 0;
+    }
     return school;
-  })
-  return sortedSchools.sort((a, b) => a.dist - b.dist);
+  });
+  const filteredSchools = schoolsWithTimesAndDist.filter(
+    (school) => school.time !== -1
+  );
+  return filteredSchools;
+}
+
+export function sortSchoolsByTime(schools: School[]): School[] {
+  return schools.sort((a, b) => a.dist - b.dist);
 }
 
 export function buildAddress(school: School) {
-  return `${school.direccion.trim()}, ${school.cp} ${school.localidad}`;
+  return `${school.dir.trim()}, ${school.cp} ${school.muni}`;
 }
 
 export function prepareSchools(
-  baseSchools: any[],
-  infoSchools: any[],
-  craSchools: number[]
+  rawSchools: rawSchool[],
+  craSchools: string[]
 ): School[] {
-  return baseSchools.map((baseSchool) => {
-    const infoSchool = infoSchools.find((info) => {
-      let codigo = info.código.toString();
-      if (codigo.startsWith("03")) {
-        codigo = codigo.substring(1);
-      }
-      return codigo === baseSchool.Codigo.toString();
-    });
-    const craSchool = craSchools.includes(baseSchool.Codigo);
-    const caeSchool = infoSchool?.informacion_adicional
-      ? infoSchool.informacion_adicional.find((info: string) =>
-          info.includes("Centro Singular")
-        )
-      : false;
-    const jornadaContinua = hasJornadaContinua(infoSchool);
+  const schools = rawSchools.map((rawSchool) => {
+    const cra = craSchools.includes(rawSchool.codigo);
+    const caes = isCaesSchool(rawSchool);
+    const jornadaContinua = hasJornadaContinua(rawSchool);
+    const horario = getSchoolSchedule(rawSchool);
+    const reduNiveles = calculateNiveles(rawSchool);
+    const reg = simplifyRegimen(rawSchool);
+    const prov = calculateProvince(rawSchool);
+
     return {
-      codigo: baseSchool.Codigo,
-      denGenEs: baseSchool.Denominacion_Generica_ES,
-      denGenVal: baseSchool.Denominacion_Generica_VAL,
-      denEspec: baseSchool.Denominacion_Especifica,
-      denominacion: baseSchool.Denominacion,
-      regimen: baseSchool.Regimen,
-      direccion: infoSchool?.dirección || "",
-      localidad: baseSchool.Localidad,
-      comarca: baseSchool.comarca || "",
-      provincia: baseSchool.Provincia,
-      cp: baseSchool.Codigo_postal,
-      telefono: baseSchool.Telefono,
-      fax: baseSchool.Fax,
-      long: baseSchool.long,
-      lat: baseSchool.lat,
-      cif: baseSchool.CIF,
-      instalaciones: infoSchool?.instalaciones || [],
-      horario: (
-        infoSchool?.horario?.filter((h: string) => !h.includes("JORNADA")) || []
-      ).join(" | "),
-      informacion_adicional: infoSchool?.informacion_adicional || [],
-      niveles_autorizados: infoSchool?.niveles_autorizados || [],
-      dist: 0,
-      time: 0,
-      cra: craSchool,
-      caes: caeSchool,
-      jornada_continua: jornadaContinua,
-      niveles: calculateNiveles(infoSchool),
+      ...rawSchool,
+      horario,
+      dist: -1,
+      time: -1,
+      cra,
+      caes,
+      jornadaContinua,
+      reduNiveles,
+      reg,
+      prov,
     };
-  });
+  }) as School[];
+  return schools;
 }

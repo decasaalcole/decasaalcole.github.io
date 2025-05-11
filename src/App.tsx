@@ -2,12 +2,11 @@ import { Header } from './components/Header.tsx'
 import { Finder } from './components/Finder.tsx'
 import { Results } from './components/Results.tsx'
 import { useEffect, useState } from 'react';
-import { SchoolRegimenType, SchoolEducationType, School, SchoolDayType, SchoolCenterType, Province } from './types/types.ts';
-import baseSchools from './assets/data/schools_base.json';
-import infoSchools from './assets/data/schools_info.json';
+import { SchoolRegimenType, SchoolEducationType, School, SchoolDayType, SchoolCenterType, Province, rawSchool } from './types/types.ts';
+import baseSchools from './assets/data/schools.json'
 import craSchools from './assets/data/schools_cra.json';
 import travelTimes from './assets/data/travel_times.json';
-import { filterSchools, prepareSchools, sortSchoolsByZipCodeTime, getZipCodeTimes } from './helpers/school.helper.ts';
+import { filterSchools, prepareSchools, getZipCodeTimes, sortSchoolsByTime, populateSchoolsByZipCodeWithTimeAndDist } from './helpers/school.helper.ts';
 import { Footer } from './components/Footer.tsx';
 
 function App() {
@@ -27,7 +26,7 @@ function App() {
 
   // Prepare schools data
   useEffect(() => {
-    const schools = prepareSchools(baseSchools, infoSchools, craSchools);
+    const schools = prepareSchools(baseSchools as rawSchool[], craSchools as string[]);
     setRawSchools(schools);
   }, []);
 
@@ -37,9 +36,10 @@ function App() {
       let schools: School[] = []
       if(zipCode.toString().length > 3 && zipCode.toString().length < 6) {
         const filteredSchools = filterSchools(rawSchools, regimenTypes, educationTypes, dayTypes, provinces, centerTypes);       
-        const zipCodeTimes = getZipCodeTimes(travelTimes as any, zipCode);        
+        const zipCodeTimes = getZipCodeTimes(travelTimes as any, zipCode);      
         if(zipCodeTimes) {
-          schools = sortSchoolsByZipCodeTime(filteredSchools, zipCodeTimes);          
+          const schoolsWithTimesAndDist = populateSchoolsByZipCodeWithTimeAndDist(filteredSchools, zipCodeTimes, zipCode);
+          schools = sortSchoolsByTime(schoolsWithTimesAndDist);          
         }
       }
       setSchools(schools);

@@ -10,7 +10,7 @@ import './CardSchool.css';
 export function CardSchool({ school }: { school: School }) {
 
     const handleCall = () => {
-        window.open(`tel:${school.telefono}`, '_blank');
+        window.open(`tel:${school.tel}`, '_blank');
     }
 
     const handleMap = () => {
@@ -26,7 +26,7 @@ export function CardSchool({ school }: { school: School }) {
             <div className="card-school-header">
                 <div className="code-regimen">
                     <p className="code">{school.codigo}</p>
-                    <p className="regimen">{school.regimen === 'PrivConc' ? 'Conc' : school.regimen}</p>
+                    <p className="regimen">{school.reg}</p>
                     {school.cra && <p className="cra">CRA</p>}
                     {school.caes && <p className="cae">CAES</p>}
                 </div>                
@@ -34,38 +34,38 @@ export function CardSchool({ school }: { school: School }) {
                     <div className="car">
                         <img src={Car} alt="Car" />
                     </div>
-                    <p className="time">{school.time === 0 ? '1 min' : `${school.time + 2} min`}</p>
+                    <p className="time">{school.time === 0 ? '1 min' : `${school.time + 7} min`}</p>
                     <p className="km">{school.dist === 0 ? 'En tu CP' : `${school.dist} km`}</p>
                 </div>
             </div>
             <div className="card-school-body">
-                <p className="title">{school.denEspec}</p>
+                <p className="title">{school.deno}</p>
                 <p className="subtitle">{school.denGenVal}</p>
                 <div className="address">
                     <img src={Home} alt="Home" />
                     <p>{buildAddress(school)}</p>
                 </div>
-                {school.telefono && school.telefono.toString().trim() !== '' && (
+                {school.tel && school.tel.toString().trim() !== '' && (
                     <div className="phone">
                         <img src={Phone} alt="Phone" />
-                        <p>{school.telefono}</p>
+                        <p>{school.tel}</p>
                     </div>
                 )}                
                 <div className="schedule">
                     <img src={Schedule} alt="Schedule" />
-                    <p>{school.horario}</p>
+                    <p>{school.horario.join(' | ')}</p>
                 </div> 
                 <div className="education">
                     <img src={Education} alt="Education" />
                     <div className="education-levels">
-                        {school.niveles_autorizados.map((nivel: SchoolLevel) => (
+                        {school.niveles.map((nivel: SchoolLevel) => (
                             <p key={nivel.nivel}>{nivel.nivel}</p>
                         ))}
                     </div>
                 </div>                
             </div>
             <div className="card-school-footer">
-                {school.telefono && school.telefono.toString().trim() !== '' && (
+                {school.tel && school.tel.toString().trim() !== '' && (
                     <CardBtn text="Llamar" action={handleCall} />
                 )}
                 <CardBtn text="Mapa" action={handleMap} />

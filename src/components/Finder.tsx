@@ -14,9 +14,10 @@ export function Finder({ zipCode, setZipCode, regimenTypes, setRegimenTypes, edu
     }
 
     return (
-        <>        
+        <>
+        
         <section className="finder">
-            <h2>Selección de colegios</h2>
+            <h2>Selección de centros</h2>
             <div className="step">
                 <div className="title">
                 <img src={Counter1} alt="" />
@@ -82,7 +83,7 @@ export function Finder({ zipCode, setZipCode, regimenTypes, setRegimenTypes, edu
                 </div>
                 <div className="btns">
                     <Btn text="CRA" value={SchoolCenterType.CRA} selected={centerTypes.includes(SchoolCenterType.CRA)} setSelected={setCenterTypes}/>
-                    <Btn text="CAES" value={SchoolCenterType.CAES} selected={centerTypes.includes(SchoolCenterType.CAES)} setSelected={setCenterTypes}/>
+                    <Btn text="Singular" value={SchoolCenterType.CAES} selected={centerTypes.includes(SchoolCenterType.CAES)} setSelected={setCenterTypes}/>
                 </div>
             </div>
 
