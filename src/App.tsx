@@ -6,7 +6,7 @@ import { SchoolRegimenType, SchoolEducationType, School, SchoolDayType, SchoolCe
 import baseSchools from './assets/data/schools_base.json';
 import infoSchools from './assets/data/schools_info.json';
 import craSchools from './assets/data/schools_cra.json';
-import times from './assets/data/times.json';
+import travelTimes from './assets/data/travel_times.json';
 import { filterSchools, prepareSchools, sortSchoolsByZipCodeTime, getZipCodeTimes } from './helpers/school.helper.ts';
 import { Footer } from './components/Footer.tsx';
 
@@ -37,7 +37,7 @@ function App() {
       let schools: School[] = []
       if(zipCode.toString().length > 3 && zipCode.toString().length < 6) {
         const filteredSchools = filterSchools(rawSchools, regimenTypes, educationTypes, dayTypes, provinces, centerTypes);       
-        const zipCodeTimes = getZipCodeTimes(times as any, zipCode);        
+        const zipCodeTimes = getZipCodeTimes(travelTimes as any, zipCode);        
         if(zipCodeTimes) {
           schools = sortSchoolsByZipCodeTime(filteredSchools, zipCodeTimes);          
         }

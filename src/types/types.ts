@@ -78,32 +78,33 @@ export interface SchoolLevel {
 }
 
 export interface School {
-    codigo: string;   
-    denGenEs: string;
-    denGenVal: string;
-    denEspec: string;
-    denominacion: string;
-    regimen: string;
-    direccion: string;
-    localidad: string;
-    comarca: string;
-    provincia: string;
-    cp: number;
-    telefono: number;
-    fax: string;
-    cif: string;
-    long: string;
-    lat: string;
-    instalaciones: string[];
-    horario: string[];
-    informacion_adicional: string[];
-    niveles_autorizados: SchoolLevel[];
-    dist: number;
-    time: number;
-    cra: boolean;
-    caes: boolean;
-    jornada_continua: boolean;
-    niveles: SchoolEducationType[];
+    codigo: string;        // codigo de la escuela
+    denGenEs: string;      // nombre base de la escuela en castellano
+    denGenVal: string;     // nombre base de la escuela en valenciano
+    denEspec: string;      // nombre de la escuela
+    denominacion: string;  // nombre completo de la escuela
+    regimen: string;        // regimen de la escuela (Públic, Privado, Concertado)
+    direccion: string;      // dirección de la escuela
+    localidad: string;      // localidad de la escuela
+    comarca: string;         // comarca de la escuela
+    provincia: string;       // provincia de la escuela
+    cp: number;             // código postal de la escuela
+    telefono: number;        // teléfono de la escuela
+    fax: string;            // fax de la escuela
+    email: string;          // email de la escuela
+    cif: string;            // cif de la escuela
+    long: string;           // longitud de la escuela
+    lat: string;            // latitud de la escuela
+    instalaciones: string[]; // instalaciones de la escuela
+    horario: string[];       // horario de la escuela
+    informacion_adicional: string[]; // información adicional de la escuela
+    niveles_autorizados: SchoolLevel[]; // niveles autorizados de la escuela
+    dist: number;            
+    time: number;            
+    cra: boolean;            
+    caes: boolean;          
+    jornada_continua: boolean; 
+    niveles: SchoolEducationType[]; 
 }
 
 export interface RawTime {
