@@ -34,7 +34,7 @@ export function CardSchool({ school }: { school: School }) {
                     <div className="car">
                         <img src={Car} alt="Car" />
                     </div>
-                    <p className="time">{school.time === 0 ? '1 min' : `${school.time + 7} min`}</p>
+                    <p className="time">{school.time === 0 ? '5 min' : `${school.time + 7} min`}</p>
                     <p className="km">{school.dist === 0 ? 'En tu CP' : `${school.dist} km`}</p>
                 </div>
             </div>
