@@ -14,9 +14,7 @@ export function CardSchool({ school }: { school: School }) {
     }
 
     const handleMap = () => {
-        const longitude = school.long.toString().replace(',', '.');
-        const latitude = school.lat.toString().replace(',', '.');
-        window.open(`https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`, '_blank');
+        window.open(`https://www.google.com/maps/search/?api=1&query=${school.lat},${school.long}`, '_blank');
     }
 
     const handleMoreInfo = () => {
