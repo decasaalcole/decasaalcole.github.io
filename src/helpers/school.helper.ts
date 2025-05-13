@@ -265,7 +265,7 @@ export function populateSchoolsByZipCodeWithTimeAndDist(
 }
 
 export function sortSchoolsByTime(schools: School[]): School[] {
-  return schools.sort((a, b) => a.time - b.time);
+  return schools.sort((a, b) => a.time - b.time).map((school, index) => ({ ...school, num: index + 1 }));
 }
 
 export function buildAddress(school: School) {

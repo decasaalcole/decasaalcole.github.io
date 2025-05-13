@@ -65,9 +65,12 @@ export interface CardBtnProps {
     action: () => void;
 }
 
-
-
-
+export interface PaginationProps {
+    page: number;
+    modifyPage: any;
+    disablePrev: boolean;
+    disableNext: boolean;
+}
 
 export interface RawTime {
     Codigo: number;
@@ -79,9 +82,6 @@ export interface ToZipCodeDistTime {
     dist: number;
     time: number;
 }
-
-
-////////////////////////////
 
 export enum SchoolEducationLevel {
     EI1 = 'EDUCACIÓN INFANTIL PRIMER CICLO',
@@ -141,5 +141,6 @@ export interface School extends rawSchool {
     caes: boolean;          
     jornadaContinua: boolean;  
     reduNiveles: string[];
+    num: number;
 }
 
