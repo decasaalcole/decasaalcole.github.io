@@ -27,7 +27,7 @@ export function Results({ schools }: { schools: School[] }) {
         <>
         <div className="results">            
             <h2>Listado de centros ordenados por tiempo de viaje</h2>
-            <div className="total">{schools.length} centros selecionados</div>
+            <div className="total">{schools.length} centros seleccionados</div>
             
             {schoolsPage.length === 0 ? (
                 <div className="no-results">
