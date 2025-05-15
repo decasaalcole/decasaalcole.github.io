@@ -36,7 +36,7 @@ export function CardSchool({ school }: { school: School }) {
                         <img src={Car} alt="Car" />
                     </div>
                     <div className="time">
-                        <div>{school.time === 0 ? '5' : `${school.time + 7}`}</div>
+                        <div>{school.time === 0 ? '5' : `${school.time}`}</div>
                         <div className="units">min</div>
                     </div>
                     <div className="km">
@@ -47,7 +47,6 @@ export function CardSchool({ school }: { school: School }) {
             </div>
             <div className="card-school-body">
                 <p className="title">{school.deno}</p>
-                <p className="subtitle">{school.denGenVal}</p>
                 <div className="address">
                     <img src={Home} alt="Home" />
                     <p>{buildAddress(school)}</p>

@@ -5,8 +5,11 @@ import Counter3 from '../assets/icons/counter_3.svg';
 import Counter4 from '../assets/icons/counter_4.svg';
 import Counter5 from '../assets/icons/counter_5.svg';
 import Counter6 from '../assets/icons/counter_6.svg';
-import { FinderProps, SchoolRegimenType, SchoolEducationType, SchoolDayType, Province, SchoolCenterType, StepProps } from '../types/types';
+import Counter7 from '../assets/icons/counter_7.svg';
+import { FinderProps, SchoolRegimenType, SchoolEducationType, SchoolDayType, Province, SchoolCenterType, StepProps, FilterType } from '../types/types';
 import { Btn } from './btns/Btn';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 
 
@@ -32,7 +35,13 @@ export function Finder({
     provinces, 
     setProvinces, 
     centerTypes, 
-    setCenterTypes 
+    setCenterTypes,
+    filterType,
+    setFilterType,
+    filterValue,
+    setFilterValue,
+    maxTime,
+    maxDistance
 }: FinderProps) {
 
     const handleZipCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -104,6 +113,20 @@ export function Finder({
                 <div className="btns">
                     <Btn text="C. Rural Agrupado" value={SchoolCenterType.CRA} selected={centerTypes.includes(SchoolCenterType.CRA)} setSelected={setCenterTypes}/>
                     <Btn text="C. Singular" value={SchoolCenterType.CAES} selected={centerTypes.includes(SchoolCenterType.CAES)} setSelected={setCenterTypes}/>
+                </div>
+            </Step>
+            <Step number={7} title="Limita por distancia o tiempo de viaje" counterIcon={Counter7}>
+                <div className="btns">
+                    <Btn text="Distancia" value={FilterType.Distance} selected={filterType === FilterType.Distance} setSelected={setFilterType}/>
+                    <Btn text="Tiempo de viaje" value={FilterType.Time} selected={filterType === FilterType.Time} setSelected={setFilterType}/>                    
+                </div>
+                <div className="slider">
+                    <div className="slider-ctrl">
+                        <Slider min={0} max={filterType === FilterType.Distance ? maxDistance : maxTime} value={filterValue} onChange={setFilterValue} />
+                    </div>
+                    <div className="slider-text">
+                        <span>{filterValue} {filterType === FilterType.Distance ? 'km' : 'min'}</span>
+                    </div>                    
                 </div>
             </Step>
         </section>

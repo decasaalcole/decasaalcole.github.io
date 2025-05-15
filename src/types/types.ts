@@ -21,6 +21,11 @@ export enum SchoolEducationType {
     Adultos = 'ADU',
 }
 
+export enum FilterType {
+    Distance = 'dist',
+    Time = 'time',
+}
+
 export enum SchoolCenterType {
     CRA = 'CRA',
     CAES = 'CAES',
@@ -57,11 +62,17 @@ export interface FinderProps {
     setProvinces: any;
     centerTypes: SchoolCenterType[];
     setCenterTypes: any;
+    filterType: FilterType;
+    setFilterType: any;
+    filterValue: number;
+    setFilterValue: any;
+    maxTime: number;
+    maxDistance: number;
 }
 
 export interface BtnProps {
     text: string;
-    value: SchoolRegimenType | SchoolEducationType | SchoolDayType | Province | SchoolCenterType    ;
+    value: SchoolRegimenType | SchoolEducationType | SchoolDayType | Province | SchoolCenterType | FilterType;
     selected: boolean;
     setSelected: any;
 }

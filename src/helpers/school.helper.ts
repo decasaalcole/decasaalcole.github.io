@@ -9,6 +9,7 @@ import {
   ToZipCodeDistTime,
   rawSchool,
   RawSchoolRegimenType,
+  FilterType,
 } from "../types/types";
 
 function filterSchoolsByProvince(
@@ -247,15 +248,16 @@ export function populateSchoolsByZipCodeWithTimeAndDist(
   times: ToZipCodeDistTime[],
   cp: number
 ): School[] {
+  const OFFSET_TIME = 5;
   const schoolsWithTimesAndDist = schools.map((school) => {
     const zc = times.find((time) => Number(time.zcTo) === Number(school.cp));
     if (zc?.dist && zc?.time) {
       school.dist = zc.dist;
-      school.time = zc.time;
+      school.time = zc.time + OFFSET_TIME;
     }
     if (school.cp === cp.toString()) {
       school.dist = 0;
-      school.time = 0;
+      school.time = 0 + OFFSET_TIME;
     }
     return school;
   });
@@ -267,6 +269,14 @@ export function populateSchoolsByZipCodeWithTimeAndDist(
 
 export function sortSchoolsByTime(schools: School[]): School[] {
   return schools.sort((a, b) => a.time - b.time).map((school, index) => ({ ...school, num: index + 1 }));
+}
+
+export function filterSchoolsByTimeOrDistance(schools: School[], filterType: FilterType, filterValue: number): School[] {
+  if(filterType === FilterType.Distance) {
+    return schools.filter(school => school.dist <= filterValue);
+  } else {
+    return schools.filter(school => school.time <= filterValue);
+  }
 }
 
 export function buildAddress(school: School) {
@@ -300,4 +310,20 @@ export function prepareSchools(
     };
   }) as School[];
   return schools;
+}
+
+export function getMaxTime(codes: ToZipCodeDistTime[] | null): number {
+  if (!codes) {
+    return 300;
+  }
+  const maxTime = codes.map(code => code.time).reduce((max, time) => Math.max(max, time), 0);
+  return Math.ceil(maxTime / 10) * 10;
+}
+
+export function getMaxDistance(codes: ToZipCodeDistTime[] | null): number {
+  if (!codes) {
+    return 250;
+  }
+  const maxDistance = codes.map(code => code.dist).reduce((max, dist) => Math.max(max, dist), 0);
+  return Math.ceil(maxDistance / 10) * 10;
 }

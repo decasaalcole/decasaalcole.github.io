@@ -37,7 +37,7 @@
                 color: var(--white-color);
                 margin: 0;
                 background-color: var(--primary-color);
-                padding: 3px 8px;
+                padding: 3px 10px;
                 border-radius: 0px 10px 10px 0px;
                 margin-left: -15px;
                 padding-left: 5px;
@@ -50,7 +50,7 @@
                 color: var(--secondary-color);
                 margin: 0;
                 background-color: var(--light-gray-color);
-                padding: 3px 8px;
+                padding: 3px 10px;
                 border-radius: 5px;    
             }
 
@@ -67,7 +67,7 @@
             .cra {
                 font-size: 14px;
                 font-weight: bold;
-                color: var(--green-color);
+                color: var(--red-color);
                 margin: 0;
                 background-color: var(--light-gray-color);
                 padding: 3px 8px;
@@ -143,8 +143,10 @@
         align-items: flex-start;
         justify-content: flex-start;
         width: 100%;
-        gap: 10px;
+        gap: 12px;
         margin-left: 5px;
+        margin-top: 5px;
+        margin-right: 5px;
 
         .title {
             font-size: 18px;
@@ -153,18 +155,12 @@
             margin: 0;
         }
 
-        .subtitle {
-            font-size: 14px;
-            color: var(--dark-gray-color);
-            margin: 0;
-        }
-
         .address, .phone, .schedule {
             display: flex;
             align-items: center;
             gap: 7px;
             flex-direction: row;
-            font-size: 14px;
+            font-size: 15px;
             color: var(--dark-gray-color);
             margin: 0;
             justify-content: center;
