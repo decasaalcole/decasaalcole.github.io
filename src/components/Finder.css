@@ -84,6 +84,7 @@
         gap: 10px;
         .slider-ctrl {
           flex: 0.8;
+          .rc-slider{
             .rc-slider.rc-slider-horizontal {
               margin-top: 10px;
 
