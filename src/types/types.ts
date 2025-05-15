@@ -38,6 +38,13 @@ export enum Province {
     Alicante = 'Alacant',
 }
 
+export interface StepProps {
+    number: number;
+    title: string;
+    children: React.ReactNode;
+    counterIcon: string;
+}
+
 export interface FinderProps {
     zipCode: number;
     setZipCode: (zipCode: number) => void;
