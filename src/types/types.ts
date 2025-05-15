@@ -11,7 +11,8 @@ export enum SchoolRegimenType {
 }
 
 export enum SchoolEducationType {
-    Infantil = 'EI',
+    Infantil1 = 'EI1',
+    Infantil2 = 'EI2',
     Primaria = 'EP',
     Especial = 'ESP',
     ESO = 'SEC',
@@ -19,8 +20,6 @@ export enum SchoolEducationType {
     FP = 'FP',
     Adultos = 'ADU',
 }
-
-
 
 export enum SchoolCenterType {
     CRA = 'CRA',

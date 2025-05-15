@@ -78,12 +78,15 @@ export function Finder({
 
             <Step number={4} title="Selecciona los tipos de nivel educativo" counterIcon={Counter4}>
                 <div className="btns">
-                    <Btn text="Infantil" value={SchoolEducationType.Infantil} selected={educationTypes.includes(SchoolEducationType.Infantil)} setSelected={setEducationTypes}/>
-                    <Btn text="Primaria" value={SchoolEducationType.Primaria} selected={educationTypes.includes(SchoolEducationType.Primaria)} setSelected={setEducationTypes}/>
-                    <Btn text="Especial" value={SchoolEducationType.Especial} selected={educationTypes.includes(SchoolEducationType.Especial)} setSelected={setEducationTypes}/>
+                    <Btn text="Infantil 1er ciclo" value={SchoolEducationType.Infantil1} selected={educationTypes.includes(SchoolEducationType.Infantil1)} setSelected={setEducationTypes}/>
+                    <Btn text="Infantil 2º ciclo" value={SchoolEducationType.Infantil2} selected={educationTypes.includes(SchoolEducationType.Infantil2)} setSelected={setEducationTypes}/>                                        
                 </div>
                 <div className="btns">
-                    <Btn text="E.S.O." value={SchoolEducationType.ESO} selected={educationTypes.includes(SchoolEducationType.ESO)} setSelected={setEducationTypes}/>
+                    <Btn text="Primaria" value={SchoolEducationType.Primaria} selected={educationTypes.includes(SchoolEducationType.Primaria)} setSelected={setEducationTypes}/>
+                    <Btn text="Especial" value={SchoolEducationType.Especial} selected={educationTypes.includes(SchoolEducationType.Especial)} setSelected={setEducationTypes}/>
+                    <Btn text="E.S.O." value={SchoolEducationType.ESO} selected={educationTypes.includes(SchoolEducationType.ESO)} setSelected={setEducationTypes}/>                    
+                </div>
+                <div className="btns">
                     <Btn text="Bachillerato" value={SchoolEducationType.Bachillerato} selected={educationTypes.includes(SchoolEducationType.Bachillerato)} setSelected={setEducationTypes}/>
                     <Btn text="FP" value={SchoolEducationType.FP} selected={educationTypes.includes(SchoolEducationType.FP)} setSelected={setEducationTypes}/>
                     <Btn text="Adultos" value={SchoolEducationType.Adultos} selected={educationTypes.includes(SchoolEducationType.Adultos)} setSelected={setEducationTypes}/>
@@ -99,8 +102,8 @@ export function Finder({
 
             <Step number={6} title="Selecciona los tipos de centros" counterIcon={Counter6}>
                 <div className="btns">
-                    <Btn text="CRA" value={SchoolCenterType.CRA} selected={centerTypes.includes(SchoolCenterType.CRA)} setSelected={setCenterTypes}/>
-                    <Btn text="Singular" value={SchoolCenterType.CAES} selected={centerTypes.includes(SchoolCenterType.CAES)} setSelected={setCenterTypes}/>
+                    <Btn text="C. Rural Agrupado" value={SchoolCenterType.CRA} selected={centerTypes.includes(SchoolCenterType.CRA)} setSelected={setCenterTypes}/>
+                    <Btn text="C. Singular" value={SchoolCenterType.CAES} selected={centerTypes.includes(SchoolCenterType.CAES)} setSelected={setCenterTypes}/>
                 </div>
             </Step>
         </section>

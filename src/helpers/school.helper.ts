@@ -155,10 +155,11 @@ function calculateNiveles(school: rawSchool): SchoolEducationType[] {
   }
   const levels = school.niveles.map((nivel: any) => {
     if (
-      nivel.nivel === SchoolEducationLevel.EI1 ||
-      nivel.nivel === SchoolEducationLevel.EI2
+      nivel.nivel === SchoolEducationLevel.EI1
     ) {
-      return SchoolEducationType.Infantil;
+      return SchoolEducationType.Infantil1;
+    } else if (nivel.nivel === SchoolEducationLevel.EI2) {
+      return SchoolEducationType.Infantil2;
     } else if (nivel.nivel === SchoolEducationLevel.EP) {
       return SchoolEducationType.Primaria;
     } else if (nivel.nivel === SchoolEducationLevel.ESP) {
