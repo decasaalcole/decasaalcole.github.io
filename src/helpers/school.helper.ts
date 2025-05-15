@@ -16,15 +16,12 @@ function filterSchoolsByProvince(
   schools: School[],
   provinces: Province[]
 ): School[] {
-  console.log("filterSchoolsByProvince | schools IN", schools.length);
   if (provinces.length === Object.keys(Province).length) {
-    console.log("filterSchoolsByProvince | schools OUT", schools.length);
     return schools;
   }
   const response = schools.filter((school: School) => {
     return provinces.includes(school.prov as Province);
   });
-  console.log("filterSchoolsByProvince | schools OUT", response.length);
   return response;
 }
 
@@ -32,15 +29,12 @@ function filterSchoolsByRegimen(
   schools: School[],
   regimenTypes: SchoolRegimenType[]
 ): School[] {
-  console.log("filterSchoolsByRegimen | schools IN", schools.length);
   if (regimenTypes.length === Object.keys(SchoolRegimenType).length) {
-    console.log("filterSchoolsByRegimen | schools OUT", schools.length);
     return schools;
   }
   const response = schools.filter((school: School) => {
     return regimenTypes.includes(school.reg as SchoolRegimenType);
   });
-  console.log("filterSchoolsByRegimen | schools OUT", response.length);
   return response;
 }
 
@@ -48,9 +42,7 @@ function filterSchoolsByEducation(
   schools: School[],
   educationTypes: SchoolEducationType[]
 ): School[] {
-  console.log("filterSchoolsByEducation | schools IN", schools.length);
   if (educationTypes.length === Object.keys(SchoolEducationType).length) {
-    console.log("filterSchoolsByEducation | schools OUT", schools.length);
     return schools;
   }
   const response = schools.filter((school: School) => {
@@ -58,7 +50,6 @@ function filterSchoolsByEducation(
       return school.reduNiveles.includes(educationType);
     });
   });
-  console.log("filterSchoolsByEducation | schools OUT", response.length);
   return response;
 }
 
@@ -66,9 +57,7 @@ function filterSchoolsByCenterType(
   schools: School[],
   centerTypes: SchoolCenterType[]
 ): School[] {
-  console.log("filterSchoolsByCenterType | schools IN", schools.length);
   if (centerTypes.length === 0) {
-    console.log("filterSchoolsByCenterType | schools OUT", schools.length);
     return schools;
   }
   const response = schools.filter((school: School) => {
@@ -82,7 +71,6 @@ function filterSchoolsByCenterType(
       return false;
     });
   });
-  console.log("filterSchoolsByCenterType | schools OUT", response.length);
   return response;
 }
 
@@ -90,9 +78,7 @@ function filterSchoolsByDayType(
   schools: School[],
   dayType: SchoolDayType[]
 ): School[] {
-  console.log("filterSchoolsByDayType | schools IN", schools.length);
   if (dayType.length === Object.keys(SchoolDayType).length) {
-    console.log("filterSchoolsByDayType | schools OUT", schools.length);
     return schools;
   }
   const response = schools.filter((school: School) => {
@@ -106,7 +92,6 @@ function filterSchoolsByDayType(
       return false;
     });
   });
-  console.log("filterSchoolsByDayType | schools OUT", response.length);
   return response;
 }
 
@@ -203,7 +188,6 @@ export function filterSchools(
   province: Province[],
   centerTypes: SchoolCenterType[]
 ): School[] {
-  console.log("----------------------");
   const filteredSchoolsByProvince = filterSchoolsByProvince(schools, province);
   const filteredSchoolsByRegimen = filterSchoolsByRegimen(
     filteredSchoolsByProvince,
