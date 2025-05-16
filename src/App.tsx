@@ -18,7 +18,7 @@ function App() {
   const [zipCode, setZipCode] = useState(46113);
   const [regimenTypes, setRegimenTypes] = useState([SchoolRegimenType.Public]);
   const [educationTypes, setEducationTypes] = useState([SchoolEducationType.Infantil1, SchoolEducationType.Infantil2, SchoolEducationType.Primaria]);
-  const [centerTypes, setCenterTypes] = useState([] as SchoolCenterType[]);
+  const [centerTypes, setCenterTypes] = useState([SchoolCenterType.ORD]);
   const [dayTypes, setDayTypes] = useState([SchoolDayType.Continue, SchoolDayType.Splitted]);
   const [provinces, setProvinces] = useState([Province.Castellon, Province.Valencia, Province.Alicante]);
   const [filterType, setFilterType] = useState(FilterType.Distance);
@@ -91,7 +91,7 @@ function App() {
       );
 
       setSchools(filteredByTimeOrDist);
-    }, 2000);
+    }, 500);
 
     return () => clearTimeout(filterData);
   }, [
@@ -145,6 +145,9 @@ function App() {
     } else {
       setCenterTypes(prev => [...prev, value]);
     }
+    if (centerTypes.length === 0) {
+      setCenterTypes([SchoolCenterType.ORD]);
+    }
   }
 
   const handleProvinceChange = (value: Province) => {
@@ -171,6 +174,10 @@ function App() {
   }
   if (provinces.length === 0) {
     setProvinces([Province.Castellon, Province.Valencia, Province.Alicante]);
+  }
+
+  if (centerTypes.length === 0) {
+    setCenterTypes([SchoolCenterType.ORD]);
   }
 
   return (

@@ -27,6 +27,7 @@ export enum FilterType {
 }
 
 export enum SchoolCenterType {
+    ORD = 'ORD',
     CRA = 'CRA',
     CAES = 'CAES',
 }

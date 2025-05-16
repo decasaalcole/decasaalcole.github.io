@@ -68,6 +68,9 @@ function filterSchoolsByCenterType(
       if (centerType === SchoolCenterType.CAES) {
         return school.caes;
       }
+      if (centerType === SchoolCenterType.ORD) {
+        return !school.cra && !school.caes;
+      }
       return false;
     });
   });
