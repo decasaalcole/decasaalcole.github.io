@@ -10,6 +10,7 @@ import { filterSchools, prepareSchools, getZipCodeTimes, sortSchoolsByTime, popu
 import { Footer } from './components/Footer.tsx';
 import { Routes, Route, Link } from 'react-router-dom';
 import { About } from './components/About';
+import { Map } from './components/Map';
 
 function App() {
   // schools
@@ -179,8 +180,9 @@ function App() {
     <>
       <Header />
       <nav style={{ textAlign: 'center', margin: '1rem 0' }}>
-        <Link to="/" style={{ marginRight: '1.5rem' }}>Inicio</Link>
-        <Link to="/acerca-de">Acerca de</Link>
+        <Link style={{marginRight: '0.5rem'}} to="/">Inicio</Link>
+        <Link style={{marginRight: '0.5rem'}} to="/acerca-de">Acerca de</Link>
+        <Link to="/mapa">Mapa</Link>
       </nav>
       <Routes>
         <Route path="/" element={
@@ -209,6 +211,7 @@ function App() {
           </>
         } />
         <Route path="/acerca-de" element={<About />} />
+        <Route path="/mapa" element={<Map />} />
       </Routes>
       <Footer />
     </>
