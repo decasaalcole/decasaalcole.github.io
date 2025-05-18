@@ -8,6 +8,8 @@ import craSchools from './assets/data/schools_cra.json';
 import travelTimes from './assets/data/travel_times.json';
 import { filterSchools, prepareSchools, getZipCodeTimes, sortSchoolsByTime, populateSchoolsByZipCodeWithTimeAndDist, filterSchoolsByTimeOrDistance, getMaxDistance, getMaxTime } from './helpers/school.helper.ts';
 import { Footer } from './components/Footer.tsx';
+import { Routes, Route, Link } from 'react-router-dom';
+import { About } from './components/About';
 
 function App() {
   // schools
@@ -183,27 +185,38 @@ function App() {
   return (
     <>
       <Header />
-      <Finder 
-        zipCode={zipCode} 
-        setZipCode={setZipCode} 
-        regimenTypes={regimenTypes} 
-        setRegimenTypes={handleRegimenTypeChange} 
-        educationTypes={educationTypes} 
-        setEducationTypes={handleEducationTypeChange} 
-        dayTypes={dayTypes}
-        setDayTypes={handleDayTypesChange}
-        provinces={provinces}
-        setProvinces={handleProvinceChange}
-        centerTypes={centerTypes}
-        setCenterTypes={handleCenterTypeChange}
-        filterType={filterType}
-        setFilterType={handleFilterTypeChange}
-        filterValue={filterValue}
-        setFilterValue={setFilterValue}
-        maxTime={maxTime}
-        maxDistance={maxDistance}
-      />
-      <Results schools={schools} />
+      <nav style={{ textAlign: 'center', margin: '1rem 0' }}>
+        <Link to="/" style={{ marginRight: '1.5rem' }}>Inicio</Link>
+        <Link to="/acerca-de">Acerca de</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={
+          <>
+            <Finder 
+              zipCode={zipCode} 
+              setZipCode={setZipCode} 
+              regimenTypes={regimenTypes} 
+              setRegimenTypes={handleRegimenTypeChange} 
+              educationTypes={educationTypes} 
+              setEducationTypes={handleEducationTypeChange} 
+              dayTypes={dayTypes}
+              setDayTypes={handleDayTypesChange}
+              provinces={provinces}
+              setProvinces={handleProvinceChange}
+              centerTypes={centerTypes}
+              setCenterTypes={handleCenterTypeChange}
+              filterType={filterType}
+              setFilterType={handleFilterTypeChange}
+              filterValue={filterValue}
+              setFilterValue={setFilterValue}
+              maxTime={maxTime}
+              maxDistance={maxDistance}
+            />
+            <Results schools={schools} />
+          </>
+        } />
+        <Route path="/acerca-de" element={<About />} />
+      </Routes>
       <Footer />
     </>
   )
