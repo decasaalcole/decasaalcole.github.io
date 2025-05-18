@@ -20,7 +20,7 @@ export function About() {
       <ul>
         <li>Escuelas:
             <ul>
-                <li> Número decentros: <strong>{formattedSchools}</strong></li>
+                <li> Número de centros: <strong>{formattedSchools}</strong></li>
                 <li> Ultima actualización : <strong>{new Date(schoolTimestamp).toLocaleDateString('es-ES')}</strong></li>
             </ul>
         </li>
@@ -44,6 +44,12 @@ export function About() {
       </p>
       <h2>Créditos</h2>
       <p>
+        Idea original:
+      </p>
+      <ul>
+        <li>Alicia Rodrigo Valero</li>
+      </ul>
+      <p>
         Proyecto desarrollado en <a href='https://github.com/decasaalcole/'>abierto</a> por:
       </p>
       <ul>
@@ -52,6 +58,14 @@ export function About() {
         <li><a href='https://jorgesanz.net'>Jorge Sanz</a></li>
         <li><a href='https://www.linkedin.com/in/raolbal/'>Rafael Oliete</a></li>
         <li><a href='https://www.linkedin.com/in/danigaston/'>Daniel Gastón</a></li>
+      </ul>
+      <p>
+        Docentes colaboradores:
+      </p>
+      <ul>
+        <li>Alicia Rodrigo Valero</li>
+        <li>Enrique Perez Monzó</li>
+        <li>Laura Martínez Torres</li>
       </ul>
     </div>
   );
