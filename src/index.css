@@ -86,21 +86,45 @@ button:focus-visible {
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    color: var(--dark-blue-gray-color);
-    background-color: var(--white-color);
-  }
-  a:hover {
-    color: var(--secondary-color);
-  }
-  button {
-    background-color: var(--white-color);
-  }
-}
 
 h2 {
   font-weight: bold;
   margin-bottom: 0px;
   margin-top: 5px;
+}
+
+nav a {
+  color: var(--primary-color);
+}
+
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+  /* Colors */
+  --primary-color: #4bb8e4;
+  --secondary-color: #596fef;
+  --white-color: #fff;
+  --gray-color: #ccc;
+  --dark-gray-color: #444;
+  --light-gray-color: #f0f0f0;
+  --ultra-light-gray-color: #f9f9f9;
+  --dark-blue-gray-color: #415162;
+  --red-color: #ef5959;
+  --green-color: #45e4b8;
+  --warning-color: #ffa008;
+
+    color: var(--gray-color);
+    background-color: var(--dark-blue-gray-color);
+  }
+  a:hover {
+    color: var(--gray-color);
+  }
+  button {
+    background-color: var(--white-color);
+  }
+
+  nav a {
+    color: var(--white-color);
+  }
 }

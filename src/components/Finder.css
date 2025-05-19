@@ -1,138 +1,152 @@
 .finder {
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-    flex-direction: column;
-    margin: 22px 15px 25px 15px;
-    font-family: "Roboto", sans-serif;
-    color: var(--dark-gray-color);
-    border-radius: 10px;
-    padding-bottom: 5px;
-    background-color: var(--white-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  flex-direction: column;
+  margin: 22px 15px 25px 15px;
+  font-family: "Roboto", sans-serif;
+  color: var(--dark-gray-color);
+
+  border-radius: 10px;
+  padding-bottom: 5px;
+  background-color: var(--white-color);
+  align-items: center;
+  gap: 15px;
+
+  .step {
     align-items: center;
-    gap: 15px;
+    margin: 0px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
-    .step {
-      align-items: center;
-      margin: 0px 10px;
+    .title {
+      font-size: 15px;
+      font-weight: bold;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      align-items: center;
       gap: 10px;
-
-      .title {
-        font-size: 15px;
-        font-weight: bold;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 10px;
-        svg {
-          padding-top: 4px;
-          height: 30px;
-          width: 30px;
-        }
+      svg {
+        padding-top: 4px;
+        height: 30px;
+        width: 30px;
       }
-      .input {
-        background-color: var(--white-color);
-        input {
-          width: 100%;
-          padding: 10px;
-          border: 1px solid var(--gray-color);
-          border-radius: 5px;
-          max-width: 100px;
-          text-align: right;
-          font-size: 18px;
-          font-weight: 700;
-          &::-webkit-outer-spin-button,
-          &::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-          }
-          color: var(--primary-color);
-          background-color: var(--white-color);
-
-
-        }
-      }
-      .btns {
-        display: flex;
-        gap: 1px;
-        align-items: center;
-        justify-content: center;
-        border-radius: 0px;
-        button:first-child {
-          border-radius: 20px 0px 0px 20px;
-        }
-        button:last-child {
-          border-radius: 0px 20px 20px 0px;
-        }
-
-      }
-      .slider {
-        margin-bottom: 20px;
+    }
+    .input {
+      background-color: var(--white-color);
+      input {
         width: 100%;
-        margin-top: 10px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        .slider-ctrl {
-          flex: 0.75;
-          .rc-slider{
-            .rc-slider.rc-slider-horizontal {
-              margin-top: 10px;
+        padding: 10px;
+        border: 1px solid var(--gray-color);
+        border-radius: 5px;
+        max-width: 100px;
+        text-align: right;
+        font-size: 18px;
+        font-weight: 700;
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        color: var(--primary-color);
+        background-color: var(--white-color);
+      }
+    }
+    .btns {
+      display: flex;
+      gap: 1px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0px;
+      button:first-child {
+        border-radius: 20px 0px 0px 20px;
+      }
+      button:last-child {
+        border-radius: 0px 20px 20px 0px;
+      }
+    }
+    .slider {
+      margin-bottom: 20px;
+      width: 100%;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      .slider-ctrl {
+        flex: 0.75;
+        .rc-slider {
+          .rc-slider.rc-slider-horizontal {
+            margin-top: 10px;
 
-              .rc-slider-handle {
-                background-color: var(--primary-color);
-                border-color: var(--primary-color);
-                opacity: 1;
-              }
+            .rc-slider-handle {
+              background-color: var(--primary-color);
+              border-color: var(--primary-color);
+              opacity: 1;
             }
           }
         }
-
-        .slider-text {
-          margin-top: 3px;
-          flex: 0.25;
-          text-align: center;
-          font-size: 15px;
-          font-weight: bold;
-          background-color: var(--light-gray-color);
-          border-radius: 5px;
-          padding: 3px;
-          color: var(--primary-color);
-        }
-
-
-
-
       }
-    }
-    .action {
-      margin-top: 30px;
-      display: flex;
-      justify-content: center;
-      width: 100%;
-      button {
-        background-color: var(--primary-color);
-        border: none;
-        color: var(--white-color);
-        padding: 10px 20px;
-        border-radius: 5px;
+
+      .slider-text {
+        margin-top: 3px;
+        flex: 0.25;
+        text-align: center;
         font-size: 15px;
-        cursor: pointer;
-        height: 60px;
-        width: 160px;
         font-weight: bold;
-        font-size: 20px;
-
-        &:hover {
-          background-color: #f56;
-        }
-        &:focus {
-          outline: none;
-      }
+        background-color: var(--light-gray-color);
+        border-radius: 5px;
+        padding: 3px;
+        color: var(--primary-color);
       }
     }
   }
+  .action {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    button {
+      background-color: var(--primary-color);
+      border: none;
+      color: var(--white-color);
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 15px;
+      cursor: pointer;
+      height: 60px;
+      width: 160px;
+      font-weight: bold;
+      font-size: 20px;
+
+      &:hover {
+        background-color: #f56;
+      }
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  /* dark theme color overrides */
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--dark-blue-gray-color);
+    color: var(--light-gray-color);
+
+    .step {
+      .input {
+        input {
+          background-color: var(--dark-blue-gray-color);
+          border: 1px solid var(--white-color);
+          color: var(--white-color);
+        }
+      }
+    }
+    .slider-text {
+      background-color: var(--dark-gray-color);
+      color: var(--white-color);
+    }
+  }
+}

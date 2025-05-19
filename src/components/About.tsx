@@ -15,7 +15,7 @@ export function About() {
       <h2>Sobre Decasaalcole</h2>
       <p>
         Proyecto desarrollado por un grupo de colegas con el objetivo de ayudar a familias
-        y profesionals de la educación a encontrar el colegio más cercano a su domicilio.
+        y profesionales de la educación a encontrar el colegio más cercano a su domicilio.
       </p>
       <h3>Metadatos</h3>
       <ul>
