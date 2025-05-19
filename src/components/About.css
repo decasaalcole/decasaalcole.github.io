@@ -1,24 +1,12 @@
 .about-container {
   max-width: 700px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-  font-size: 1.1rem;
-}
-.about-container h1 {
-  margin-bottom: 1rem;
-  font-size: 2rem;
-}
-.about-container h2 {
-  margin-top: 2rem;
-  font-size: 1.3rem;
+  margin: 1rem auto;
+  padding: 0.5rem 1rem;
 }
 .about-container ul {
     padding-left: 20px;
 }
 .about-container a {
-  color: #0078d4;
+  color: var(--primary-color);
   text-decoration: underline;
 }

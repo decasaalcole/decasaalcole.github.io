@@ -12,11 +12,6 @@
     align-items: center;
     gap: 15px;
 
-    h2 {
-        font-weight: bold;
-        margin-bottom: 0px;
-        margin-top: 5px;
-    }
     .step {
       align-items: center;
       margin: 0px 10px;

@@ -1,3 +1,4 @@
+import '../index.css';
 import './About.css';
 
 // Import metadata files
@@ -11,12 +12,12 @@ export function About() {
 
   return (
     <div className="about-container">
-      <h1>Sobre Decasaalcole</h1>
+      <h2>Sobre Decasaalcole</h2>
       <p>
         Proyecto desarrollado por un grupo de colegas con el objetivo de ayudar a familias
         y profesionals de la educación a encontrar el colegio más cercano a su domicilio.
       </p>
-      <h2>Metadatos</h2>
+      <h3>Metadatos</h3>
       <ul>
         <li>Escuelas:
             <ul>
@@ -32,17 +33,17 @@ export function About() {
             </ul>
         </li>
       </ul>
-      <h2>Fuentes</h2>
+      <h3>Fuentes</h3>
       <ul>
         <li>Datos de las escuelas extraídos de la <a href='https://ceice.gva.es/es/web/centros-docentes/guia-de-centros-docentes'>Guia de Centres Docents</a> de la Conselleria d'Educacio, Cultura, Universitats, i Ocupació de la Generalitat Valenciana</li>
         <li>Códigos postales derivados del juego de datos de direcciones postales del proyecto <a href='https://www.cartociudad.es/web/portal'>Cartociudad</a>, disponibles en el <a href='https://centrodedescargas.cnig.es/CentroDescargas/cartociudad'>Centro de descargas del CNIG</a></li>
         <li>Tiempos de viaje calculados utilizando el motor de rutas <a href='https://github.com/Project-OSRM/osrm-backend'>OSRM</a> a partir de la red de carreteras extraída de <a href='https://osm.org'>OpenStreetMap</a> publicado por <a href='https://download.geofabrik.de/europe/spain/valencia.html'>Geofabrik</a></li>
       </ul>
-      <h2>Contacto</h2>
+      <h3>Contacto</h3>
       <p>
         Para sugerencias, correcciones o dudas, puedes contactar con el equipo en <a href="mailto:info@decasaalcole.es">info@decasaalcole.es</a>.
       </p>
-      <h2>Créditos</h2>
+      <h3>Créditos</h3>
       <p>
         Idea original:
       </p>
