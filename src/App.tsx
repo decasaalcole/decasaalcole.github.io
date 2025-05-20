@@ -27,7 +27,7 @@ function App() {
   const [filterValue, setFilterValue] = useState(100);
   const [maxTime, setMaxTime] = useState(6);
   const [maxDistance, setMaxDistance] = useState(10);
-  
+
 
   // Prepare schools data
   useEffect(() => {
@@ -56,7 +56,7 @@ function App() {
   // Filter schools with debounce of 2 seconds
   useEffect(() => {
     const isValidZipCode = zipCode.toString().length > 3 && zipCode.toString().length < 6;
-    
+
     if (!isValidZipCode) {
       setSchools([]);
       return;
@@ -64,7 +64,7 @@ function App() {
 
     const filterData = setTimeout(() => {
       const zipCodeTimes = getZipCodeTimes(travelTimes as any, zipCode);
-      
+
       if (!zipCodeTimes) {
         setSchools([]);
         return;
@@ -73,7 +73,7 @@ function App() {
       const filteredSchools = filterSchools(
         rawSchools,
         regimenTypes,
-        educationTypes, 
+        educationTypes,
         dayTypes,
         provinces,
         centerTypes
@@ -192,13 +192,13 @@ function App() {
       <Routes>
         <Route path="/" element={
           <>
-            <Finder 
-              zipCode={zipCode} 
-              setZipCode={setZipCode} 
-              regimenTypes={regimenTypes} 
-              setRegimenTypes={handleRegimenTypeChange} 
-              educationTypes={educationTypes} 
-              setEducationTypes={handleEducationTypeChange} 
+            <Finder
+              zipCode={zipCode}
+              setZipCode={setZipCode}
+              regimenTypes={regimenTypes}
+              setRegimenTypes={handleRegimenTypeChange}
+              educationTypes={educationTypes}
+              setEducationTypes={handleEducationTypeChange}
               dayTypes={dayTypes}
               setDayTypes={handleDayTypesChange}
               provinces={provinces}
@@ -216,6 +216,7 @@ function App() {
           </>
         } />
         <Route path="/acerca-de" element={<About />} />
+        <Route path="*" element={<h2 style={{ textAlign: 'center', marginBottom: '3em' }}>404 - Página no encontrada</h2>} />
       </Routes>
       <Footer />
     </>

@@ -67,4 +67,22 @@
         width: 100%;
         gap: 10px;
     }
+
+    /* dark theme color overrides */
+    @media (prefers-color-scheme: dark) {
+        background-color: #566575;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+
+        h2 {
+            color: var(--white-color);
+        }
+
+        .total {
+            color: var(--white-color);
+        }
+
+        .no-results p {
+            color: var(--white-color);
+        }
+    }
 }
