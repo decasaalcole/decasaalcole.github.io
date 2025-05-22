@@ -7,6 +7,11 @@ import Education from '../../assets/icons/education.svg';
 import Car from '../../assets/icons/car.svg';
 import { CardBtn } from '../btns/CardBtn';
 import './CardSchool.css';
+
+export function moreInfo(codigo: string): string {
+    return `https://ceice.gva.es/es/web/centros-docentes/consulta-general?viewUrl162652993=/abc/i_guiadecentros/es/centro.asp&codi=${codigo}`
+}
+
 export function CardSchool({ school }: { school: School }) {
 
     const handleCall = () => {
@@ -18,7 +23,7 @@ export function CardSchool({ school }: { school: School }) {
     }
 
     const handleMoreInfo = () => {
-        window.open(`https://ceice.gva.es/es/web/centros-docentes/consulta-general?viewUrl162652993=/abc/i_guiadecentros/es/centro.asp&codi=${school.codigo}`, '_blank');
+        window.open(moreInfo(school.codigo), '_blank');
     }
 
     return (
@@ -30,7 +35,7 @@ export function CardSchool({ school }: { school: School }) {
                     <p className="regimen">{school.reg}</p>
                     {school.cra && <p className="cra">CRA</p>}
                     {school.caes && <p className="caes">CAES</p>}
-                </div>                
+                </div>
                 <div className="distance">
                     <div className="car">
                         <img src={Car} alt="Car" />
@@ -56,11 +61,11 @@ export function CardSchool({ school }: { school: School }) {
                         <img src={Phone} alt="Phone" />
                         <p>{school.tel}</p>
                     </div>
-                )}                
+                )}
                 <div className="schedule">
                     <img src={Schedule} alt="Schedule" />
                     <p>{school.horario.join(' | ')}</p>
-                </div> 
+                </div>
                 <div className="education">
                     <img src={Education} alt="Education" />
                     <div className="education-levels">
@@ -68,7 +73,7 @@ export function CardSchool({ school }: { school: School }) {
                             <p key={nivel.nivel}>{nivel.nivel}</p>
                         ))}
                     </div>
-                </div>                
+                </div>
             </div>
             <div className="card-school-footer">
                 {school.tel && school.tel.toString().trim() !== '' && (

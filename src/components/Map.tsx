@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
-import maplibregl, { GeoJSONFeature } from 'maplibre-gl';
+import maplibregl, { GeoJSONFeature, LngLatLike } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import './Map.css';
+import { moreInfo } from './card/CardSchool';
 
 import schools from '../assets/data/schools.json';
 
@@ -34,7 +35,9 @@ export function Map() {
                             id: school.codigo,
                             cp: school.cp,
                             reg: school.reg,
-                            deno: school.deno
+                            deno: school.deno,
+                            muni: school.muni,
+                            tel: school.tel,
                         },
                         geometry: {
                             type: 'Point',
@@ -61,20 +64,35 @@ export function Map() {
             });
         });
 
+        // Change cursor to pointer when over a school
+        map.on('mouseenter', 'schools', () => {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+        // Change cursor back to default when not over a school
+        map.on('mouseleave', 'schools', () => {
+            map.getCanvas().style.cursor = '';
+        });
+
 
         // Add a popup on click
         map.on('click', 'schools', (e) => {
-            if (e !== undefined) {
-                const coordinates = e.features[0].geometry.coordinates.slice();
+            if (e !== undefined && e.features &&
+                e.features.length > 0 && e.features[0].geometry &&
+                e.features[0].geometry.type === 'Point') {
+                const coordinates = e.features[0].geometry.coordinates.slice() as LngLatLike;
                 const properties = e.features[0].properties;
-    
+
                 // Create a popup
                 new maplibregl.Popup()
                     .setLngLat(coordinates)
                     .setHTML(`
                         <h3>${properties.deno}</h3>
-                        <p>Regimen: ${properties.reg}</p>
-                        <p>Codigo Postal: ${properties.cp}</p>
+                        <ul>
+                            <li><strong>Municipio:</strong> ${properties.muni}</li>
+                            <li><strong>Regimen:</strong> ${properties.reg}</li>
+                            <li><strong>Telefono:</strong> <a href="tel:${properties.tel}">${properties.tel}</a></li>
+                        </ul>
+                        <button class="more-info" onclick="window.open('${moreInfo(properties.id)}')">Más info</button>
                     `)
                     .addTo(map);
             }

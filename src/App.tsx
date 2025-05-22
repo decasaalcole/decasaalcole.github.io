@@ -188,8 +188,8 @@ function App() {
       <Header />
       <nav style={{ textAlign: 'center', margin: '1rem 0' }}>
         <Link style={{marginRight: '0.5rem'}} to="/">Inicio</Link>
-        <Link style={{marginRight: '0.5rem'}} to="/acerca-de">Acerca de</Link>
-        <Link to="/mapa">Mapa</Link>
+        <Link style={{marginRight: '0.5rem'}} to="/mapa">Mapa</Link>
+        <Link to="/acerca-de">Acerca de</Link>
       </nav>
       <Routes>
         <Route path="/" element={
@@ -218,8 +218,8 @@ function App() {
           </>
         } />
         <Route path="/acerca-de" element={<About />} />
-        <Route path="*" element={<h2 style={{ textAlign: 'center', marginBottom: '3em' }}>404 - Página no encontrada</h2>} />
         <Route path="/mapa" element={<Map />} />
+        <Route path="*" element={<h2 style={{ textAlign: 'center', marginBottom: '3em' }}>404 - Página no encontrada</h2>} />
       </Routes>
       <Footer />
     </>
