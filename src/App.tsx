@@ -12,6 +12,8 @@ import { Routes, Route, Link } from 'react-router-dom';
 import { About } from './components/About';
 import { Map } from './components/Map';
 
+import './App.css';
+
 function App() {
   // schools
   const [rawSchools, setRawSchools] = useState<School[]>([]);
@@ -187,8 +189,8 @@ function App() {
     <>
       <Header />
       <nav style={{ textAlign: 'center', margin: '1rem 0' }}>
-        <Link style={{marginRight: '0.5rem'}} to="/">Inicio</Link>
-        <Link style={{marginRight: '0.5rem'}} to="/mapa">Mapa</Link>
+        <Link to="/">Inicio</Link>
+        <Link to="/mapa">Mapa</Link>
         <Link to="/acerca-de">Acerca de</Link>
       </nav>
       <Routes>

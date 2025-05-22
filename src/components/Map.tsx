@@ -1,17 +1,52 @@
 import { useEffect, useRef } from 'react';
-import maplibregl, { GeoJSONFeature, LngLatLike } from 'maplibre-gl';
+
+import maplibregl, { LngLatLike } from 'maplibre-gl';
+import type { ExpressionSpecification } from 'maplibre-gl';
+
+import { moreInfo } from './card/CardSchool';
+import schools from '../assets/data/schools.json';
+
 import 'maplibre-gl/dist/maplibre-gl.css';
 import './Map.css';
-import { moreInfo } from './card/CardSchool';
-
-import schools from '../assets/data/schools.json';
 
 export function Map() {
     const mapContainer = useRef<HTMLDivElement>(null);
     const lng = -0.3;
     const lat = 39.44;
     const zoom = 7;
-    const mapStyle = 'https://maps.black/styles/openstreetmap-openmaptiles/openfreemap/fiord/style.json';
+    // Map style URL depends on the theme of the browser
+    // For example, if the browser is in dark mode, use the dark theme
+    // If the browser is in light mode, use the light theme
+
+    const mapStyleTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'fiord'
+        : 'positron';
+
+    const mapStyle = `https://maps.black/styles/openstreetmap-openmaptiles/openfreemap/${mapStyleTheme}/style.json`;
+
+
+    const mapColor = (mapStyleTheme: 'fiord' | 'positron'): ExpressionSpecification => {
+        const styles: { fiord: (string | number)[]; positron: (string | number)[] } = {
+            'fiord': [
+                'PÚBLICO', '#ccebc5',
+                'PRIVADO', '#fbb4ae',
+                'PRIVADO - CONCERTADO', '#b3cde3',
+                '#FF0000'
+            ],
+            'positron': [
+                'PÚBLICO', '#66c2a5',
+                'PRIVADO', '#8da0cb',
+                'PRIVADO - CONCERTADO', '#fc8d62',
+                '#FF0000'
+            ]
+        };
+
+        return [
+            'match',
+            ['get', 'reg'],
+            ...styles[mapStyleTheme]
+        ] as unknown as ExpressionSpecification;
+    }
 
     useEffect(() => {
         if (!mapContainer.current) return; // wait until ref is set
@@ -25,42 +60,62 @@ export function Map() {
 
         // When ready, load the schools data
         map.on('load', () => {
+            const schoolsData: GeoJSON.FeatureCollection<GeoJSON.Point, {
+                id: string;
+                cp: string;
+                reg: string;
+                deno: string;
+                muni: string;
+                tel?: string;
+            }> = {
+                type: 'FeatureCollection',
+                features: schools.map((school) => ({
+                    type: 'Feature',
+                    properties: {
+                        id: school.codigo,
+                        cp: school.cp,
+                        reg: school.reg,
+                        deno: school.deno,
+                        muni: school.muni,
+                        tel: school.tel,
+                    },
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [Number(school.long), Number(school.lat)]
+                    }
+                }))
+            };
+
+            // Sort the schools by regimen,
+            // first PRIVADO, then PRIVADO - CONCERTADO, and finally PÚBLICO
+            // This is done to highilght the public schools first, damn it.
+            schoolsData.features.sort((a, b) => {
+                const toNum = (reg: string) => {
+                    if (reg === 'PRIVADO') return 0;
+                    if (reg === 'PRIVADO - CONCERTADO') return 1;
+                    if (reg === 'PÚBLICO') return 2;
+                    return 3;
+                };
+                const numA = toNum(a.properties.reg);
+                const numB = toNum(b.properties.reg);
+                if (numA < numB) return -1;
+                if (numA > numB) return 1;
+                return 0;
+            });
+
+
             map.addSource('schools', {
                 type: 'geojson',
-                data: {
-                    type: 'FeatureCollection',
-                    features: schools.map((school) => ({
-                        type: 'Feature',
-                        properties: {
-                            id: school.codigo,
-                            cp: school.cp,
-                            reg: school.reg,
-                            deno: school.deno,
-                            muni: school.muni,
-                            tel: school.tel,
-                        },
-                        geometry: {
-                            type: 'Point',
-                            coordinates: [school.long, school.lat]
-                        }
-                    } as unknown as GeoJSONFeature))
-                }
+                data: schoolsData,
             }).addLayer({
                 id: 'schools',
                 type: 'circle',
                 source: 'schools',
                 paint: {
-                    'circle-radius': 6,
                     'circle-opacity': 0.8,
-                    'circle-color': [
-                        'match',
-                        ['get', 'reg'],
-                        'PÚBLICO', '#ccff99',
-                        'PRIVADO', '#FABADA',
-                        'PRIVADO - CONCERTADO', '#9999ff',
-                        '#FF0000'
-                    ]
-                }
+                    'circle-color': mapColor(mapStyleTheme),
+                    'circle-radius': ['interpolate', ['linear'], ['zoom'], 8, 3, 15, 10]
+                },
             });
         });
 
