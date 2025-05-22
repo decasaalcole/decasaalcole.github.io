@@ -111,8 +111,9 @@ export function Finder({
 
             <Step number={6} title="Selecciona los tipos de centros" counterIcon={Counter6}>
                 <div className="btns">
-                    <Btn text="C. Rural Agrupado" value={SchoolCenterType.CRA} selected={centerTypes.includes(SchoolCenterType.CRA)} setSelected={setCenterTypes}/>
-                    <Btn text="C. Singular" value={SchoolCenterType.CAES} selected={centerTypes.includes(SchoolCenterType.CAES)} setSelected={setCenterTypes}/>
+                    <Btn text="Ordinario" value={SchoolCenterType.ORD} selected={centerTypes.includes(SchoolCenterType.ORD)} setSelected={setCenterTypes}/>
+                    <Btn text="Rural Agrupado" value={SchoolCenterType.CRA} selected={centerTypes.includes(SchoolCenterType.CRA)} setSelected={setCenterTypes}/>
+                    <Btn text="Singular" value={SchoolCenterType.CAES} selected={centerTypes.includes(SchoolCenterType.CAES)} setSelected={setCenterTypes}/>
                 </div>
             </Step>
             <Step number={7} title="Limita por distancia o tiempo de viaje" counterIcon={Counter7}>

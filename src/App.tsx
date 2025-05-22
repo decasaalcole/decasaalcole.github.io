@@ -21,14 +21,14 @@ function App() {
   const [zipCode, setZipCode] = useState(46113);
   const [regimenTypes, setRegimenTypes] = useState([SchoolRegimenType.Public]);
   const [educationTypes, setEducationTypes] = useState([SchoolEducationType.Infantil1, SchoolEducationType.Infantil2, SchoolEducationType.Primaria]);
-  const [centerTypes, setCenterTypes] = useState([] as SchoolCenterType[]);
+  const [centerTypes, setCenterTypes] = useState([SchoolCenterType.ORD]);
   const [dayTypes, setDayTypes] = useState([SchoolDayType.Continue, SchoolDayType.Splitted]);
   const [provinces, setProvinces] = useState([Province.Castellon, Province.Valencia, Province.Alicante]);
   const [filterType, setFilterType] = useState(FilterType.Distance);
   const [filterValue, setFilterValue] = useState(100);
   const [maxTime, setMaxTime] = useState(6);
   const [maxDistance, setMaxDistance] = useState(10);
-  
+
 
   // Prepare schools data
   useEffect(() => {
@@ -57,7 +57,7 @@ function App() {
   // Filter schools with debounce of 2 seconds
   useEffect(() => {
     const isValidZipCode = zipCode.toString().length > 3 && zipCode.toString().length < 6;
-    
+
     if (!isValidZipCode) {
       setSchools([]);
       return;
@@ -65,7 +65,7 @@ function App() {
 
     const filterData = setTimeout(() => {
       const zipCodeTimes = getZipCodeTimes(travelTimes as any, zipCode);
-      
+
       if (!zipCodeTimes) {
         setSchools([]);
         return;
@@ -74,7 +74,7 @@ function App() {
       const filteredSchools = filterSchools(
         rawSchools,
         regimenTypes,
-        educationTypes, 
+        educationTypes,
         dayTypes,
         provinces,
         centerTypes
@@ -94,7 +94,7 @@ function App() {
       );
 
       setSchools(filteredByTimeOrDist);
-    }, 2000);
+    }, 500);
 
     return () => clearTimeout(filterData);
   }, [
@@ -148,6 +148,9 @@ function App() {
     } else {
       setCenterTypes(prev => [...prev, value]);
     }
+    if (centerTypes.length === 0) {
+      setCenterTypes([SchoolCenterType.ORD]);
+    }
   }
 
   const handleProvinceChange = (value: Province) => {
@@ -176,6 +179,10 @@ function App() {
     setProvinces([Province.Castellon, Province.Valencia, Province.Alicante]);
   }
 
+  if (centerTypes.length === 0) {
+    setCenterTypes([SchoolCenterType.ORD]);
+  }
+
   return (
     <>
       <Header />
@@ -187,13 +194,13 @@ function App() {
       <Routes>
         <Route path="/" element={
           <>
-            <Finder 
-              zipCode={zipCode} 
-              setZipCode={setZipCode} 
-              regimenTypes={regimenTypes} 
-              setRegimenTypes={handleRegimenTypeChange} 
-              educationTypes={educationTypes} 
-              setEducationTypes={handleEducationTypeChange} 
+            <Finder
+              zipCode={zipCode}
+              setZipCode={setZipCode}
+              regimenTypes={regimenTypes}
+              setRegimenTypes={handleRegimenTypeChange}
+              educationTypes={educationTypes}
+              setEducationTypes={handleEducationTypeChange}
               dayTypes={dayTypes}
               setDayTypes={handleDayTypesChange}
               provinces={provinces}
@@ -211,6 +218,7 @@ function App() {
           </>
         } />
         <Route path="/acerca-de" element={<About />} />
+        <Route path="*" element={<h2 style={{ textAlign: 'center', marginBottom: '3em' }}>404 - Página no encontrada</h2>} />
         <Route path="/mapa" element={<Map />} />
       </Routes>
       <Footer />
