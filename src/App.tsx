@@ -10,6 +10,9 @@ import { filterSchools, prepareSchools, getZipCodeTimes, sortSchoolsByTime, popu
 import { Footer } from './components/Footer.tsx';
 import { Routes, Route, Link } from 'react-router-dom';
 import { About } from './components/About';
+import { Map } from './components/Map';
+
+import './App.css';
 
 function App() {
   // schools
@@ -186,7 +189,8 @@ function App() {
     <>
       <Header />
       <nav style={{ textAlign: 'center', margin: '1rem 0' }}>
-        <Link to="/" style={{ marginRight: '1.5rem' }}>Inicio</Link>
+        <Link to="/">Inicio</Link>
+        <Link to="/mapa">Mapa</Link>
         <Link to="/acerca-de">Acerca de</Link>
       </nav>
       <Routes>
@@ -216,6 +220,7 @@ function App() {
           </>
         } />
         <Route path="/acerca-de" element={<About />} />
+        <Route path="/mapa" element={<Map />} />
         <Route path="*" element={<h2 style={{ textAlign: 'center', marginBottom: '3em' }}>404 - Página no encontrada</h2>} />
       </Routes>
       <Footer />
