@@ -66,14 +66,16 @@ export function CardSchool({ school }: { school: School }) {
                     <img src={Schedule} alt="Schedule" />
                     <p>{school.horario.join(' | ')}</p>
                 </div>
-                <div className="education">
-                    <img src={Education} alt="Education" />
-                    <div className="education-levels">
-                        {school.niveles.map((nivel: SchoolLevel) => (
-                            <p key={nivel.nivel}>{nivel.nivel}</p>
-                        ))}
+                {school.niveles && (
+                    <div className="education">
+                        <img src={Education} alt="Education" />
+                        <div className="education-levels">
+                            {school.niveles.map((nivel: SchoolLevel) => (
+                                <p key={nivel.nivel}>{nivel.nivel}</p>
+                            ))}
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
             <div className="card-school-footer">
                 {school.tel && school.tel.toString().trim() !== '' && (
