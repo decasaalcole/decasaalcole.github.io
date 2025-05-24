@@ -87,15 +87,16 @@ function App() {
         zipCodeTimes,
         zipCode
       );
-
-      const sortedSchools = sortSchoolsByTime(schoolsWithTimesAndDist);
+      
       const filteredByTimeOrDist = filterSchoolsByTimeOrDistance(
-        sortedSchools,
+        schoolsWithTimesAndDist,
         filterType,
         filterValue
       );
 
-      setSchools(filteredByTimeOrDist);
+      const sortedSchools = sortSchoolsByTime(filteredByTimeOrDist);
+
+      setSchools(sortedSchools);
     }, 500);
 
     return () => clearTimeout(filterData);
