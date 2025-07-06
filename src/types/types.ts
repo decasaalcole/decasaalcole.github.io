@@ -76,6 +76,7 @@ export interface BtnProps {
     value: SchoolRegimenType | SchoolEducationType | SchoolDayType | Province | SchoolCenterType | FilterType;
     selected: boolean;
     setSelected: any;
+    filter?: boolean;
 }
 
 export interface CardBtnProps {

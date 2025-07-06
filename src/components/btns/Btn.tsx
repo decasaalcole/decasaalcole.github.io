@@ -1,14 +1,14 @@
 import { BtnProps } from "../../types/types";
 import './Btn.css';
 
-export function Btn({ text, value, selected, setSelected }: BtnProps) {
+export function Btn({ text, value, selected, setSelected, filter }: BtnProps) {
     const handleClick = () => {
         if (setSelected) {
             setSelected(value);
         }
     };
 
-    const buttonClassName = `btn ${selected ? 'selected' : ''}`.trim();
+    const buttonClassName = `btn ${filter ? 'filter' : ''} ${selected ? 'selected' : ''}`.trim();
 
     return (
         <button 

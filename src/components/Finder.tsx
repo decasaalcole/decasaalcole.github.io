@@ -71,55 +71,55 @@ export function Finder({
 
             <Step number={2} title="Selecciona las provincias" counterIcon={Counter2}>
                 <div className="btns">
-                    <Btn text="Castellón" value={Province.Castellon} selected={provinces.includes(Province.Castellon)} setSelected={setProvinces}/>
-                    <Btn text="Valencia" value={Province.Valencia} selected={provinces.includes(Province.Valencia)} setSelected={setProvinces}/>
-                    <Btn text="Alicante" value={Province.Alicante} selected={provinces.includes(Province.Alicante)} setSelected={setProvinces}/>
+                    <Btn text="Castellón" value={Province.Castellon} selected={provinces.includes(Province.Castellon)} setSelected={setProvinces} filter={true}/>
+                    <Btn text="Valencia" value={Province.Valencia} selected={provinces.includes(Province.Valencia)} setSelected={setProvinces} filter={true}/>
+                    <Btn text="Alicante" value={Province.Alicante} selected={provinces.includes(Province.Alicante)} setSelected={setProvinces} filter={true}/>
                 </div>
             </Step>
 
             <Step number={3} title="Selecciona los régimenes de los centros" counterIcon={Counter3}>
                 <div className="btns">
-                    <Btn text="Público" value={SchoolRegimenType.Public} selected={regimenTypes.includes(SchoolRegimenType.Public)} setSelected={setRegimenTypes}/>
-                    <Btn text="Privado" value={SchoolRegimenType.Private} selected={regimenTypes.includes(SchoolRegimenType.Private)} setSelected={setRegimenTypes}/>
-                    <Btn text="Priv. concertado" value={SchoolRegimenType.PrivateConc} selected={regimenTypes.includes(SchoolRegimenType.PrivateConc)} setSelected={setRegimenTypes}/>
+                    <Btn text="Público" value={SchoolRegimenType.Public} selected={regimenTypes.includes(SchoolRegimenType.Public)} setSelected={setRegimenTypes} filter={true}/>
+                    <Btn text="Privado" value={SchoolRegimenType.Private} selected={regimenTypes.includes(SchoolRegimenType.Private)} setSelected={setRegimenTypes} filter={true}/>
+                    <Btn text="Priv. concertado" value={SchoolRegimenType.PrivateConc} selected={regimenTypes.includes(SchoolRegimenType.PrivateConc)} setSelected={setRegimenTypes} filter={true}/>
                 </div>
             </Step>
 
             <Step number={4} title="Selecciona los tipos de nivel educativo" counterIcon={Counter4}>
                 <div className="btns">
-                    <Btn text="Infantil 1er ciclo" value={SchoolEducationType.Infantil1} selected={educationTypes.includes(SchoolEducationType.Infantil1)} setSelected={setEducationTypes}/>
-                    <Btn text="Infantil 2º ciclo" value={SchoolEducationType.Infantil2} selected={educationTypes.includes(SchoolEducationType.Infantil2)} setSelected={setEducationTypes}/>                                        
+                    <Btn text="Infantil 1er ciclo" value={SchoolEducationType.Infantil1} selected={educationTypes.includes(SchoolEducationType.Infantil1)} setSelected={setEducationTypes} filter={true}/>
+                    <Btn text="Infantil 2º ciclo" value={SchoolEducationType.Infantil2} selected={educationTypes.includes(SchoolEducationType.Infantil2)} setSelected={setEducationTypes} filter={true}/>                                        
                 </div>
                 <div className="btns">
-                    <Btn text="Primaria" value={SchoolEducationType.Primaria} selected={educationTypes.includes(SchoolEducationType.Primaria)} setSelected={setEducationTypes}/>
-                    <Btn text="Especial" value={SchoolEducationType.Especial} selected={educationTypes.includes(SchoolEducationType.Especial)} setSelected={setEducationTypes}/>
-                    <Btn text="E.S.O." value={SchoolEducationType.ESO} selected={educationTypes.includes(SchoolEducationType.ESO)} setSelected={setEducationTypes}/>                    
+                    <Btn text="Primaria" value={SchoolEducationType.Primaria} selected={educationTypes.includes(SchoolEducationType.Primaria)} setSelected={setEducationTypes} filter={true}/>
+                    <Btn text="Especial" value={SchoolEducationType.Especial} selected={educationTypes.includes(SchoolEducationType.Especial)} setSelected={setEducationTypes} filter={true}/>
+                    <Btn text="E.S.O." value={SchoolEducationType.ESO} selected={educationTypes.includes(SchoolEducationType.ESO)} setSelected={setEducationTypes} filter={true}/>                    
                 </div>
                 <div className="btns">
-                    <Btn text="Bachillerato" value={SchoolEducationType.Bachillerato} selected={educationTypes.includes(SchoolEducationType.Bachillerato)} setSelected={setEducationTypes}/>
-                    <Btn text="FP" value={SchoolEducationType.FP} selected={educationTypes.includes(SchoolEducationType.FP)} setSelected={setEducationTypes}/>
-                    <Btn text="Adultos" value={SchoolEducationType.Adultos} selected={educationTypes.includes(SchoolEducationType.Adultos)} setSelected={setEducationTypes}/>
+                    <Btn text="Bachillerato" value={SchoolEducationType.Bachillerato} selected={educationTypes.includes(SchoolEducationType.Bachillerato)} setSelected={setEducationTypes} filter={true}/>
+                    <Btn text="FP" value={SchoolEducationType.FP} selected={educationTypes.includes(SchoolEducationType.FP)} setSelected={setEducationTypes} filter={true}/>
+                    <Btn text="Adultos" value={SchoolEducationType.Adultos} selected={educationTypes.includes(SchoolEducationType.Adultos)} setSelected={setEducationTypes} filter={true}/>
                 </div>
             </Step>
 
             <Step number={5} title="Selecciona los tipos de jornada" counterIcon={Counter5}>
                 <div className="btns">
-                    <Btn text="Continua" value={SchoolDayType.Continue} selected={dayTypes.includes(SchoolDayType.Continue)} setSelected={setDayTypes}/>
-                    <Btn text="Partida" value={SchoolDayType.Splitted} selected={dayTypes.includes(SchoolDayType.Splitted)} setSelected={setDayTypes}/>
+                    <Btn text="Continua" value={SchoolDayType.Continue} selected={dayTypes.includes(SchoolDayType.Continue)} setSelected={setDayTypes} filter={true}/>
+                    <Btn text="Partida" value={SchoolDayType.Splitted} selected={dayTypes.includes(SchoolDayType.Splitted)} setSelected={setDayTypes} filter={true}/>
                 </div>
             </Step>
 
             <Step number={6} title="Selecciona los tipos de centros" counterIcon={Counter6}>
                 <div className="btns">
-                    <Btn text="Ordinario" value={SchoolCenterType.ORD} selected={centerTypes.includes(SchoolCenterType.ORD)} setSelected={setCenterTypes}/>
-                    <Btn text="Rural Agrupado" value={SchoolCenterType.CRA} selected={centerTypes.includes(SchoolCenterType.CRA)} setSelected={setCenterTypes}/>
-                    <Btn text="Singular" value={SchoolCenterType.CAES} selected={centerTypes.includes(SchoolCenterType.CAES)} setSelected={setCenterTypes}/>
+                    <Btn text="Ordinario" value={SchoolCenterType.ORD} selected={centerTypes.includes(SchoolCenterType.ORD)} setSelected={setCenterTypes} filter={true}/>
+                    <Btn text="Rural Agrupado" value={SchoolCenterType.CRA} selected={centerTypes.includes(SchoolCenterType.CRA)} setSelected={setCenterTypes} filter={true}/>
+                    <Btn text="Singular" value={SchoolCenterType.CAES} selected={centerTypes.includes(SchoolCenterType.CAES)} setSelected={setCenterTypes} filter={true}/>
                 </div>
             </Step>
             <Step number={7} title="Limita por distancia o tiempo de viaje" counterIcon={Counter7}>
                 <div className="btns">
-                    <Btn text="Distancia" value={FilterType.Distance} selected={filterType === FilterType.Distance} setSelected={setFilterType}/>
-                    <Btn text="Tiempo de viaje" value={FilterType.Time} selected={filterType === FilterType.Time} setSelected={setFilterType}/>                    
+                    <Btn text="Distancia" value={FilterType.Distance} selected={filterType === FilterType.Distance} setSelected={setFilterType} filter={true}/>
+                    <Btn text="Tiempo de viaje" value={FilterType.Time} selected={filterType === FilterType.Time} setSelected={setFilterType} filter={true}/>                    
                 </div>
                 <div className="slider">
                     <div className="slider-ctrl">
