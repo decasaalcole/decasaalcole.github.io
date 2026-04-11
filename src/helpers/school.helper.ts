@@ -12,114 +12,36 @@ import {
   FilterType,
 } from "../types/types";
 
-function filterSchoolsByProvince(
-  schools: School[],
-  provinces: Province[]
-): School[] {
-  if (provinces.length === Object.keys(Province).length) {
-    return schools;
-  }
-  const response = schools.filter((school: School) => {
-    return provinces.includes(school.prov as Province);
-  });
-  return response;
-}
-
-function filterSchoolsByRegimen(
-  schools: School[],
-  regimenTypes: SchoolRegimenType[]
-): School[] {
-  if (regimenTypes.length === Object.keys(SchoolRegimenType).length) {
-    return schools;
-  }
-  const response = schools.filter((school: School) => {
-    return regimenTypes.includes(school.reg as SchoolRegimenType);
-  });
-  return response;
-}
-
-function filterSchoolsByEducation(
-  schools: School[],
-  educationTypes: SchoolEducationType[]
-): School[] {
-  if (educationTypes.length === Object.keys(SchoolEducationType).length) {
-    return schools;
-  }
-  const response = schools.filter((school: School) => {
-    return educationTypes.some((educationType: SchoolEducationType) => {
-      return school.reduNiveles.includes(educationType);
-    });
-  });
-  return response;
-}
-
-function filterSchoolsByCenterType(
-  schools: School[],
-  centerTypes: SchoolCenterType[]
-): School[] {
-  if (centerTypes.length === 0) {
-    return schools;
-  }
-  const response = schools.filter((school: School) => {
-    return centerTypes.some((centerType) => {
-      if (centerType === SchoolCenterType.CRA) {
-        return school.cra;
-      }
-      if (centerType === SchoolCenterType.CAES) {
-        return school.caes;
-      }
-      if (centerType === SchoolCenterType.ORD) {
-        return !school.cra && !school.caes;
-      }
-      return false;
-    });
-  });
-  return response;
-}
-
-function filterSchoolsByDayType(
-  schools: School[],
-  dayType: SchoolDayType[]
-): School[] {
-  if (dayType.length === Object.keys(SchoolDayType).length) {
-    return schools;
-  }
-  const response = schools.filter((school: School) => {
-    return dayType.some((type) => {
-      if (type === SchoolDayType.Continue) {
-        return school.jornadaContinua === true;
-      }
-      if (type === SchoolDayType.Splitted) {
-        return school.jornadaContinua === false;
-      }
-      return false;
-    });
-  });
-  return response;
-}
+const EDUCATION_LEVEL_MAP: Partial<Record<SchoolEducationLevel, SchoolEducationType>> = {
+  [SchoolEducationLevel.EI1]:          SchoolEducationType.Infantil1,
+  [SchoolEducationLevel.EI2]:          SchoolEducationType.Infantil2,
+  [SchoolEducationLevel.EP]:           SchoolEducationType.Primaria,
+  [SchoolEducationLevel.ESP]:          SchoolEducationType.Especial,
+  [SchoolEducationLevel.ESO]:          SchoolEducationType.ESO,
+  [SchoolEducationLevel.ESO1]:         SchoolEducationType.ESO,
+  [SchoolEducationLevel.BACH]:         SchoolEducationType.Bachillerato,
+  [SchoolEducationLevel.CICLOS]:       SchoolEducationType.FP,
+  [SchoolEducationLevel.FP]:           SchoolEducationType.FP,
+  [SchoolEducationLevel.MODULOS]:      SchoolEducationType.FP,
+  [SchoolEducationLevel.PROF_INICIAL]: SchoolEducationType.FP,
+  [SchoolEducationLevel.HOGAR]:        SchoolEducationType.FP,
+  [SchoolEducationLevel.ADU]:          SchoolEducationType.Adultos,
+};
 
 function hasJornadaContinua(school: rawSchool): boolean {
-  return school.info
-    ? school.info.includes("Jornada escolar modificada")
-    : false;
+  return school.info?.includes("Jornada escolar modificada") ?? false;
 }
 
 function isCaesSchool(school: rawSchool): boolean {
-  return school.info
-    ? school.info.some((info: string) => info.includes("Centro Singular"))
-    : false;
+  return school.info?.some((info: string) => info.includes("Centro Singular")) ?? false;
 }
 
 function simplifyRegimen(school: rawSchool): string {
   switch (school.reg) {
-    case RawSchoolRegimenType.Public:
-      return SchoolRegimenType.Public;
-    case RawSchoolRegimenType.Private:
-      return SchoolRegimenType.Private;
-    case RawSchoolRegimenType.PrivateConc:
-      return SchoolRegimenType.PrivateConc;
-    default:
-      return SchoolRegimenType.Public;
+    case RawSchoolRegimenType.Public:     return SchoolRegimenType.Public;
+    case RawSchoolRegimenType.Private:    return SchoolRegimenType.Private;
+    case RawSchoolRegimenType.PrivateConc:return SchoolRegimenType.PrivateConc;
+    default:                              return SchoolRegimenType.Public;
   }
 }
 
@@ -129,9 +51,8 @@ function calculateProvince(school: rawSchool): Province {
     "46": Province.Valencia,
     "03": Province.Alicante,
   };
-
   const prefix = school.cp.toString().slice(0, 2);
-  return provinceMap[prefix] || Province.Valencia; // Default to Valencia if unknown
+  return provinceMap[prefix] || Province.Valencia;
 }
 
 function getSchoolSchedule(school: rawSchool): string[] {
@@ -139,48 +60,12 @@ function getSchoolSchedule(school: rawSchool): string[] {
 }
 
 function calculateNiveles(school: rawSchool): SchoolEducationType[] {
-  if (!school.niveles || school.niveles.length === 0) {
-    return [];
-  }
-  const levels = school.niveles.map((nivel: any) => {
-    if (
-      nivel.nivel === SchoolEducationLevel.EI1
-    ) {
-      return SchoolEducationType.Infantil1;
-    } else if (nivel.nivel === SchoolEducationLevel.EI2) {
-      return SchoolEducationType.Infantil2;
-    } else if (nivel.nivel === SchoolEducationLevel.EP) {
-      return SchoolEducationType.Primaria;
-    } else if (nivel.nivel === SchoolEducationLevel.ESP) {
-      return SchoolEducationType.Especial;
-    } else if (
-      nivel.nivel === SchoolEducationLevel.ESO ||
-      nivel.nivel === SchoolEducationLevel.ESO1
-    ) {
-      return SchoolEducationType.ESO;
-    } else if (nivel.nivel === SchoolEducationLevel.BACH) {
-      return SchoolEducationType.Bachillerato;
-    } else if (
-      nivel.nivel === SchoolEducationLevel.CICLOS ||
-      nivel.nivel === SchoolEducationLevel.FP ||
-      nivel.nivel === SchoolEducationLevel.MODULOS ||
-      nivel.nivel === SchoolEducationLevel.PROF_INICIAL ||
-      nivel.nivel === SchoolEducationLevel.HOGAR
-    ) {
-      return SchoolEducationType.FP;
-    } else if (nivel.nivel === SchoolEducationLevel.ADU) {
-      return SchoolEducationType.Adultos;
-    } else {
-      return "";
-    }
-  });
-  return [
-    ...new Set(
-      levels.filter(
-        (level: string): level is SchoolEducationType => level !== ""
-      )
-    ),
-  ] as SchoolEducationType[];
+  if (!school.niveles || school.niveles.length === 0) return [];
+  return [...new Set(
+    school.niveles
+      .map(n => EDUCATION_LEVEL_MAP[n.nivel as SchoolEducationLevel])
+      .filter((t): t is SchoolEducationType => t !== undefined)
+  )];
 }
 
 export function filterSchools(
@@ -188,46 +73,40 @@ export function filterSchools(
   regimenTypes: SchoolRegimenType[],
   educationTypes: SchoolEducationType[],
   dayTypes: SchoolDayType[],
-  province: Province[],
+  provinces: Province[],
   centerTypes: SchoolCenterType[]
 ): School[] {
-  const filteredSchoolsByProvince = filterSchoolsByProvince(schools, province);
-  const filteredSchoolsByRegimen = filterSchoolsByRegimen(
-    filteredSchoolsByProvince,
-    regimenTypes
+  const skipProvinces  = provinces.length     === Object.keys(Province).length;
+  const skipRegimen    = regimenTypes.length   === Object.keys(SchoolRegimenType).length;
+  const skipEducation  = educationTypes.length === Object.keys(SchoolEducationType).length;
+  const skipDayType    = dayTypes.length       === Object.keys(SchoolDayType).length;
+  const skipCenterType = centerTypes.length    === Object.keys(SchoolCenterType).length;
+
+  return schools.filter(school =>
+    (skipProvinces  || provinces.includes(school.prov as Province)) &&
+    (skipRegimen    || regimenTypes.includes(school.reg as SchoolRegimenType)) &&
+    (skipEducation  || educationTypes.some(t => school.reduNiveles.includes(t))) &&
+    (skipDayType    || dayTypes.some(t =>
+      t === SchoolDayType.Continue ? school.jornadaContinua : !school.jornadaContinua
+    )) &&
+    (skipCenterType || centerTypes.some(t =>
+      t === SchoolCenterType.CRA  ? school.cra :
+      t === SchoolCenterType.CAES ? school.caes :
+      !school.cra && !school.caes
+    ))
   );
-  const filteredSchoolsByEducationType = filterSchoolsByEducation(
-    filteredSchoolsByRegimen,
-    educationTypes
-  );
-  const filteredSchoolsByDayType = filterSchoolsByDayType(
-    filteredSchoolsByEducationType,
-    dayTypes
-  );
-  const filteredSchoolsByCenterType = filterSchoolsByCenterType(
-    filteredSchoolsByDayType,
-    centerTypes
-  );
-  return filteredSchoolsByCenterType;
 }
 
 export function getZipCodeTimes(
-  times: any[],
+  times: Record<string, string[]>,
   cp: number
 ): ToZipCodeDistTime[] | null {
-  const rawZipCodeTimes = times[cp] as string[];
-  if (!rawZipCodeTimes) {
-    return null;
-  } else {
-    return rawZipCodeTimes.map((strTime: string) => {
-      const [zcTo, dist, time] = strTime.split(",");
-      return {
-        zcTo: Number(zcTo),
-        dist: Number(dist),
-        time: Number(time),
-      };
-    });
-  }
+  const rawZipCodeTimes = times[cp];
+  if (!rawZipCodeTimes) return null;
+  return rawZipCodeTimes.map((strTime: string) => {
+    const [zcTo, dist, time] = strTime.split(",");
+    return { zcTo: Number(zcTo), dist: Number(dist), time: Number(time) };
+  });
 }
 
 export function populateSchoolsByZipCodeWithTimeAndDist(
@@ -236,34 +115,33 @@ export function populateSchoolsByZipCodeWithTimeAndDist(
   cp: number
 ): School[] {
   const OFFSET_TIME = 5;
-  const schoolsWithTimesAndDist = schools.map((school) => {
-    const zc = times.find((time) => Number(time.zcTo) === Number(school.cp));
-    if (zc?.dist && zc?.time) {
-      school.dist = zc.dist;
-      school.time = zc.time + OFFSET_TIME;
-    }
-    if (school.cp === cp.toString()) {
-      school.dist = 0;
-      school.time = 0 + OFFSET_TIME;
-    }
-    return school;
-  });
-  const filteredSchools = schoolsWithTimesAndDist.filter(
-    (school) => school.time !== -1
-  );
-  return filteredSchools;
+  return schools
+    .map((school) => {
+      if (school.cp === cp.toString()) {
+        return { ...school, dist: 0, time: OFFSET_TIME };
+      }
+      const zc = times.find((time) => Number(time.zcTo) === Number(school.cp));
+      if (zc?.dist && zc?.time) {
+        return { ...school, dist: zc.dist, time: zc.time + OFFSET_TIME };
+      }
+      return school;
+    })
+    .filter(school => school.time !== -1);
 }
 
 export function sortSchoolsByTime(schools: School[]): School[] {
-  return schools.sort((a, b) => a.time - b.time).map((school, index) => ({ ...school, num: index + 1 }));
+  return schools
+    .sort((a, b) => a.time - b.time)
+    .map((school, index) => ({ ...school, num: index + 1 }));
 }
 
-export function filterSchoolsByTimeOrDistance(schools: School[], filterType: FilterType, filterValue: number): School[] {
-  if(filterType === FilterType.Distance) {
-    return schools.filter(school => school.dist <= filterValue);
-  } else {
-    return schools.filter(school => school.time <= filterValue);
-  }
+export function filterSchoolsByTimeOrDistance(
+  schools: School[],
+  filterType: FilterType,
+  filterValue: number
+): School[] {
+  const field = filterType === FilterType.Distance ? 'dist' : 'time';
+  return schools.filter(school => school[field] <= filterValue);
 }
 
 export function buildAddress(school: School) {
@@ -274,43 +152,26 @@ export function prepareSchools(
   rawSchools: rawSchool[],
   craSchools: string[]
 ): School[] {
-  const schools = rawSchools.map((rawSchool) => {
-    const cra = craSchools.includes(rawSchool.codigo);
-    const caes = isCaesSchool(rawSchool);
-    const jornadaContinua = hasJornadaContinua(rawSchool);
-    const horario = getSchoolSchedule(rawSchool);
-    const reduNiveles = calculateNiveles(rawSchool);
-    const reg = simplifyRegimen(rawSchool);
-    const prov = calculateProvince(rawSchool);
-
-    return {
-      ...rawSchool,
-      horario,
-      dist: -1,
-      time: -1,
-      cra,
-      caes,
-      jornadaContinua,
-      reduNiveles,
-      reg,
-      prov,
-    };
-  }) as School[];
-  return schools;
+  return rawSchools.map((rawSchool) => ({
+    ...rawSchool,
+    horario:       getSchoolSchedule(rawSchool),
+    dist:          -1,
+    time:          -1,
+    cra:           craSchools.includes(rawSchool.codigo),
+    caes:          isCaesSchool(rawSchool),
+    jornadaContinua: hasJornadaContinua(rawSchool),
+    reduNiveles:   calculateNiveles(rawSchool),
+    reg:           simplifyRegimen(rawSchool),
+    prov:          calculateProvince(rawSchool),
+  })) as School[];
 }
 
 export function getMaxTime(codes: ToZipCodeDistTime[] | null): number {
-  if (!codes) {
-    return 300;
-  }
-  const maxTime = codes.map(code => code.time).reduce((max, time) => Math.max(max, time), 0);
-  return Math.ceil(maxTime / 10) * 10;
+  if (!codes) return 300;
+  return Math.ceil(codes.reduce((max, c) => Math.max(max, c.time), 0) / 10) * 10;
 }
 
 export function getMaxDistance(codes: ToZipCodeDistTime[] | null): number {
-  if (!codes) {
-    return 250;
-  }
-  const maxDistance = codes.map(code => code.dist).reduce((max, dist) => Math.max(max, dist), 0);
-  return Math.ceil(maxDistance / 10) * 10;
+  if (!codes) return 250;
+  return Math.ceil(codes.reduce((max, c) => Math.max(max, c.dist), 0) / 10) * 10;
 }

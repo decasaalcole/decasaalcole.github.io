@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'react';
 
-import maplibregl, { LngLatLike } from 'maplibre-gl';
+import maplibregl from 'maplibre-gl';
 import type { ExpressionSpecification } from 'maplibre-gl';
 
 import { moreInfo } from './card/CardSchool';
+import { RawSchoolRegimenType, SchoolProperties } from '../types/types';
 import schools from '../assets/data/schools.json';
 
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -25,18 +26,18 @@ export function Map() {
     const mapStyle = `https://maps.black/styles/openstreetmap-openmaptiles/openfreemap/${mapStyleTheme}/style.json`;
 
 
-    const mapColor = (mapStyleTheme: 'fiord' | 'positron'): ExpressionSpecification => {
-        const styles: { fiord: (string | number)[]; positron: (string | number)[] } = {
+    const mapColor = (theme: 'fiord' | 'positron'): ExpressionSpecification => {
+        const styles: Record<'fiord' | 'positron', [string, string, string, string, string, string, string]> = {
             'fiord': [
-                'PÚBLICO', '#ccebc5',
-                'PRIVADO', '#fbb4ae',
-                'PRIVADO - CONCERTADO', '#b3cde3',
+                RawSchoolRegimenType.Public, '#ccebc5',
+                RawSchoolRegimenType.Private, '#fbb4ae',
+                RawSchoolRegimenType.PrivateConc, '#b3cde3',
                 '#FF0000'
             ],
             'positron': [
-                'PÚBLICO', '#66c2a5',
-                'PRIVADO', '#8da0cb',
-                'PRIVADO - CONCERTADO', '#fc8d62',
+                RawSchoolRegimenType.Public, '#66c2a5',
+                RawSchoolRegimenType.Private, '#8da0cb',
+                RawSchoolRegimenType.PrivateConc, '#fc8d62',
                 '#FF0000'
             ]
         };
@@ -44,8 +45,8 @@ export function Map() {
         return [
             'match',
             ['get', 'reg'],
-            ...styles[mapStyleTheme]
-        ] as unknown as ExpressionSpecification;
+            ...styles[theme]
+        ] as ExpressionSpecification;
     }
 
     useEffect(() => {
@@ -86,22 +87,15 @@ export function Map() {
                 }))
             };
 
-            // Sort the schools by regimen,
-            // first PRIVADO, then PRIVADO - CONCERTADO, and finally PÚBLICO
-            // This is done to highilght the public schools first, damn it.
-            schoolsData.features.sort((a, b) => {
-                const toNum = (reg: string) => {
-                    if (reg === 'PRIVADO') return 0;
-                    if (reg === 'PRIVADO - CONCERTADO') return 1;
-                    if (reg === 'PÚBLICO') return 2;
-                    return 3;
-                };
-                const numA = toNum(a.properties.reg);
-                const numB = toNum(b.properties.reg);
-                if (numA < numB) return -1;
-                if (numA > numB) return 1;
-                return 0;
-            });
+            // Sort so public schools render last (on top)
+            const regimenOrder: Partial<Record<RawSchoolRegimenType, number>> = {
+                [RawSchoolRegimenType.Private]: 0,
+                [RawSchoolRegimenType.PrivateConc]: 1,
+                [RawSchoolRegimenType.Public]: 2,
+            };
+            schoolsData.features.sort((a, b) =>
+                (regimenOrder[a.properties.reg as RawSchoolRegimenType] ?? 3) - (regimenOrder[b.properties.reg as RawSchoolRegimenType] ?? 3)
+            );
 
 
             map.addSource('schools', {
@@ -129,13 +123,16 @@ export function Map() {
         });
 
 
+        
+
         // Add a popup on click
         map.on('click', 'schools', (e) => {
-            if (e !== undefined && e.features &&
+            if (e.features &&
                 e.features.length > 0 && e.features[0].geometry &&
                 e.features[0].geometry.type === 'Point') {
-                const coordinates = e.features[0].geometry.coordinates.slice() as LngLatLike;
-                const properties = e.features[0].properties;
+                const [lng, lat] = e.features[0].geometry.coordinates;
+                const coordinates: [number, number] = [lng, lat];
+                const properties = e.features[0].properties as SchoolProperties;
 
                 // Create a popup
                 new maplibregl.Popup()
@@ -152,7 +149,7 @@ export function Map() {
                     .addTo(map);
             }
         });
-    }, [mapContainer.current]);
+    }, []);
 
     return (
         <div className="map-wrap">
