@@ -156,12 +156,14 @@ export interface rawSchool {
 }
 
 export interface School extends rawSchool {
-    dist: number;            
-    time: number;            
-    cra: boolean;            
-    caes: boolean;          
-    jornadaContinua: boolean;  
+    dist: number;
+    time: number;
+    cra: boolean;
+    caes: boolean;
+    jornadaContinua: boolean;
     reduNiveles: string[];
     num: number;
 }
 
+
+export type SchoolProperties = { id: string; cp: string; reg: string; deno: string; muni: string; tel?: string }
