@@ -34,7 +34,7 @@ function App() {
 
   // Prepare schools data
   useEffect(() => {
-    const schools = prepareSchools(baseSchools as rawSchool[], craSchools as string[]);
+    const schools = prepareSchools(baseSchools as unknown as rawSchool[], craSchools as string[]);
     setRawSchools(schools);
   }, []);
 
