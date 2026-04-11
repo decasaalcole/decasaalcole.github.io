@@ -13,18 +13,7 @@ export function moreInfo(codigo: string): string {
 }
 
 export function CardSchool({ school }: { school: School }) {
-
-    const handleCall = () => {
-        window.open(`tel:${school.tel}`, '_blank');
-    }
-
-    const handleMap = () => {
-        window.open(`https://www.google.com/maps/search/?api=1&query=${school.lat},${school.long}`, '_blank');
-    }
-
-    const handleMoreInfo = () => {
-        window.open(moreInfo(school.codigo), '_blank');
-    }
+    const hasTel = school.tel?.toString().trim() !== '';
 
     return (
         <div className="card-school">
@@ -56,7 +45,7 @@ export function CardSchool({ school }: { school: School }) {
                     <img src={Home} alt="Home" />
                     <p>{buildAddress(school)}</p>
                 </div>
-                {school.tel && school.tel.toString().trim() !== '' && (
+                {hasTel && (
                     <div className="phone">
                         <img src={Phone} alt="Phone" />
                         <p>{school.tel}</p>
@@ -78,11 +67,11 @@ export function CardSchool({ school }: { school: School }) {
                 )}
             </div>
             <div className="card-school-footer">
-                {school.tel && school.tel.toString().trim() !== '' && (
-                    <CardBtn text="Llamar" action={handleCall} />
+                {hasTel && (
+                    <CardBtn text="Llamar" action={() => window.open(`tel:${school.tel}`, '_blank')} />
                 )}
-                <CardBtn text="Mapa" action={handleMap} />
-                <CardBtn text="Más Info" action={handleMoreInfo} />
+                <CardBtn text="Mapa" action={() => window.open(`https://www.google.com/maps/search/?api=1&query=${school.lat},${school.long}`, '_blank')} />
+                <CardBtn text="Más Info" action={() => window.open(moreInfo(school.codigo), '_blank')} />
             </div>
         </div>
     )

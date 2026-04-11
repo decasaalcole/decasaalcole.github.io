@@ -86,22 +86,11 @@ export function Map() {
                 }))
             };
 
-            // Sort the schools by regimen,
-            // first PRIVADO, then PRIVADO - CONCERTADO, and finally PÚBLICO
-            // This is done to highilght the public schools first, damn it.
-            schoolsData.features.sort((a, b) => {
-                const toNum = (reg: string) => {
-                    if (reg === 'PRIVADO') return 0;
-                    if (reg === 'PRIVADO - CONCERTADO') return 1;
-                    if (reg === 'PÚBLICO') return 2;
-                    return 3;
-                };
-                const numA = toNum(a.properties.reg);
-                const numB = toNum(b.properties.reg);
-                if (numA < numB) return -1;
-                if (numA > numB) return 1;
-                return 0;
-            });
+            // Sort so public schools render last (on top)
+            const regimenOrder: Record<string, number> = { 'PRIVADO': 0, 'PRIVADO - CONCERTADO': 1, 'PÚBLICO': 2 };
+            schoolsData.features.sort((a, b) =>
+                (regimenOrder[a.properties.reg] ?? 3) - (regimenOrder[b.properties.reg] ?? 3)
+            );
 
 
             map.addSource('schools', {
@@ -152,7 +141,7 @@ export function Map() {
                     .addTo(map);
             }
         });
-    }, [mapContainer.current]);
+    }, []);
 
     return (
         <div className="map-wrap">

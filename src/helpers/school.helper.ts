@@ -29,15 +29,11 @@ const EDUCATION_LEVEL_MAP: Partial<Record<SchoolEducationLevel, SchoolEducationT
 };
 
 function hasJornadaContinua(school: rawSchool): boolean {
-  return school.info
-    ? school.info.includes("Jornada escolar modificada")
-    : false;
+  return school.info?.includes("Jornada escolar modificada") ?? false;
 }
 
 function isCaesSchool(school: rawSchool): boolean {
-  return school.info
-    ? school.info.some((info: string) => info.includes("Centro Singular"))
-    : false;
+  return school.info?.some((info: string) => info.includes("Centro Singular")) ?? false;
 }
 
 function simplifyRegimen(school: rawSchool): string {
@@ -144,9 +140,8 @@ export function filterSchoolsByTimeOrDistance(
   filterType: FilterType,
   filterValue: number
 ): School[] {
-  return filterType === FilterType.Distance
-    ? schools.filter(school => school.dist <= filterValue)
-    : schools.filter(school => school.time <= filterValue);
+  const field = filterType === FilterType.Distance ? 'dist' : 'time';
+  return schools.filter(school => school[field] <= filterValue);
 }
 
 export function buildAddress(school: School) {
