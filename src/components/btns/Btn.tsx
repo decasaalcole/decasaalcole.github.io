@@ -1,7 +1,7 @@
-import { BtnProps } from "../../types/types";
+import { BtnProps, BtnValue } from "../../types/types";
 import './Btn.css';
 
-export function Btn({ text, value, selected, setSelected, filter }: BtnProps) {
+export function Btn<T extends BtnValue>({ text, value, selected, setSelected, filter }: BtnProps<T>) {
     const handleClick = () => {
         if (setSelected) {
             setSelected(value);

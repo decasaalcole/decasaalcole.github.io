@@ -14,6 +14,17 @@ import { Map } from './components/Map';
 
 import './App.css';
 
+function makeToggleHandler<T>(
+  setter: (updater: (prev: T[]) => T[]) => void,
+  fallback: T[]
+) {
+  return (value: T) =>
+    setter(prev => {
+      const next = prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value];
+      return next.length === 0 ? fallback : next;
+    });
+}
+
 function App() {
   // schools
   const [rawSchools, setRawSchools] = useState<School[]>([]);
@@ -40,7 +51,7 @@ function App() {
 
   // prepare max time and max distance
   useEffect(() => {
-    const zipCodeTimes = getZipCodeTimes(travelTimes as any, zipCode);
+    const zipCodeTimes = getZipCodeTimes(travelTimes as Record<string, string[]>, zipCode);
     const maxTime = getMaxTime(zipCodeTimes);
     const maxDistance = getMaxDistance(zipCodeTimes);
     setMaxTime(maxTime);
@@ -66,7 +77,7 @@ function App() {
     }
 
     const filterData = setTimeout(() => {
-      const zipCodeTimes = getZipCodeTimes(travelTimes as any, zipCode);
+      const zipCodeTimes = getZipCodeTimes(travelTimes as Record<string, string[]>, zipCode);
 
       if (!zipCodeTimes) {
         setSchools([]);
@@ -112,79 +123,12 @@ function App() {
     filterValue
   ]);
 
-  const handleRegimenTypeChange = (value: SchoolRegimenType) => {
-    if (regimenTypes.includes(value)) {
-      setRegimenTypes(prev => prev.filter(regimen => regimen !== value));
-    } else {
-      setRegimenTypes(prev => [...prev, value]);
-    }
-    if (regimenTypes.length === 0) {
-      setRegimenTypes([SchoolRegimenType.Public, SchoolRegimenType.Private, SchoolRegimenType.PrivateConc]);
-    }
-  }
-
-  const handleEducationTypeChange = (value: SchoolEducationType) => {
-    if (educationTypes.includes(value)) {
-      setEducationTypes(prev => prev.filter(type => type !== value));
-    } else {
-      setEducationTypes(prev => [...prev, value]);
-    }
-    if (educationTypes.length === 0) {
-      setEducationTypes([SchoolEducationType.Primaria]);
-    }
-  }
-
-  const handleDayTypesChange = (value: SchoolDayType) => {
-    if (dayTypes.includes(value)) {
-      setDayTypes(prev => prev.filter(dayType => dayType !== value));
-    } else {
-      setDayTypes(prev => [...prev, value]);
-    }
-    if (dayTypes.length === 0) {
-      setDayTypes([SchoolDayType.Continue, SchoolDayType.Splitted]);
-    }
-  }
-
-  const handleCenterTypeChange = (value: SchoolCenterType) => {
-    if (centerTypes.includes(value)) {
-      setCenterTypes(prev => prev.filter(center => center !== value));
-    } else {
-      setCenterTypes(prev => [...prev, value]);
-    }
-    if (centerTypes.length === 0) {
-      setCenterTypes([SchoolCenterType.ORD]);
-    }
-  }
-
-  const handleProvinceChange = (value: Province) => {
-    if (provinces.includes(value)) {
-      setProvinces(prev => prev.filter(prov => prov !== value));
-    } else {
-      setProvinces(prev => [...prev, value]);
-    }
-  }
-
-  const handleFilterTypeChange = (value: FilterType) => {
-    setFilterType(value);
-  }
-
-  if (regimenTypes.length === 0) {
-    setRegimenTypes([SchoolRegimenType.Public, SchoolRegimenType.Private, SchoolRegimenType.PrivateConc]);
-  }
-  if (educationTypes.length === 0) {
-    setEducationTypes([SchoolEducationType.Primaria, SchoolEducationType.Infantil1, SchoolEducationType.Infantil2, SchoolEducationType.Especial, SchoolEducationType.ESO, SchoolEducationType.Bachillerato, SchoolEducationType.FP, SchoolEducationType.Adultos]);
-  }
-
-  if (dayTypes.length === 0) {
-    setDayTypes([SchoolDayType.Continue, SchoolDayType.Splitted]);
-  }
-  if (provinces.length === 0) {
-    setProvinces([Province.Castellon, Province.Valencia, Province.Alicante]);
-  }
-
-  if (centerTypes.length === 0) {
-    setCenterTypes([SchoolCenterType.ORD]);
-  }
+  const handleRegimenTypeChange   = makeToggleHandler(setRegimenTypes,  [SchoolRegimenType.Public, SchoolRegimenType.Private, SchoolRegimenType.PrivateConc]);
+  const handleEducationTypeChange  = makeToggleHandler(setEducationTypes, [SchoolEducationType.Primaria]);
+  const handleDayTypesChange       = makeToggleHandler(setDayTypes,       [SchoolDayType.Continue, SchoolDayType.Splitted]);
+  const handleCenterTypeChange     = makeToggleHandler(setCenterTypes,    [SchoolCenterType.ORD]);
+  const handleProvinceChange       = makeToggleHandler(setProvinces,      [Province.Castellon, Province.Valencia, Province.Alicante]);
+  const handleFilterValueChange    = (value: number | number[]) => setFilterValue(Array.isArray(value) ? value[0] : value);
 
   return (
     <>
@@ -211,9 +155,9 @@ function App() {
               centerTypes={centerTypes}
               setCenterTypes={handleCenterTypeChange}
               filterType={filterType}
-              setFilterType={handleFilterTypeChange}
+              setFilterType={setFilterType}
               filterValue={filterValue}
-              setFilterValue={setFilterValue}
+              setFilterValue={handleFilterValueChange}
               maxTime={maxTime}
               maxDistance={maxDistance}
             />

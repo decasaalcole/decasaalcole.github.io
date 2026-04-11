@@ -50,32 +50,34 @@ export interface StepProps {
     counterIcon: string;
 }
 
+export type BtnValue = SchoolRegimenType | SchoolEducationType | SchoolDayType | Province | SchoolCenterType | FilterType;
+
 export interface FinderProps {
     zipCode: number;
     setZipCode: (zipCode: number) => void;
     regimenTypes: SchoolRegimenType[];
-    setRegimenTypes: any;
+    setRegimenTypes: (value: SchoolRegimenType) => void;
     educationTypes: SchoolEducationType[];
-    setEducationTypes: any;
+    setEducationTypes: (value: SchoolEducationType) => void;
     dayTypes: SchoolDayType[];
-    setDayTypes: any;
+    setDayTypes: (value: SchoolDayType) => void;
     provinces: Province[];
-    setProvinces: any;
+    setProvinces: (value: Province) => void;
     centerTypes: SchoolCenterType[];
-    setCenterTypes: any;
+    setCenterTypes: (value: SchoolCenterType) => void;
     filterType: FilterType;
-    setFilterType: any;
+    setFilterType: (value: FilterType) => void;
     filterValue: number;
-    setFilterValue: any;
+    setFilterValue: (value: number | number[]) => void;
     maxTime: number;
     maxDistance: number;
 }
 
-export interface BtnProps {
+export interface BtnProps<T extends BtnValue = BtnValue> {
     text: string;
-    value: SchoolRegimenType | SchoolEducationType | SchoolDayType | Province | SchoolCenterType | FilterType;
+    value: T;
     selected: boolean;
-    setSelected: any;
+    setSelected: (value: T) => void;
     filter?: boolean;
 }
 
@@ -86,7 +88,7 @@ export interface CardBtnProps {
 
 export interface PaginationProps {
     page: number;
-    modifyPage: any;
+    modifyPage: (page: number) => void;
     disablePrev: boolean;
     disableNext: boolean;
 }

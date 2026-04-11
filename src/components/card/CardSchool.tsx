@@ -41,7 +41,7 @@ export function CardSchool({ school }: { school: School }) {
                         <img src={Car} alt="Car" />
                     </div>
                     <div className="time">
-                        <div>{school.time === 0 ? '5' : `${school.time}`}</div>
+                        <div>{school.time}</div>
                         <div className="units">min</div>
                     </div>
                     <div className="km">

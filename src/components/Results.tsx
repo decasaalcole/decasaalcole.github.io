@@ -8,20 +8,15 @@ import { useState, useEffect } from 'react';
 
 export function Results({ schools }: { schools: School[] }) {
 
-    const pageSize = 20;
+    const PAGE_SIZE = 20;
 
     const [page, setPage] = useState(1);
-    const [schoolsPage, setSchoolsPage] = useState<School[]>([]);
 
     useEffect(() => {
         setPage(1);
     }, [schools]);
 
-    useEffect(() => {
-        const start = (page - 1) * pageSize;
-        const end = start + pageSize;
-        setSchoolsPage(schools.slice(start, end));
-    }, [page, schools]);
+    const schoolsPage = schools.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
     return (
         <>
@@ -36,11 +31,11 @@ export function Results({ schools }: { schools: School[] }) {
                 </div>
             ) : (
                 <>
-                    <Pagination page={page} modifyPage={setPage} disablePrev={page === 1} disableNext={page === Math.ceil(schools.length / pageSize)} />
+                    <Pagination page={page} modifyPage={setPage} disablePrev={page === 1} disableNext={page === Math.ceil(schools.length / PAGE_SIZE)} />
                     {schoolsPage.map((school) => (
                         <CardSchool key={school.codigo} school={school} />
                     ))}
-                    <Pagination page={page} modifyPage={setPage} disablePrev={page === 1} disableNext={page === Math.ceil(schools.length / pageSize)} />
+                    <Pagination page={page} modifyPage={setPage} disablePrev={page === 1} disableNext={page === Math.ceil(schools.length / PAGE_SIZE)} />
                 </>
             )}
             {schools.length > 0 && (
