@@ -8,7 +8,7 @@ import craSchools from './assets/data/schools_cra.json';
 import travelTimes from './assets/data/travel_times.json';
 import { filterSchools, prepareSchools, getZipCodeTimes, sortSchoolsByTime, populateSchoolsByZipCodeWithTimeAndDist, filterSchoolsByTimeOrDistance, getMaxDistance, getMaxTime } from './helpers/school.helper.ts';
 import { Footer } from './components/Footer.tsx';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, NavLink, useLocation } from 'react-router-dom';
 import { About } from './components/About';
 import { Map } from './components/Map';
 
@@ -130,13 +130,16 @@ function App() {
   const handleProvinceChange       = makeToggleHandler(setProvinces,      [Province.Castellon, Province.Valencia, Province.Alicante]);
   const handleFilterValueChange    = (value: number | number[]) => setFilterValue(Array.isArray(value) ? value[0] : value);
 
+  const { pathname } = useLocation();
+  const hideFooter = pathname === '/mapa' && window.innerWidth < 700;
+
   return (
     <>
       <Header />
-      <nav style={{ textAlign: 'center', margin: '1rem 0' }}>
-        <Link to="/">Inicio</Link>
-        <Link to="/mapa">Mapa</Link>
-        <Link to="/acerca-de">Acerca de</Link>
+      <nav>
+        <NavLink to="/" end>Inicio</NavLink>
+        <NavLink to="/mapa">Mapa</NavLink>
+        <NavLink to="/acerca-de">Acerca de</NavLink>
       </nav>
       <Routes>
         <Route path="/" element={
@@ -168,7 +171,7 @@ function App() {
         <Route path="/mapa" element={<Map />} />
         <Route path="*" element={<h2 style={{ textAlign: 'center', marginBottom: '3em' }}>404 - Página no encontrada</h2>} />
       </Routes>
-      <Footer />
+      {!hideFooter && <Footer />}
     </>
   )
 }

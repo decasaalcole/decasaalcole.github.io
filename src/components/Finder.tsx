@@ -81,9 +81,9 @@ export function Finder({
 
             <Step number={3} title="Selecciona los régimenes de los centros" counterIcon={COUNTERS[2]}>
                 <div className="btns">
-                    <Btn text="Público" value={SchoolRegimenType.Public} selected={regimenTypes.includes(SchoolRegimenType.Public)} setSelected={setRegimenTypes} filter />
-                    <Btn text="Privado" value={SchoolRegimenType.Private} selected={regimenTypes.includes(SchoolRegimenType.Private)} setSelected={setRegimenTypes} filter />
-                    <Btn text="Priv. concertado" value={SchoolRegimenType.PrivateConc} selected={regimenTypes.includes(SchoolRegimenType.PrivateConc)} setSelected={setRegimenTypes} filter />
+                    <Btn text="Público" value={SchoolRegimenType.Public} selected={regimenTypes.includes(SchoolRegimenType.Public)} setSelected={setRegimenTypes} filter color="var(--color-pub)" />
+                    <Btn text="Privado" value={SchoolRegimenType.Private} selected={regimenTypes.includes(SchoolRegimenType.Private)} setSelected={setRegimenTypes} filter color="var(--color-priv)" />
+                    <Btn text="Priv. concertado" value={SchoolRegimenType.PrivateConc} selected={regimenTypes.includes(SchoolRegimenType.PrivateConc)} setSelected={setRegimenTypes} filter color="var(--color-conc)" />
                 </div>
             </Step>
 

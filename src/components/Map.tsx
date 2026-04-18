@@ -56,7 +56,10 @@ export function Map() {
             container: mapContainer.current,
             style: mapStyle,
             center: [lng, lat],
-            zoom: zoom
+            zoom: zoom,
+            attributionControl: {
+                customAttribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors | Tiles by <a href="https://maps.black" target="_blank">maps.black</a>'
+            }
         });
 
         // When ready, load the schools data

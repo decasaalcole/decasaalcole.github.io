@@ -1,12 +1,26 @@
 .about-container {
-  max-width: 700px;
-  margin: 1rem auto;
-  padding: 0.5rem 1rem;
+  max-width: 680px;
+  margin: 24px auto 40px;
+  padding: 0 20px;
+  color: var(--dark-blue-gray-color);
+  line-height: 1.6;
 }
+
 .about-container ul {
-    padding-left: 20px;
+  padding-left: 20px;
 }
+
 .about-container a {
   color: var(--primary-color);
   text-decoration: underline;
+}
+
+.about-container a:hover {
+  color: var(--primary-color-hover);
+}
+
+@media (prefers-color-scheme: dark) {
+  .about-container {
+    color: #F1F5F9;
+  }
 }

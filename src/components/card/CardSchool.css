@@ -1,266 +1,353 @@
 .card-school {
-  padding: 15px 10px 3px 10px;
-  padding-left: 15px;
   background-color: var(--white-color);
   width: 93%;
-  border-radius: 10px;
+  border-radius: 12px;
+  border-top: 5px solid var(--border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07), 0 1px 2px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.15s;
 
-  @media screen and (min-width: 1024px) {
-    width: 60%;
+  &:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
   }
 
+  /* sm — large phones */
+  @media screen and (min-width: 480px) {
+    width: 88%;
+  }
+
+  /* md — tablet */
+  @media screen and (min-width: 768px) {
+    width: 75%;
+  }
+
+  /* lg — small desktop */
+  @media screen and (min-width: 1024px) {
+    width: 62%;
+  }
+
+  /* xl — large desktop */
+  @media screen and (min-width: 1280px) {
+    width: 50%;
+  }
+
+  &[data-regimen="PUB"]  { border-top-color: var(--color-pub); }
+  &[data-regimen="CONC"] { border-top-color: var(--color-conc); }
+  &[data-regimen="PRIV"] { border-top-color: var(--color-priv); }
+
+  /* ── Header: badges + distance ── */
   .card-school-header {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
+    padding: 11px 14px 0;
+    gap: 8px;
 
     .code-regimen {
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: center;
       gap: 5px;
+      flex-wrap: wrap;
+      min-width: 0;
 
       .num {
-        font-size: 14px;
-        font-weight: bold;
-        color: var(--white-color);
+        font-size: 12px;
+        font-weight: 700;
+        color: #FFFFFF;
+        padding: 2px 9px;
+        border-radius: 10px;
         margin: 0;
-        background-color: var(--primary-color);
-        padding: 3px 10px;
-        border-radius: 0px 10px 10px 0px;
-        margin-left: -15px;
-        padding-left: 5px;
+        flex-shrink: 0;
       }
 
       .code {
-        font-size: 14px;
-        font-weight: bold;
-        color: var(--secondary-color);
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--dark-gray-color);
         margin: 0;
-        background-color: var(--light-gray-color);
-        padding: 3px 10px;
-        border-radius: 5px;
       }
 
       .regimen {
-        font-size: 14px;
-        font-weight: bold;
-        color: var(--primary-color);
+        font-size: 11px;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 8px;
         margin: 0;
         background-color: var(--light-gray-color);
-        padding: 3px 8px;
-        border-radius: 5px;
+        color: var(--dark-gray-color);
       }
 
-      .cra {
-        font-size: 14px;
-        font-weight: bold;
+      .cra, .caes {
+        font-size: 11px;
+        font-weight: 700;
         color: var(--red-color);
         margin: 0;
-        background-color: var(--light-gray-color);
-        padding: 3px 8px;
-        border-radius: 5px;
-      }
-
-      .caes {
-        font-size: 14px;
-        font-weight: bold;
-        color: var(--red-color);
-        margin: 0;
-        background-color: var(--light-gray-color);
-        padding: 3px 8px;
-        border-radius: 5px;
       }
     }
 
+    /* Distance: plain text, no colored pill backgrounds */
     .distance {
       display: flex;
-      flex-direction: row;
       align-items: center;
-      justify-content: center;
-      gap: 0px;
+      gap: 0;
       font-size: 12px;
-      color: var(--white-color);
-      font-weight: bold;
+      font-weight: 600;
+      color: var(--dark-gray-color);
+      flex-shrink: 0;
+      white-space: nowrap;
+
+      .car {
+        img {
+          width: 14px;
+          height: 14px;
+          vertical-align: middle;
+          margin-right: 4px;
+          position: relative;
+          top: -1px;
+        }
+      }
 
       .time {
-        background-color: var(--primary-color);
-        padding: 3px 5px;
-        border-radius: 5px 0 0 5px;
         display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
+        align-items: baseline;
         gap: 2px;
+        font-weight: 700;
+        color: var(--dark-blue-gray-color);
+        background: none;
+        padding: 0;
+        border-radius: 0;
 
         .units {
           font-size: 10px;
+          font-weight: 400;
+          color: var(--dark-gray-color);
         }
       }
 
       .km {
-        background-color: var(--secondary-color);
-        padding: 3px 5px;
-        border-radius: 0 5px 5px 0;
         display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
+        align-items: baseline;
         gap: 2px;
+        color: var(--dark-gray-color);
+        background: none;
+        padding: 0;
+        border-radius: 0;
+
+        &::before {
+          content: '·';
+          margin: 0 4px;
+          font-weight: 400;
+        }
 
         .units {
           font-size: 10px;
         }
       }
-
-      .car {
-        img {
-          margin-top: 3px;
-          margin-right: 3px;
-          width: 20px;
-          height: 20px;
-        }
-      }
     }
   }
 
+  /* ── Body: school info ── */
   .card-school-body {
+    padding: 10px 14px 4px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    width: 100%;
-    gap: 12px;
-    margin-left: 5px;
-    margin-top: 5px;
-    margin-right: 5px;
+    gap: 7px;
 
     .title {
-      font-size: 18px;
-      font-weight: bold;
+      font-size: 16px;
+      font-weight: 700;
       color: var(--dark-blue-gray-color);
       margin: 0;
+      line-height: 1.35;
     }
 
     div {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 7px;
-      flex-direction: row;
       color: var(--dark-gray-color);
       margin: 0;
-      justify-content: center;
 
       p {
         margin: 0;
+        line-height: 1.4;
       }
 
       img {
-        width: 20px;
-        height: 20px;
+        width: 14px;
+        height: 14px;
+        margin-top: 2px;
+        flex-shrink: 0;
       }
     }
 
-    .address,
-    .phone,
-    .schedule {
-      font-size: 15px;
+    .address, .phone, .schedule {
+      font-size: 13px;
     }
 
     .education {
-      font-size: 14px;
+      font-size: 12px;
 
       .education-levels {
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-start;
-        gap: 5px;
+        gap: 2px;
+
+        p {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+        }
+
+        .units-badge {
+          font-size: 10px;
+          font-weight: 600;
+          color: var(--dark-gray-color);
+          background: var(--light-gray-color);
+          border-radius: 4px;
+          padding: 1px 5px;
+          flex-shrink: 0;
+        }
       }
     }
   }
 
+  /* ── Footer: action buttons ── */
   .card-school-footer {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 5px;
-    flex-direction: row;
-    margin-top: 10px;
-    margin-bottom: 10px;
-
-    width: 100%;
+    gap: 6px;
+    padding: 8px 14px 11px;
+    margin-top: 6px;
+    border-top: 1px solid var(--border-light-color);
+    box-sizing: border-box;
   }
 
-  /* dark theme color overrides */
-  @media (prefers-color-scheme: dark) {
-    background-color: var(--dark-blue-gray-color);
-    color: var(--white-color);
-
+  /* ── Larger fonts on desktop ── */
+  @media screen and (min-width: 1280px) {
     .card-school-header {
+      padding: 14px 18px 0;
+
       .code-regimen {
-        .num {
-          background-color: var(--primary-color);
-        }
-
-        .code,
-        .regimen,
-        .cra,
-        .caes {
-          background-color: var(--dark-blue-gray-color);
-        }
-
-        .code {
-          color: var(--warning-color);
-        }
+        .num  { font-size: 13px; }
+        .code { font-size: 13px; }
+        .regimen, .cra, .caes { font-size: 13px; }
       }
 
-      .distance {
-
-        .time,
-        .km {
-          background-color: var(--primary-color);
-        }
-
-        .car img {
-          filter: brightness(300%);
-        }
-      }
+      .distance { font-size: 14px; }
     }
 
     .card-school-body {
-      color: var(--white-color);
+      padding: 12px 18px 6px;
+      gap: 9px;
 
-      .title {
-        color: var(--white-color);
+      .title { font-size: 18px; }
+
+      .address, .phone, .schedule { font-size: 15px; }
+
+      .education { font-size: 14px; }
+
+      div img { width: 16px; height: 16px; }
+    }
+
+    .card-school-footer {
+      padding: 10px 18px 13px;
+    }
+  }
+
+  /* ── Regimen badge tinting ── */
+  &[data-regimen="PUB"]  .regimen { background-color: #EFF6FF; color: var(--color-pub); }
+  &[data-regimen="CONC"] .regimen { background-color: #F5F3FF; color: var(--color-conc); }
+  &[data-regimen="PRIV"] .regimen { background-color: #FFFBEB; color: var(--color-priv); }
+
+  &[data-regimen="PUB"]  .num { background-color: var(--color-pub); }
+  &[data-regimen="CONC"] .num { background-color: var(--color-conc); }
+  &[data-regimen="PRIV"] .num { background-color: var(--color-priv); }
+
+  /* ── Icon colors by regimen — PUB: blue, CONC: purple, PRIV: amber ── */
+  &[data-regimen="PUB"] .card-school-body div img,
+  &[data-regimen="PUB"] .distance .car img {
+    filter: brightness(0) saturate(100%) invert(44%) sepia(90%) saturate(700%) hue-rotate(201deg) brightness(104%) contrast(96%);
+  }
+  &[data-regimen="CONC"] .card-school-body div img,
+  &[data-regimen="CONC"] .distance .car img {
+    filter: brightness(0) saturate(100%) invert(24%) sepia(99%) saturate(1000%) hue-rotate(261deg) brightness(91%) contrast(103%);
+  }
+  &[data-regimen="PRIV"] .card-school-body div img,
+  &[data-regimen="PRIV"] .distance .car img {
+    filter: brightness(0) saturate(100%) invert(66%) sepia(84%) saturate(700%) hue-rotate(1deg) brightness(104%) contrast(100%);
+  }
+
+  /* ── Dark mode ── */
+  @media (prefers-color-scheme: dark) {
+    background-color: #1E293B;
+    border-top: 5px solid #334155;
+    box-shadow: none;
+
+    &[data-regimen="PUB"]  { border-top-color: var(--color-pub); }
+    &[data-regimen="CONC"] { border-top-color: var(--color-conc); }
+    &[data-regimen="PRIV"] { border-top-color: var(--color-priv); }
+
+    &:hover {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-school-header {
+      .code-regimen {
+        .num    { color: #FFFFFF; }
+        .code   { color: #64748B; }
+        .regimen { background-color: #0F172A; color: #94A3B8; }
+        .cra, .caes { color: #FCA5A5; }
       }
 
-      .address,
-      .phone,
-      .schedule,
-      .education {
-        color: var(--white-color);
-      }
+      .distance {
+        color: #64748B;
 
-      div {
-        color: var(--white-color);
-
-        img {
-          filter: brightness(300%);
+        .time {
+          color: #F1F5F9;
+          .units { color: #64748B; }
         }
+
+        .km { color: #94A3B8; }
+
+        .car img { filter: none; }
       }
     }
 
-    button {
-      background-color: var(--primary-color);
-      color: var(--white-color);
+    &[data-regimen="PUB"]  .regimen { background-color: #1E3A5F; color: #93C5FD; }
+    &[data-regimen="CONC"] .regimen { background-color: #2E1065; color: #C4B5FD; }
+    &[data-regimen="PRIV"] .regimen { background-color: #451A03; color: #FCD34D; }
+
+    .card-school-body {
+      .title { color: #F1F5F9; }
+
+      div {
+        color: #CBD5E1;
+        img { filter: none; }
+      }
+    }
+
+    .card-school-footer {
+      border-top-color: #334155;
+    }
+
+    &[data-regimen="PUB"] .card-school-body div img,
+    &[data-regimen="PUB"] .distance .car img {
+      filter: brightness(0) saturate(100%) invert(63%) sepia(70%) saturate(500%) hue-rotate(196deg) brightness(110%) contrast(95%);
+    }
+    &[data-regimen="CONC"] .card-school-body div img,
+    &[data-regimen="CONC"] .distance .car img {
+      filter: brightness(0) saturate(100%) invert(58%) sepia(50%) saturate(800%) hue-rotate(240deg) brightness(115%) contrast(100%);
+    }
+    &[data-regimen="PRIV"] .card-school-body div img,
+    &[data-regimen="PRIV"] .distance .car img {
+      filter: brightness(0) saturate(100%) invert(85%) sepia(50%) saturate(800%) hue-rotate(5deg) brightness(107%) contrast(97%);
     }
   }
 }

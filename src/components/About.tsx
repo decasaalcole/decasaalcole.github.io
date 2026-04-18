@@ -38,6 +38,7 @@ export function About() {
         <li>Datos de las escuelas extraídos de la <a href='https://ceice.gva.es/es/web/centros-docentes/guia-de-centros-docentes'>Guia de Centres Docents</a> de la Conselleria d'Educacio, Cultura, Universitats, i Ocupació de la Generalitat Valenciana</li>
         <li>Códigos postales derivados del juego de datos de direcciones postales del proyecto <a href='https://www.cartociudad.es/web/portal'>Cartociudad</a>, disponibles en el <a href='https://centrodedescargas.cnig.es/CentroDescargas/cartociudad'>Centro de descargas del CNIG</a></li>
         <li>Tiempos de viaje calculados utilizando el motor de rutas <a href='https://github.com/Project-OSRM/osrm-backend'>OSRM</a> a partir de la red de carreteras extraída de <a href='https://osm.org'>OpenStreetMap</a> publicado por <a href='https://download.geofabrik.de/europe/spain/valencia.html'>Geofabrik</a></li>
+        <li>Mapa renderizado con <a href='https://maplibre.org'>MapLibre GL JS</a> usando teselas de <a href='https://maps.black'>maps.black</a> basadas en datos de <a href='https://www.openstreetmap.org/copyright'>© OpenStreetMap contributors</a> (licencia <a href='https://opendatacommons.org/licenses/odbl/'>ODbL</a>)</li>
       </ul>
       <h3>Contacto</h3>
       <p>
