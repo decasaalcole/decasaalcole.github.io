@@ -16,7 +16,7 @@ export function CardSchool({ school }: { school: School }) {
     const hasTel = school.tel?.toString().trim() !== '';
 
     return (
-        <div className="card-school">
+        <div className="card-school" data-regimen={school.reg}>
             <div className="card-school-header">
                 <div className="code-regimen">
                     <p className="num">{school.num}</p>
@@ -59,8 +59,11 @@ export function CardSchool({ school }: { school: School }) {
                     <div className="education">
                         <img src={Education} alt="Education" />
                         <div className="education-levels">
-                            {school.niveles.map((nivel: SchoolLevel) => (
-                                <p key={nivel.nivel}>{nivel.nivel}</p>
+                            {school.niveles.filter((nivel: SchoolLevel) => nivel.uni_act && nivel.uni_act !== '0').map((nivel: SchoolLevel) => (
+                                <p key={nivel.nivel}>
+                                    {nivel.nivel}
+                                    <span className="units-badge">{nivel.uni_act}u</span>
+                                </p>
                             ))}
                         </div>
                     </div>

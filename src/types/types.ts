@@ -79,6 +79,7 @@ export interface BtnProps<T extends BtnValue = BtnValue> {
     selected: boolean;
     setSelected: (value: T) => void;
     filter?: boolean;
+    color?: string;
 }
 
 export interface CardBtnProps {
@@ -123,10 +124,10 @@ export enum SchoolEducationLevel {
 
 export interface SchoolLevel {
     nivel: string;
-    unidades_autorizadas?: number;
-    puestos_autorizados?: number;
-    unidades_activas?: number;
-    puestos_activos?: number;
+    uni_auto?: string;
+    pues_auto?: string;
+    uni_act?: string;
+    pues_act?: string;
 }
 
 export interface rawSchool {

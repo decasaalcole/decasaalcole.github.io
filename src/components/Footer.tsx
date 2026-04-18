@@ -4,11 +4,8 @@ import './Footer.css';
 export function Footer() {
     return (
         <footer className="footer">
-            <div className="footer_body">
-                <img src={logo} alt="Decasaalcole logo" width={30} height={30} />
-                <p>Decasaalcole</p>
-            </div>
+            <img src={logo} alt="Decasaalcole logo" width={28} height={28} />
+            <span>© {new Date().getFullYear()} Decasaalcole</span>
         </footer>
     );
 }
-  
