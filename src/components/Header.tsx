@@ -20,7 +20,7 @@ export function Header() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const isCompact = (isScrolled && !isMobile) || (isMobile && pathname === '/mapa');
+    const isCompact = (isScrolled && !isMobile) || pathname === '/mapa';
 
     return (
         <div className={`header${isCompact ? ' header--compact' : ''}`}>

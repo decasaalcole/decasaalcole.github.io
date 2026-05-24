@@ -23,7 +23,7 @@ export function Map() {
         ? 'fiord'
         : 'positron';
 
-    const mapStyle = `https://maps.black/styles/openstreetmap-openmaptiles/openfreemap/${mapStyleTheme}/style.json`;
+    const mapStyle = `https://tiles.openfreemap.org/styles/${mapStyleTheme}`;
 
 
     const mapColor = (theme: 'fiord' | 'positron'): ExpressionSpecification => {
@@ -152,6 +152,8 @@ export function Map() {
                     .addTo(map);
             }
         });
+
+        return () => map.remove();
     }, []);
 
     return (

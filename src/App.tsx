@@ -8,6 +8,7 @@ import craSchools from './assets/data/schools_cra.json';
 import travelTimes from './assets/data/travel_times.json';
 import { filterSchools, prepareSchools, getZipCodeTimes, sortSchoolsByTime, populateSchoolsByZipCodeWithTimeAndDist, filterSchoolsByTimeOrDistance, getMaxDistance, getMaxTime } from './helpers/school.helper.ts';
 import { Footer } from './components/Footer.tsx';
+import { Banner } from './components/Banner.tsx';
 import { Routes, Route, NavLink, useLocation } from 'react-router-dom';
 import { About } from './components/About';
 import { Map } from './components/Map';
@@ -136,6 +137,7 @@ function App() {
   return (
     <>
       <Header />
+      <Banner />
       <nav>
         <NavLink to="/" end>Inicio</NavLink>
         <NavLink to="/mapa">Mapa</NavLink>
