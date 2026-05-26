@@ -132,49 +132,52 @@ function App() {
   const handleFilterValueChange    = (value: number | number[]) => setFilterValue(Array.isArray(value) ? value[0] : value);
 
   const { pathname } = useLocation();
-  const hideFooter = pathname === '/mapa' && window.innerWidth < 700;
+  const isMapRoute = pathname === '/mapa';
+  const hideFooter = isMapRoute && window.innerWidth < 700;
 
   return (
-    <>
+    <div className={isMapRoute ? 'app app--map-page' : 'app'}>
       <Header />
-      <Banner />
+      {pathname === '/' && <Banner />}
       <nav>
         <NavLink to="/" end>Inicio</NavLink>
         <NavLink to="/mapa">Mapa</NavLink>
         <NavLink to="/acerca-de">Acerca de</NavLink>
       </nav>
-      <Routes>
-        <Route path="/" element={
-          <>
-            <Finder
-              zipCode={zipCode}
-              setZipCode={setZipCode}
-              regimenTypes={regimenTypes}
-              setRegimenTypes={handleRegimenTypeChange}
-              educationTypes={educationTypes}
-              setEducationTypes={handleEducationTypeChange}
-              dayTypes={dayTypes}
-              setDayTypes={handleDayTypesChange}
-              provinces={provinces}
-              setProvinces={handleProvinceChange}
-              centerTypes={centerTypes}
-              setCenterTypes={handleCenterTypeChange}
-              filterType={filterType}
-              setFilterType={setFilterType}
-              filterValue={filterValue}
-              setFilterValue={handleFilterValueChange}
-              maxTime={maxTime}
-              maxDistance={maxDistance}
-            />
-            <Results schools={schools} />
-          </>
-        } />
-        <Route path="/acerca-de" element={<About />} />
-        <Route path="/mapa" element={<Map />} />
-        <Route path="*" element={<h2 style={{ textAlign: 'center', marginBottom: '3em' }}>404 - Página no encontrada</h2>} />
-      </Routes>
+      <main className={isMapRoute ? 'page page--map' : 'page'}>
+        <Routes>
+          <Route path="/" element={
+            <>
+              <Finder
+                zipCode={zipCode}
+                setZipCode={setZipCode}
+                regimenTypes={regimenTypes}
+                setRegimenTypes={handleRegimenTypeChange}
+                educationTypes={educationTypes}
+                setEducationTypes={handleEducationTypeChange}
+                dayTypes={dayTypes}
+                setDayTypes={handleDayTypesChange}
+                provinces={provinces}
+                setProvinces={handleProvinceChange}
+                centerTypes={centerTypes}
+                setCenterTypes={handleCenterTypeChange}
+                filterType={filterType}
+                setFilterType={setFilterType}
+                filterValue={filterValue}
+                setFilterValue={handleFilterValueChange}
+                maxTime={maxTime}
+                maxDistance={maxDistance}
+              />
+              <Results schools={schools} />
+            </>
+          } />
+          <Route path="/acerca-de" element={<About />} />
+          <Route path="/mapa" element={<Map />} />
+          <Route path="*" element={<h2 style={{ textAlign: 'center', marginBottom: '3em' }}>404 - Página no encontrada</h2>} />
+        </Routes>
+      </main>
       {!hideFooter && <Footer />}
-    </>
+    </div>
   )
 }
 
