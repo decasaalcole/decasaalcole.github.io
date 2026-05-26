@@ -4,7 +4,7 @@ import maplibregl from 'maplibre-gl';
 import type { ExpressionSpecification } from 'maplibre-gl';
 
 import { moreInfo } from './card/CardSchool';
-import { RawSchoolRegimenType, SchoolProperties } from '../types/types';
+import { RawSchoolRegimenType, School, SchoolProperties } from '../types/types';
 import schools from '../assets/data/schools.json';
 
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -23,8 +23,7 @@ export function Map() {
         ? 'fiord'
         : 'positron';
 
-    const mapStyle = `https://maps.black/styles/openstreetmap-openmaptiles/openfreemap/${mapStyleTheme}/style.json`;
-
+    const mapStyle = `https://tiles.openfreemap.org/styles/${mapStyleTheme}`;
 
     const mapColor = (theme: 'fiord' | 'positron'): ExpressionSpecification => {
         const styles: Record<'fiord' | 'positron', [string, string, string, string, string, string, string]> = {
@@ -73,7 +72,7 @@ export function Map() {
                 tel?: string;
             }> = {
                 type: 'FeatureCollection',
-                features: schools.map((school) => ({
+                features: (schools as unknown as School[]).map((school) => ({
                     type: 'Feature',
                     properties: {
                         id: school.codigo,
@@ -110,7 +109,7 @@ export function Map() {
                 source: 'schools',
                 paint: {
                     'circle-opacity': 0.8,
-                    'circle-color': mapColor(mapStyleTheme),
+                        'circle-color': mapColor(mapStyleTheme),
                     'circle-radius': ['interpolate', ['linear'], ['zoom'], 8, 3, 15, 10]
                 },
             });
@@ -152,6 +151,8 @@ export function Map() {
                     .addTo(map);
             }
         });
+
+        return () => map.remove();
     }, []);
 
     return (

@@ -25,6 +25,22 @@ nav a.active {
   border-bottom-color: var(--primary-color);
 }
 
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page {
+  flex: 1;
+  min-height: 0;
+}
+
+.page--map {
+  display: flex;
+  flex-direction: column;
+}
+
 @media (prefers-color-scheme: dark) {
   nav {
     background: #1E293B;
