@@ -67,10 +67,10 @@ export function CardSchool({ school }: { school: School }) {
             </div>
             <div className="card-school-footer">
                 {hasTel && (
-                    <CardBtn text="Llamar" action={() => window.open(`tel:${school.tel}`, '_blank')} />
+                    <CardBtn text="Llamar" action={() => window.open(`tel:${school.tel}`, '_blank', 'noopener')} />
                 )}
-                <CardBtn text="Mapa" action={() => window.open(`https://www.google.com/maps/search/?api=1&query=${school.lat},${school.long}`, '_blank')} />
-                <CardBtn text="Más Info" action={() => window.open(moreInfo(school.codigo), '_blank')} />
+                <CardBtn text="Mapa" action={() => window.open(`https://www.google.com/maps/search/?api=1&query=${school.lat},${school.long}`, '_blank', 'noopener')} />
+                <CardBtn text="Más Info" action={() => window.open(moreInfo(school.codigo), '_blank', 'noopener')} />
             </div>
         </div>
     )

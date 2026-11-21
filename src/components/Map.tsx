@@ -15,6 +15,39 @@ import './Map.css';
 // maplibre-gl v6 resolves its worker relative to its own module URL, which breaks once bundled
 maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
+// Build the popup with DOM nodes so school data is always inserted as text, never as HTML
+function buildPopupContent(properties: SchoolProperties): HTMLElement {
+    const el = <K extends keyof HTMLElementTagNameMap>(tag: K, text?: string) => {
+        const node = document.createElement(tag);
+        if (text !== undefined) node.textContent = text;
+        return node;
+    };
+    const item = (label: string, value: Node | string) => {
+        const li = el('li');
+        li.append(el('strong', `${label}:`), ' ', value);
+        return li;
+    };
+
+    const tel = properties.tel ?? '';
+    const telLink = el('a', tel);
+    telLink.href = `tel:${tel}`;
+
+    const moreInfoBtn = el('button', 'Más info');
+    moreInfoBtn.className = 'more-info';
+    moreInfoBtn.addEventListener('click', () => window.open(moreInfo(properties.id), '_blank', 'noopener'));
+
+    const list = el('ul');
+    list.append(
+        item('Municipio', properties.muni),
+        item('Regimen', properties.reg),
+        item('Telefono', telLink),
+    );
+
+    const container = el('div');
+    container.append(el('h3', properties.deno), list, moreInfoBtn);
+    return container;
+}
+
 const lng = -0.3;
 const lat = 39.44;
 const zoom = 7;
@@ -145,15 +178,7 @@ export function Map() {
                 // Create a popup
                 new maplibregl.Popup()
                     .setLngLat(coordinates)
-                    .setHTML(`
-                        <h3>${properties.deno}</h3>
-                        <ul>
-                            <li><strong>Municipio:</strong> ${properties.muni}</li>
-                            <li><strong>Regimen:</strong> ${properties.reg}</li>
-                            <li><strong>Telefono:</strong> <a href="tel:${properties.tel}">${properties.tel}</a></li>
-                        </ul>
-                        <button class="more-info" onclick="window.open('${moreInfo(properties.id)}')">Más info</button>
-                    `)
+                    .setDOMContent(buildPopupContent(properties))
                     .addTo(map);
             }
         });
