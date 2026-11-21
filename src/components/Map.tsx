@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import * as maplibregl from 'maplibre-gl';
 import type { ExpressionSpecification } from 'maplibre-gl';
+import type { FeatureCollection, Point } from 'geojson';
 
 import { moreInfo } from './card/CardSchool';
 import { RawSchoolRegimenType, School, SchoolProperties } from '../types/types';
@@ -63,7 +64,7 @@ export function Map() {
 
         // When ready, load the schools data
         map.on('load', () => {
-            const schoolsData: GeoJSON.FeatureCollection<GeoJSON.Point, {
+            const schoolsData: FeatureCollection<Point, {
                 id: string;
                 cp: string;
                 reg: string;
