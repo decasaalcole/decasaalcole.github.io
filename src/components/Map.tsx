@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import maplibregl from 'maplibre-gl';
+import * as maplibregl from 'maplibre-gl';
 import type { ExpressionSpecification } from 'maplibre-gl';
 
 import { moreInfo } from './card/CardSchool';
