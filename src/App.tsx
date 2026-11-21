@@ -1,7 +1,7 @@
 import { Header } from './components/Header.tsx'
 import { Finder } from './components/Finder.tsx'
 import { Results } from './components/Results.tsx'
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { SchoolRegimenType, SchoolEducationType, School, SchoolDayType, SchoolCenterType, Province, rawSchool, FilterType } from './types/types.ts';
 import baseSchools from './assets/data/schools.json'
 import craSchools from './assets/data/schools_cra.json';
@@ -26,9 +26,11 @@ function makeToggleHandler<T>(
     });
 }
 
+// Prepare schools data
+const rawSchools = prepareSchools(baseSchools as unknown as rawSchool[], craSchools as string[]);
+
 function App() {
   // schools
-  const [rawSchools, setRawSchools] = useState<School[]>([]);
   const [schools, setSchools] = useState<School[]>([]);
 
   // filters
@@ -39,43 +41,32 @@ function App() {
   const [dayTypes, setDayTypes] = useState([SchoolDayType.Continue, SchoolDayType.Splitted]);
   const [provinces, setProvinces] = useState([Province.Castellon, Province.Valencia, Province.Alicante]);
   const [filterType, setFilterType] = useState(FilterType.Distance);
-  const [filterValue, setFilterValue] = useState(100);
-  const [maxTime, setMaxTime] = useState(6);
-  const [maxDistance, setMaxDistance] = useState(10);
-
-
-  // Prepare schools data
-  useEffect(() => {
-    const schools = prepareSchools(baseSchools as unknown as rawSchool[], craSchools as string[]);
-    setRawSchools(schools);
-  }, []);
 
   // prepare max time and max distance
-  useEffect(() => {
+  const { maxTime, maxDistance } = useMemo(() => {
     const zipCodeTimes = getZipCodeTimes(travelTimes as Record<string, string[]>, zipCode);
-    const maxTime = getMaxTime(zipCodeTimes);
-    const maxDistance = getMaxDistance(zipCodeTimes);
-    setMaxTime(maxTime);
-    setMaxDistance(maxDistance);
+    return { maxTime: getMaxTime(zipCodeTimes), maxDistance: getMaxDistance(zipCodeTimes) };
   }, [zipCode]);
 
-  // prepare filter value
-  useEffect(() => {
-    if (filterType === FilterType.Time) {
-      setFilterValue(maxTime);
-    } else {
-      setFilterValue(maxDistance);
-    }
-  }, [maxTime, maxDistance, filterType]);
+  // prepare filter value: reset it to the max when the max or the filter type changes
+  const filterMax = filterType === FilterType.Time ? maxTime : maxDistance;
+  const filterKey = `${filterType}|${maxTime}|${maxDistance}`;
+  const [filterValue, setFilterValue] = useState(filterMax);
+  const [prevFilterKey, setPrevFilterKey] = useState(filterKey);
+  if (filterKey !== prevFilterKey) {
+    setPrevFilterKey(filterKey);
+    setFilterValue(filterMax);
+  }
 
-  // Filter schools with debounce of 2 seconds
-  useEffect(() => {
-    const isValidZipCode = zipCode.toString().length > 3 && zipCode.toString().length < 6;
+  // clear results as soon as the zip code becomes invalid
+  const isValidZipCode = zipCode.toString().length > 3 && zipCode.toString().length < 6;
+  if (!isValidZipCode && schools.length > 0) {
+    setSchools([]);
+  }
 
-    if (!isValidZipCode) {
-      setSchools([]);
-      return;
-    }
+  // Filter schools with debounce of 500ms
+  useEffect(() => {
+    if (!isValidZipCode) return;
 
     const filterData = setTimeout(() => {
       const zipCodeTimes = getZipCodeTimes(travelTimes as Record<string, string[]>, zipCode);
@@ -113,7 +104,7 @@ function App() {
 
     return () => clearTimeout(filterData);
   }, [
-    rawSchools,
+    isValidZipCode,
     regimenTypes,
     zipCode,
     educationTypes,

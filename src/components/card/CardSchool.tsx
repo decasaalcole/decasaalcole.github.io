@@ -1,4 +1,4 @@
-import { buildAddress } from "../../helpers/school.helper";
+import { buildAddress, moreInfo } from "../../helpers/school.helper";
 import { School, SchoolLevel } from "../../types/types";
 import Home from '../../assets/icons/home.svg';
 import Phone from '../../assets/icons/phone.svg';
@@ -7,10 +7,6 @@ import Education from '../../assets/icons/education.svg';
 import Car from '../../assets/icons/car.svg';
 import { CardBtn } from '../btns/CardBtn';
 import './CardSchool.css';
-
-export function moreInfo(codigo: string): string {
-    return `https://ceice.gva.es/es/web/centros-docentes/consulta-general?viewUrl162652993=/abc/i_guiadecentros/es/centro.asp&codi=${codigo}`
-}
 
 export function CardSchool({ school }: { school: School }) {
     const hasTel = school.tel?.toString().trim() !== '';
@@ -71,10 +67,10 @@ export function CardSchool({ school }: { school: School }) {
             </div>
             <div className="card-school-footer">
                 {hasTel && (
-                    <CardBtn text="Llamar" action={() => window.open(`tel:${school.tel}`, '_blank')} />
+                    <CardBtn text="Llamar" action={() => window.open(`tel:${school.tel}`, '_blank', 'noopener')} />
                 )}
-                <CardBtn text="Mapa" action={() => window.open(`https://www.google.com/maps/search/?api=1&query=${school.lat},${school.long}`, '_blank')} />
-                <CardBtn text="Más Info" action={() => window.open(moreInfo(school.codigo), '_blank')} />
+                <CardBtn text="Mapa" action={() => window.open(`https://www.google.com/maps/search/?api=1&query=${school.lat},${school.long}`, '_blank', 'noopener')} />
+                <CardBtn text="Más Info" action={() => window.open(moreInfo(school.codigo), '_blank', 'noopener')} />
             </div>
         </div>
     )

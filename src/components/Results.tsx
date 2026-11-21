@@ -4,16 +4,19 @@ import { CardSchool } from './card/CardSchool';
 import noResults from '../assets/icons/no_results.svg';
 import { DownloadBtn } from './btns/DownloadBtn';
 import { Pagination } from './pagination/Pagination';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const PAGE_SIZE = 20;
 
 export function Results({ schools }: { schools: School[] }) {
     const [page, setPage] = useState(1);
 
-    useEffect(() => {
+    // go back to the first page when the results change
+    const [prevSchools, setPrevSchools] = useState(schools);
+    if (schools !== prevSchools) {
+        setPrevSchools(schools);
         setPage(1);
-    }, [schools]);
+    }
 
     const totalPages = Math.ceil(schools.length / PAGE_SIZE);
     const schoolsPage = schools.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
