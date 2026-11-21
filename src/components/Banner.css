@@ -2,19 +2,29 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 85px;
+  height: 56px;
   background-color: #2d7c2d;
+  overflow: hidden;
+}
+
+/* The image repeats the same message three times: on narrow screens show only the middle one */
+.banner__crop {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  aspect-ratio: 1637 / 360;
   overflow: hidden;
 }
 
 .banner__image {
   height: 100%;
   width: auto;
+  flex-shrink: 0;
   display: block;
 }
 
 @media (min-width: 700px) {
-  .banner {
-    height: 85px;
+  .banner__crop {
+    aspect-ratio: auto;
   }
 }
