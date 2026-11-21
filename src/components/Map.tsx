@@ -2,29 +2,28 @@ import { useEffect, useRef } from 'react';
 
 import * as maplibregl from 'maplibre-gl';
 import type { ExpressionSpecification } from 'maplibre-gl';
+import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
 import type { FeatureCollection, Point } from 'geojson';
 
-import { moreInfo } from './card/CardSchool';
+import { moreInfo } from '../helpers/school.helper';
 import { RawSchoolRegimenType, School, SchoolProperties } from '../types/types';
 import schools from '../assets/data/schools.json';
 
 import 'maplibre-gl/dist/maplibre-gl.css';
 import './Map.css';
 
+// maplibre-gl v6 resolves its worker relative to its own module URL, which breaks once bundled
+maplibregl.setWorkerUrl(maplibreWorkerUrl);
+
+const lng = -0.3;
+const lat = 39.44;
+const zoom = 7;
+
 export function Map() {
     const mapContainer = useRef<HTMLDivElement>(null);
-    const lng = -0.3;
-    const lat = 39.44;
-    const zoom = 7;
     // Map style URL depends on the theme of the browser
     // For example, if the browser is in dark mode, use the dark theme
     // If the browser is in light mode, use the light theme
-
-    const mapStyleTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'fiord'
-        : 'positron';
-
-    const mapStyle = `https://tiles.openfreemap.org/styles/${mapStyleTheme}`;
 
     const mapColor = (theme: 'fiord' | 'positron'): ExpressionSpecification => {
         const styles: Record<'fiord' | 'positron', [string, string, string, string, string, string, string]> = {
@@ -51,6 +50,12 @@ export function Map() {
 
     useEffect(() => {
         if (!mapContainer.current) return; // wait until ref is set
+
+        const mapStyleTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'fiord'
+            : 'positron';
+
+        const mapStyle = `https://tiles.openfreemap.org/styles/${mapStyleTheme}`;
 
         const map = new maplibregl.Map({
             container: mapContainer.current,

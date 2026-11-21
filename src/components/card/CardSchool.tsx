@@ -1,4 +1,4 @@
-import { buildAddress } from "../../helpers/school.helper";
+import { buildAddress, moreInfo } from "../../helpers/school.helper";
 import { School, SchoolLevel } from "../../types/types";
 import Home from '../../assets/icons/home.svg';
 import Phone from '../../assets/icons/phone.svg';
@@ -7,10 +7,6 @@ import Education from '../../assets/icons/education.svg';
 import Car from '../../assets/icons/car.svg';
 import { CardBtn } from '../btns/CardBtn';
 import './CardSchool.css';
-
-export function moreInfo(codigo: string): string {
-    return `https://ceice.gva.es/es/web/centros-docentes/consulta-general?viewUrl162652993=/abc/i_guiadecentros/es/centro.asp&codi=${codigo}`
-}
 
 export function CardSchool({ school }: { school: School }) {
     const hasTel = school.tel?.toString().trim() !== '';

@@ -175,3 +175,7 @@ export function getMaxDistance(codes: ToZipCodeDistTime[] | null): number {
   if (!codes) return 250;
   return Math.ceil(codes.reduce((max, c) => Math.max(max, c.dist), 0) / 10) * 10;
 }
+
+export function moreInfo(codigo: string): string {
+    return `https://ceice.gva.es/es/web/centros-docentes/consulta-general?viewUrl162652993=/abc/i_guiadecentros/es/centro.asp&codi=${codigo}`
+}
